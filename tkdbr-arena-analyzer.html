@@ -781,7 +781,7 @@ textarea{resize:vertical;min-height:60px;font-size:14px}
 <script>
 
 // API Security
-const PROXY_BASE_URL='ai-worker-proxy.aly-smarti1.workers.dev';
+const PROXY_BASE_URL='https://ai-worker-proxy.aly-smarti1.workers.dev';
 const EMBEDDED_PROXY_TOKEN='aly-tbdr-build';
 // ════════════════════════════════════════════════
 // CONSTANTS
@@ -1313,10 +1313,6 @@ let renamingServer=-1;
 // ════════ API CONFIG ════════
 // Replace YOUR_API_KEY_HERE with your Anthropic API key using any text editor
 // Change MAX_SCANS_PER_BROWSER to adjust the per-browser scan limit
-// AI-Worker-Proxy config — fill these in with your Cloudflare Worker URL and PROXY_AUTH_TOKEN
-// (never put a real sk-ant-... Anthropic key here — that's what the proxy exists to avoid)
-const PROXY_BASE_URL='https://ai-proxy.YOUR-USERNAME.workers.dev';
-const EMBEDDED_PROXY_TOKEN='YOUR_PROXY_AUTH_TOKEN_HERE';
 const MAX_SCANS_PER_BROWSER=250;
 
 const SRV_META_KEY='tkdb-v8-servers';
