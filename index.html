@@ -217,7 +217,6 @@ textarea{resize:vertical;min-height:60px;font-size:14px}
     <div class="brand">
       <div class="title">⚔ Arena Optimizer</div>
       <div class="subtitle">Tokyo Debunker · Guild Edition</div>
-      <div class="credit-line">Strategy &amp; card data by <span style="color:var(--gold2)">IceFog, Winter, Bloodmoon &amp; Aya</span> · App by <span style="color:var(--gold2)">Heartless</span> via Claude Code</div>
     </div>
     <div style="display:flex;flex-direction:column;align-items:flex-end;gap:6px">
       <div class="save-pill"><span class="save-dot"></span><span id="save-status">Auto-save</span></div>
@@ -640,7 +639,7 @@ textarea{resize:vertical;min-height:60px;font-size:14px}
   </div>
 
   <!-- CREDITS -->
-  <div style="font-family:'Cinzel',serif;font-size:12px;color:var(--gold);letter-spacing:.08em;margin-bottom:10px;display:flex;align-items:center;gap:8px">Credits<span style="flex:1;height:1px;background:linear-gradient(to right,var(--border2),transparent)"></span></div>
+  <div style="font-family:'Cinzel',serif;font-size:12px;color:var(--gold);letter-spacing:.08em;margin-bottom:10px;display:flex;align-items:center;gap:8px">Credits (EA-45)<span style="flex:1;height:1px;background:linear-gradient(to right,var(--border2),transparent)"></span></div>
   <div style="background:var(--bg2);border:1px solid var(--border);border-radius:10px;padding:13px 14px">
     <div style="display:flex;flex-direction:column;gap:7px;font-size:13px;color:var(--text2)">
       <div><span style="color:var(--gold2);font-family:'Cinzel',serif">IceFog, Winter, Bloodmoon &amp; Aya</span> — Strategy &amp; card data</div>
@@ -667,12 +666,14 @@ textarea{resize:vertical;min-height:60px;font-size:14px}
   <div class="modal">
     <div class="modal-title" id="card-modal-title">Add Card</div>
 
-    <!-- REQUIRED -->
-    <div class="search-wrap">
+    <!-- REQUIRED (Add mode only — card identity is fixed once a roster entry exists) -->
+    <div class="search-wrap" id="cm-search-wrap">
       <label>Card Name</label>
       <input type="text" id="cm-search" placeholder="Search card name..." oninput="doSearch('cm-sr',this.value)" onfocus="doSearch('cm-sr',this.value)" autocomplete="off">
       <div class="search-results" id="cm-sr"></div>
     </div>
+    <!-- EDIT MODE — compact, non-editable identity strip instead of the full card name search + preview -->
+    <div id="cm-edit-header" style="display:none;margin-bottom:10px"></div>
     <div id="cm-preview" style="margin-bottom:10px"></div>
 
     <div class="grid g2" style="gap:10px;margin-bottom:10px">
@@ -2329,9 +2330,10 @@ function renderRosterList(){
             ${cosmicOn?`<span style="font-family:'Cinzel',serif;font-size:9px;color:var(--purple2)">✦</span>`:''}
           </div>
         </div>
-        <!-- Power + chevron -->
+        <!-- Power + quick edit + chevron -->
         <div style="display:flex;align-items:center;gap:8px;flex-shrink:0">
           <div style="font-family:'Cinzel',serif;font-size:13px;color:var(--gold);font-weight:700">${fmtP(entry.power)}</div>
+          <button type="button" onclick="event.stopPropagation();openCardModal(${entry.uid})" title="Quick edit" style="background:none;border:1px solid var(--border);border-radius:6px;width:30px;height:30px;display:flex;align-items:center;justify-content:center;color:var(--text3);font-size:13px;cursor:pointer;flex-shrink:0">✎</button>
           <span id="rc-chevron-${entry.uid}" style="color:var(--text3);font-size:12px">▸</span>
         </div>
       </div>
@@ -2399,6 +2401,8 @@ function openCardModal(uid){
   editUid=uid;
   const entry=uid!=null?roster.find(r=>r.uid===uid):null;
   document.getElementById('card-modal-title').textContent=uid!=null?'✎ Edit Card':'Add Card';
+  const searchWrap=document.getElementById('cm-search-wrap');
+  const editHeader=document.getElementById('cm-edit-header');
   if(entry){
     addCardDbId=entry.cardId;
     const c=gc(entry.cardId);
@@ -2409,7 +2413,16 @@ function openCardModal(uid){
     initToggles(entry.cosmicBond||'no', entry.link||'off', entry.awk||0, entry.equip||'no', entry.spirits||'no');
     document.getElementById('cm-role-override').value=entry.roleOverride||'';
     document.getElementById('cm-audit').value=entry.audit||'';
-    if(c)updatePreview(c);
+    // Edit mode: hide the search field + full preview, show a compact identity strip instead
+    if(searchWrap)searchWrap.style.display='none';
+    document.getElementById('cm-preview').innerHTML='';
+    if(editHeader){
+      editHeader.style.display='block';
+      editHeader.innerHTML=c?`<div style="display:flex;align-items:center;gap:8px;padding:8px 10px;background:var(--bg3);border:1px solid var(--border);border-radius:7px">
+        <div style="font-weight:600;font-size:14px;color:var(--text);flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${c.name}</div>
+        <div style="display:flex;gap:4px;flex-wrap:wrap;flex-shrink:0">${rar(c.r)}${atkSpan(c.atk)}</div>
+      </div>`:'';
+    }
   } else {
     addCardDbId=null;
     ['cm-search','cm-power','cm-lv','cm-audit'].forEach(id=>{const el=document.getElementById(id);if(el)el.value='';});
@@ -2417,6 +2430,9 @@ function openCardModal(uid){
     initToggles('no','off',0,'no','no');
     document.getElementById('cm-role-override').value='';
     document.getElementById('cm-preview').innerHTML='';
+    // Add mode: show the search field, hide the edit-mode header
+    if(searchWrap)searchWrap.style.display='block';
+    if(editHeader){editHeader.style.display='none';editHeader.innerHTML='';}
   }
   document.getElementById('card-modal').classList.add('open');
 }
@@ -3401,27 +3417,46 @@ function runAnalysis(){
   const elemLosesTo={Fire:'Water',Grass:'Fire',Water:'Grass'};
   const elemLabel={Fire:'Fire',Grass:'Grass',Water:'Water'};
 
-  // My active carries' elements
+  // My active carries' elements (strongest first)
   const myCarries=roster.filter(e=>{const c=gc(e.cardId);return c?.r==='SSR'&&!GUARD_SKILLS.some(g=>[...(c.skills||[]).map(s=>s.toLowerCase()),(c.passive||'').toLowerCase()].join(' ').includes(g));}).sort((a,b)=>(b.power||0)-(a.power||0)).slice(0,3);
 
-  // Opponent's top cards' elements
-  const oppElems=[...new Set(oppWithCards.map(s=>s.card?.elem).filter(Boolean))];
-  const myElems=[...new Set(myCarries.map(e=>gc(e.cardId)?.elem).filter(Boolean))];
+  // Only call out an elemental matchup when one side is CLEARLY skewed toward
+  // one element (e.g. "most/all of their strong cards are Water") — not just
+  // because both 6-card teams happen to touch all 3 elements somewhere, which
+  // is the normal case and isn't actionable info on its own.
+  const ELEM_DOMINANCE=0.6; // 60%+ of a side's relevant cards sharing one element counts as "severely" skewed
+  function dominantElemOf(items,elemFn){
+    const counts={};let total=0;
+    items.forEach(it=>{const e=elemFn(it);if(e){counts[e]=(counts[e]||0)+1;total++;}});
+    if(!total)return null;
+    let best=null,bestCt=0;
+    Object.entries(counts).forEach(([e,ct])=>{if(ct>bestCt){best=e;bestCt=ct;}});
+    return (bestCt/total>=ELEM_DOMINANCE)?best:null;
+  }
+  const theirDominantElem=dominantElemOf(oppWithCards,s=>s.card?.elem);
+  const myDominantElem=dominantElemOf(myCarries,e=>gc(e.cardId)?.elem);
+  const myStrongestElem=myCarries[0]?gc(myCarries[0].cardId)?.elem:null;
+  const theirStrongestElem=biggestThreat?biggestThreat.card?.elem:null;
 
-  // Find clashes
-  const elemAdvantages=[]; // my elem beats their elem
-  const elemDisadvantages=[]; // their elem beats my elem
-  myElems.forEach(me=>{
-    oppElems.forEach(oe=>{
-      if(elemBeats[me]===oe) elemAdvantages.push({mine:me,theirs:oe});
-      if(elemLosesTo[me]===oe) elemDisadvantages.push({mine:me,theirs:oe});
-    });
-  });
+  const elemFindings=[];
+  if(theirDominantElem&&myStrongestElem){
+    if(elemBeats[myStrongestElem]===theirDominantElem)elemFindings.push({type:'advantage',mine:myStrongestElem,theirs:theirDominantElem,note:`Most of their strong cards are ${theirDominantElem}.`});
+    else if(elemLosesTo[myStrongestElem]===theirDominantElem)elemFindings.push({type:'disadvantage',mine:myStrongestElem,theirs:theirDominantElem,note:`Most of their strong cards are ${theirDominantElem}.`});
+  }
+  if(myDominantElem&&theirStrongestElem){
+    if(elemBeats[myDominantElem]===theirStrongestElem)elemFindings.push({type:'advantage',mine:myDominantElem,theirs:theirStrongestElem,note:`Most of your active carries are ${myDominantElem}.`});
+    else if(elemLosesTo[myDominantElem]===theirStrongestElem)elemFindings.push({type:'disadvantage',mine:myDominantElem,theirs:theirStrongestElem,note:`Most of your active carries are ${myDominantElem}.`});
+  }
+  // Dedupe identical findings (both checks can surface the same clash)
+  const seenFindings=new Set();
+  const dedupedFindings=elemFindings.filter(f=>{const k=f.type+f.mine+f.theirs;if(seenFindings.has(k))return false;seenFindings.add(k);return true;});
+  const elemAdvantages=dedupedFindings.filter(f=>f.type==='advantage');
+  const elemDisadvantages=dedupedFindings.filter(f=>f.type==='disadvantage');
 
   const elemHTML=elemAdvantages.length||elemDisadvantages.length?`
     <div style="margin-bottom:8px">
-      ${elemAdvantages.map(e=>`<div style="font-size:12px;color:var(--green2)">▲ Element advantage — your ${e.mine} beats their ${e.theirs}. Your carries deal increased damage.</div>`).join('')}
-      ${elemDisadvantages.map(e=>`<div style="font-size:12px;color:var(--red2)">▼ Element disadvantage — their ${e.theirs} beats your ${e.mine}. Your carries deal reduced damage — prioritise debuffs to compensate.</div>`).join('')}
+      ${elemAdvantages.map(e=>`<div style="font-size:12px;color:var(--green2)">▲ Element advantage — your ${e.mine} beats their ${e.theirs}. ${e.note} Your carries deal increased damage.</div>`).join('')}
+      ${elemDisadvantages.map(e=>`<div style="font-size:12px;color:var(--red2)">▼ Element disadvantage — their ${e.theirs} beats your ${e.mine}. ${e.note} Your carries deal reduced damage — prioritise debuffs to compensate.</div>`).join('')}
     </div>`:'';
 
   // Find my guard card for gem advice
