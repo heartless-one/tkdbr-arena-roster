@@ -267,6 +267,7 @@ textarea{resize:vertical;min-height:60px;font-size:14px}
           <option value="6">▸ #6 — Guard First</option>
           <option value="7">▸ #7 — Endurance Wall</option>
           <option value="8">▸ #8 — Dream Hunt</option>
+          <option value="9">▸ #9 — Debuff-Guard Layer</option>
         </select>
       </div>
       <button class="btn btn-sm btn-success" onclick="openSaveModal()" style="align-self:flex-end">&#128190; Save</button>
@@ -343,7 +344,7 @@ textarea{resize:vertical;min-height:60px;font-size:14px}
 <!-- CARD DB -->
 <div id="db" class="section">
   <div class="section-hdr">
-    <div><div class="section-title">Card Database</div><div style="font-size:12px;color:var(--text3);font-style:italic;margin-top:2px">Strategy &amp; card data: IceFog, Winter, Bloodmoon &amp; Aya · <span id="db-card-count"></span></div></div>
+    <div><div class="section-title">Card Database</div><div style="font-size:12px;color:var(--text3);font-style:italic;margin-top:2px">Strategy &amp; card data: IceFog, Winter, Bloodmoon, Aya &amp; Heartless · <span id="db-card-count"></span></div></div>
     <button class="btn btn-sm btn-primary" onclick="openCustomCardModal()">+ New Card</button>
   </div>
   <div class="db-filters">
@@ -584,6 +585,33 @@ textarea{resize:vertical;min-height:60px;font-size:14px}
       </div>
     </div>
 
+    <!-- S9 — Debuff-Guard Layer -->
+    <div style="background:var(--bg2);border:1px solid var(--border);border-radius:10px;overflow:hidden">
+      <div onclick="this.nextElementSibling.classList.toggle('open');this.querySelector('.g-chev').textContent=this.nextElementSibling.classList.contains('open')?'▾':'▸'" style="display:flex;align-items:center;gap:10px;padding:12px 14px;cursor:pointer">
+        <div style="font-family:'Cinzel',serif;font-size:11px;font-weight:700;color:var(--gold);min-width:24px">#9</div>
+        <div style="flex:1">
+          <div style="font-weight:500;font-size:14px;color:var(--text)">Debuff-Guard Layer</div>
+          <div style="font-size:11px;color:var(--text3);font-style:italic">Disposable cards debuff on the way out; big Guards ride WITH big Carries, not ahead of them.</div>
+        </div>
+        <div style="display:flex;gap:5px;flex-shrink:0">
+          <span style="font-size:10px;font-family:'Cinzel',serif;color:#a855f7">Any Debuff</span>
+          <span style="font-size:10px;font-family:'Cinzel',serif;color:var(--green2)">Guard+Carry</span>
+        </div>
+        <span class="g-chev" style="color:var(--text3);font-size:12px">▸</span>
+      </div>
+      <div class="g-body" style="border-top:1px solid var(--border);padding:12px 14px">
+        <div style="font-size:12px;color:var(--text2);line-height:1.6;margin-bottom:10px">Most strategies treat "debuff," "guard," and "hitter" as separate teams that happen one after another. <strong>Debuff-Guard Layer</strong> runs two things together instead. First: your cheapest cards shouldn't just die — if they carry a debuff skill (Poison, Curse, Stun, or Sleep — whichever type your roster actually has strength in), their death still weakens the enemy. A Guard-type card that ALSO debuffs is the best possible sacrifice — it can tank a hit and inflict a debuff in the same breath. Second: your best Guard doesn't lead a separate wall team — it rides directly alongside your best Carries in the <em>same</em> wave, so there's always live protection on whichever carry is actually swinging, instead of guards being spent early and carries landing exposed later.</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+          <div style="padding:8px 10px;background:var(--bg3);border-radius:7px;border-left:2px solid #a855f7"><div style="font-family:'Cinzel',serif;font-size:9px;color:#a855f7;text-transform:uppercase;letter-spacing:.06em;margin-bottom:3px">T1 · Smart Bait</div><div style="font-size:12px;color:var(--text2)">Guard+Debuff hybrids first, then any low-power debuff-applying SSR, then R/SR debuff fodder. Nothing dies for free.</div></div>
+          <div style="padding:8px 10px;background:var(--bg3);border-radius:7px;border-left:2px solid var(--green2)"><div style="font-family:'Cinzel',serif;font-size:9px;color:var(--green2);text-transform:uppercase;letter-spacing:.06em;margin-bottom:3px">T2 · Guard + Carry, Together</div><div style="font-size:12px;color:var(--text2)">Best guard leads, best carries follow in the same wave — not a separate guard team first.</div></div>
+          <div style="padding:8px 10px;background:var(--bg3);border-radius:7px;border-left:2px solid var(--blue2)"><div style="font-family:'Cinzel',serif;font-size:9px;color:var(--blue2);text-transform:uppercase;letter-spacing:.06em;margin-bottom:3px">T3 · Second Layer</div><div style="font-size:12px;color:var(--text2)">Second guard + next-best carries + more debuff pressure. Same pattern repeats.</div></div>
+          <div style="padding:8px 10px;background:var(--bg3);border-radius:7px;border-left:2px solid var(--amber)"><div style="font-family:'Cinzel',serif;font-size:9px;color:var(--amber);text-transform:uppercase;letter-spacing:.06em;margin-bottom:3px">T4 · Cleanup</div><div style="font-size:12px;color:var(--text2)">Remaining guards protect whoever's left standing.</div></div>
+        </div>
+        <div style="font-size:11px;color:var(--text3);font-style:italic;margin-top:8px">Best vs: opponents whose total power is HIGHER than yours but whose power is spread unevenly. This strategy wins on arrangement, not raw totals. Key cards: any Guard SSR — bonus points if it also has a Curse/Poison/Stun/Sleep skill.</div>
+        <div style="font-size:11px;color:var(--text3);font-style:italic;margin-top:4px">Credit: Heartless</div>
+      </div>
+    </div>
+
   </div>
   <div style="font-family:'Cinzel',serif;font-size:12px;color:var(--gold);letter-spacing:.08em;margin-bottom:10px;display:flex;align-items:center;gap:8px">Awakening<span style="flex:1;height:1px;background:linear-gradient(to right,var(--border2),transparent)"></span></div>
   <div style="background:var(--bg2);border:1px solid var(--border);border-radius:10px;padding:13px 14px;margin-bottom:16px">
@@ -642,8 +670,8 @@ textarea{resize:vertical;min-height:60px;font-size:14px}
   <div style="font-family:'Cinzel',serif;font-size:12px;color:var(--gold);letter-spacing:.08em;margin-bottom:10px;display:flex;align-items:center;gap:8px">Credits (EA-45)<span style="flex:1;height:1px;background:linear-gradient(to right,var(--border2),transparent)"></span></div>
   <div style="background:var(--bg2);border:1px solid var(--border);border-radius:10px;padding:13px 14px">
     <div style="display:flex;flex-direction:column;gap:7px;font-size:13px;color:var(--text2)">
-      <div><span style="color:var(--gold2);font-family:'Cinzel',serif">IceFog, Winter, Bloodmoon &amp; Aya</span> — Strategy &amp; card data</div>
-      <div><span style="color:var(--gold2);font-family:'Cinzel',serif">Heartless</span> — App created via Claude Code</div>
+      <div><span style="color:var(--gold2);font-family:'Cinzel',serif">IceFog, Winter, Bloodmoon, Aya &amp; Heartless</span> — Strategy &amp; card data</div>
+      <div><span style="color:var(--gold2);font-family:'Cinzel',serif">Heartless</span> — App built via Claude Code</div>
     </div>
   </div>
 </div>
@@ -1515,12 +1543,22 @@ function autoAssignTeams(strategy){
   const rarity =e=>gc(e.cardId)?.r||'';
 
   const isPoison =e=>passive(e).includes('poison');
-  const isCurse  =e=>passive(e).includes('curse');
+  // Curse can be applied via PASSIVE (Auto Curse, Curse Revenge, Curse Entry) OR via
+  // active SKILL (Curse Assault, Curse Attack, Earth/Fire/Vengeance/Water Curse). A card
+  // like Strength Alan Mido has passive "Endurance" but skills "Curse Assault"/"Curse
+  // Attack" — passive-only detection would miss him entirely. Poison/Stun/Sleep only ever
+  // appear as passives in this game's data, so they don't need the same widening.
+  const CURSE_SKILLS=['curse assault','curse attack','earth curse','fire curse','vengeance curse','water curse'];
+  const isCurse  =e=>passive(e).includes('curse')||CURSE_SKILLS.some(s=>skills(e).some(sk=>sk.includes(s)));
   const isStun   =e=>passive(e).includes('stun');
   const isSleep  =e=>passive(e).includes('sleep');
+  // A card "applies a debuff" if it's Poison/Curse/Stun/Sleep by the above — regardless
+  // of rarity. Whichever debuff type the roster actually has strength in counts equally;
+  // nothing here is hardcoded to curse specifically.
+  const appliesDebuff=e=>isPoison(e)||isCurse(e)||isStun(e)||isSleep(e);
   // IMPORTANT: only SR/R cards are treated as debuff fodder
   // SSR cards with debuff passives (e.g. Auto Curse Rui) are heavy hitters
-  const isDebuffFodder=e=>rarity(e)!=='SSR'&&(isPoison(e)||isCurse(e)||isStun(e)||isSleep(e));
+  const isDebuffFodder=e=>rarity(e)!=='SSR'&&appliesDebuff(e);
   const isGuard  =e=>{const c=gc(e.cardId);if(!c)return false;return GUARD_SKILLS.some(g=>allText(e).includes(g))&&c.r==='SSR';};
   // Heavy = SSR non-guard (includes SSRs with debuff passives — they fight, not fodder)
   const isHeavy  =e=>{const c=gc(e.cardId);return c?.r==='SSR'&&!isGuard(e);};
@@ -1598,6 +1636,31 @@ function autoAssignTeams(strategy){
   // Sort a team: guards/entry passives first, Final Stand/Desperate last
   const sortTeam=t=>[...t].sort((a,b)=>positionScore(b)-positionScore(a));
 
+  // Sleep Entry + Dream Hunt must be ADJACENT and in that exact order: the Sleep Entry
+  // card enters from reinforcement and puts an enemy to sleep, and the Dream Hunt carry
+  // needs to act on that target before the sleep wears off or gets used by someone else.
+  // Generic positionScore alone can't guarantee this — Dream Hunt carries score high
+  // (front of field) while Sleep Entry cards score low (must enter from reinforcement),
+  // which actually pushed the carry AHEAD of the card that sets it up. This is a
+  // dedicated post-pass: pull each Sleep Entry card out and reinsert it immediately
+  // before its paired Dream Hunt carry, preserving everything else's order.
+  const pairSleepBeforeDreamHunt=team=>{
+    let t=[...team];
+    const dreamHunters=t.filter(hasDreamHunt);
+    const usedSleep=new Set();
+    dreamHunters.forEach(dh=>{
+      const partner=t.find(e=>hasSleepEntry(e)&&!usedSleep.has(e.uid)&&e.uid!==dh.uid);
+      if(!partner)return;
+      usedSleep.add(partner.uid);
+      const without=t.filter(e=>e.uid!==partner.uid);
+      const dhIndex=without.findIndex(e=>e.uid===dh.uid);
+      if(dhIndex<0)return;
+      without.splice(dhIndex,0,partner);
+      t=without;
+    });
+    return t;
+  };
+
   // ── Buckets ───────────────────────────────────
   // Sort debuff fodder: R cards first (die fastest = don't bleed into next team),
   // then SR, then by power ascending within each rarity
@@ -1611,6 +1674,29 @@ function autoAssignTeams(strategy){
   const stunSleep   = sorted.filter(e=>isDebuffFodder(e)&&(isStun(e)||isSleep(e))).sort(debuffSort);
   const allDebuff   = [...poisonCurse,...stunSleep];
   const guards      = sorted.filter(e=>isGuard(e)).sort((a,b)=>(b.power||0)-(a.power||0));
+
+  // ── Debuff-type synergy detection ──────────────────────────────
+  // Don't mix debuff types indiscriminately. If a roster is built around one type (e.g.
+  // several Curse appliers feeding a Curse Assault payoff carry), a stray Poison card as
+  // bait doesn't feed that stack — it's noise. Score each type by how many appliers exist
+  // PLUS whether the roster actually has a payoff carry for it, then prefer that single
+  // type first before ever falling back to a mixed pool.
+  const poisonOnly=sorted.filter(e=>isDebuffFodder(e)&&isPoison(e)&&!isCurse(e)).sort(debuffSort);
+  const curseOnly =sorted.filter(e=>isDebuffFodder(e)&&isCurse(e)).sort(debuffSort);
+  const stunOnly  =sorted.filter(e=>isDebuffFodder(e)&&isStun(e)&&!isSleep(e)).sort(debuffSort);
+  const sleepOnly =sorted.filter(e=>isDebuffFodder(e)&&isSleep(e)).sort(debuffSort);
+  const hasCursePayoff=sorted.some(e=>{const c=gc(e.cardId);return c?.r==='SSR'&&!isGuard(e)&&hasCurseAssault(e);});
+  const hasSleepPayoff=sorted.some(e=>{const c=gc(e.cardId);return c?.r==='SSR'&&!isGuard(e)&&hasDreamHunt(e);});
+  const typeScore={
+    poison:poisonOnly.length,
+    curse:curseOnly.length+(hasCursePayoff?3:0),
+    stun:stunOnly.length,
+    sleep:sleepOnly.length+(hasSleepPayoff?3:0),
+  };
+  const dominantType=Object.entries(typeScore).sort((a,b)=>b[1]-a[1])[0][0];
+  const dominantTypePool={poison:poisonOnly,curse:curseOnly,stun:stunOnly,sleep:sleepOnly}[dominantType];
+  const cardDebuffTypes=e=>{const t=[];if(isPoison(e))t.push('poison');if(isCurse(e))t.push('curse');if(isStun(e))t.push('stun');if(isSleep(e))t.push('sleep');return t;};
+
   // Cap: max 2 guards per team — excess guards go to T4 to protect survivors
   // 3+ guards in T3 wastes damage slots; excess guards in T4 protect survivors as cards die
   const primaryGuards=guards.slice(0,2);
@@ -1635,6 +1721,24 @@ function autoAssignTeams(strategy){
   const midHeavy    = [...heavy].sort((a,b)=>(a.power||0)-(b.power||0));
   const wallFiller  = midHeavy;
   const baitCards   = midHeavy.slice(0,2);
+
+  // ── Smart bait: cards that apply a debuff (any type) on the way out aren't wasted ──
+  // sacrifices. Guard-type SSRs that ALSO apply a debuff (e.g. a Guard with Curse Assault)
+  // are premium bait — they can tank a hit AND debuff at once. Cards matching the roster's
+  // dominant type are sorted first so bait feeds the actual payoff instead of diluting it.
+  const guardDebuffHybrids=sorted.filter(e=>isGuard(e)&&appliesDebuff(e)&&!hasEntryPassive(e))
+    .sort((a,b)=>{
+      const aMatch=cardDebuffTypes(a).includes(dominantType)?1:0, bMatch=cardDebuffTypes(b).includes(dominantType)?1:0;
+      if(aMatch!==bMatch)return bMatch-aMatch;
+      return (a.power||0)-(b.power||0);
+    });
+  // Any low-power SSR (guard or heavy) that applies a debuff — broader net than the hybrids above
+  const debuffApplyingHeavy=[...heavy,...guards].filter(e=>appliesDebuff(e)&&!hasEntryPassive(e))
+    .sort((a,b)=>{
+      const aMatch=cardDebuffTypes(a).includes(dominantType)?1:0, bMatch=cardDebuffTypes(b).includes(dominantType)?1:0;
+      if(aMatch!==bMatch)return bMatch-aMatch;
+      return (a.power||0)-(b.power||0);
+    });
 
   // ── Endurance Wall buckets ──────────────────────────────────────
   // Durable SSRs (Endurance / Life Flip / Survivor's Burst) that survive an extra
@@ -1722,21 +1826,26 @@ function autoAssignTeams(strategy){
     pad(t4,excessGuards,heavyAll,fillers,allDebuff);
 
   } else if(strategy===3){
-    // T1: Endurance wall — guards + regular heavy (NO entry SSRs — wasted passive)
-    t1=pick(primaryGuards,6);
+    // T1: Endurance wall — one guard leads the wall; the second is HELD BACK for T3 so
+    // your main hitters aren't landing completely unprotected once the wall falls.
+    t1=pick(primaryGuards,1);
     pad(t1,wallFiller,fillers); // wallFiller = midHeavy (no entry passives)
     // T2: Debuffs + entry passive SSRs (their passive fires from reinforcement)
     t2=pick(allDebuff,4);
     pad(t2,entrySSRs,fillers);
-    // T3: Main hitters
+    // T3: Main hitters — the reserved guard rides with them
+    t3=pick(primaryGuards,1);
     pad(t3,heavyDesc,entrySSRs,fillers,allDebuff);
     // T4: Remaining
     pad(t4,excessGuards,heavyAll,fillers,allDebuff);
 
   } else if(strategy===4){
-    // T1: Bait — weakest non-entry SSRs + low fillers (entry SSRs too valuable to sacrifice)
-    t1=pick(baitCards,2); // baitCards = midHeavy (no entry passives)
-    pad(t1,fillers);
+    // T1: Bait — prefer cards that apply a debuff on the way out (any type: poison,
+    // curse, stun, sleep — whichever the roster favors) over generic weak SSRs. A
+    // Guard+Debuff hybrid is the best possible bait: it can absorb a hit AND debuff
+    // in the same breath. Falls back to plain weak SSRs if no debuff-applying ones exist.
+    t1=pick(guardDebuffHybrids,2);
+    pad(t1,dominantTypePool,debuffApplyingHeavy,baitCards,fillers);
     // T2: Stun+Sleep + entry SSRs (their passives land on fatigued opponent)
     t2=pick(stunSleep,6);
     pad(t2,entrySSRs,poisonCurse,fillers);
@@ -1766,7 +1875,9 @@ function autoAssignTeams(strategy){
     // T2: Best debuffers + entry SSRs + top SSRs
     t2=pick(allDebuff,4);
     pad(t2,entrySSRs,heavyDesc,fillers);
-    // T3: Main hitters
+    // T3: Main hitters — a 3rd+ guard (if the roster has one) rides with them since
+    // both primary guards are already spent holding T1
+    t3=pick(excessGuards,1);
     pad(t3,heavyDesc,entrySSRs,fillers,allDebuff);
     // T4: Remaining — excess guards protect T4
     pad(t4,excessGuards,heavyAll,fillers,allDebuff,poisonCurse,stunSleep);
@@ -1805,15 +1916,36 @@ function autoAssignTeams(strategy){
     pad(t2,dreamHuntCarries);
     pad(t2,sleepEntrySSRs);
     pad(t2,heavyDesc);
-    // T3: More Dream Hunt + Sleep Entry pairing, spaced behind a guard
+    // T3: More Dream Hunt + Sleep Entry pairing, spaced behind a guard. The 2nd primary
+    // guard (unused since T2 only took 1) protects this wave before falling back to excess.
     t3=pick(dreamHuntCarries,2);
-    pad(t3,sleepEntrySSRs,excessGuards,heavyAll,fillers);
+    pad(t3,primaryGuards,sleepEntrySSRs,excessGuards,heavyAll,fillers);
     // T4: Remaining — leftover sleep fodder + heavy cleanup
     pad(t4,sleepFodderLeveled,heavyAll,fillers,allDebuff);
+
+  } else if(strategy===9){
+    // DEBUFF-GUARD LAYER — proven from real match data. Two ideas most other strategies
+    // treat separately, run together here: (1) disposable early cards apply whatever
+    // debuff type the roster actually favors — poison, curse, stun, or sleep, not
+    // specifically curse — instead of dying for nothing, and (2) big Guards ride
+    // ALONGSIDE big Carries in the SAME wave, not in a separate guard-only team ahead of
+    // them. The guard is always live protecting whichever carry is actually swinging.
+    // T1: Smart bait — Guard+Debuff hybrids first (tank AND debuff at once), then any
+    // low-power debuff-applying SSR, then generic R/SR debuff fodder.
+    t1=pick(guardDebuffHybrids,2);
+    pad(t1,dominantTypePool,debuffApplyingHeavy,poisonCurse,stunSleep,fillers);
+    // T2: Best guard + best carries together — interleaved in one wave, not segregated.
+    t2=pick(primaryGuards,1);
+    pad(t2,heavyDesc,entrySSRs);
+    // T3: Second guard + next-best carries + more debuff pressure
+    t3=pick(primaryGuards,1);
+    pad(t3,heavyDesc,entrySSRs,allDebuff,excessGuards);
+    // T4: Remaining — excess guards protect whoever's left
+    pad(t4,excessGuards,heavyAll,fillers,allDebuff,poisonCurse,stunSleep);
   }
 
   // Sort each team: guards/carries first, Final Stand/Desperate last
-  teams=[sortTeam(t1),sortTeam(t2),sortTeam(t3),sortTeam(t4)];
+  teams=[t1,t2,t3,t4].map(t=>pairSleepBeforeDreamHunt(sortTeam(t)));
 
   // ── Option C: Fill-In-Order Guarantee ────────────────────────────
   // Arena requires teams to be filled in order — T1 must have cards before T2,
@@ -1856,14 +1988,14 @@ function autoAssignTeams(strategy){
       allTeams[i].push(card);
     }
     // Re-sort after any additions to maintain position order
-    allTeams[i]=sortTeam(allTeams[i]);
+    allTeams[i]=pairSleepBeforeDreamHunt(sortTeam(allTeams[i]));
   }
 
   // Pass 4: put any leftover overflow into T4 (true remainder)
   for(const card of overflow){
     if(allTeams[3].length<6)allTeams[3].push(card);
   }
-  allTeams[3]=sortTeam(allTeams[3]);
+  allTeams[3]=pairSleepBeforeDreamHunt(sortTeam(allTeams[3]));
 
   teams=allTeams;
 }
@@ -1871,7 +2003,7 @@ function autoAssignTeams(strategy){
 function autoAssignWithStrategy(){
   const sel=document.getElementById('strategy-select');
   const s=sel?parseInt(sel.value):1;
-  const names=['','Debuff First','Big Early','Wall First','Bait & Punish','Poison Stack','Guard First','Endurance Wall','Dream Hunt'];
+  const names=['','Debuff First','Big Early','Wall First','Bait & Punish','Poison Stack','Guard First','Endurance Wall','Dream Hunt','Debuff-Guard Layer'];
   autoAssignTeams(s);
   debounceSave();
   renderLineup();
@@ -2998,6 +3130,20 @@ function renderInvest(){
         cardFilter:e=>(gc(e.cardId)?.skills||[]).some(s=>s.toLowerCase().includes('curse assault')),boost:200});
     }
   }
+  if(recStrategy===9){
+    // Debuff-Guard Layer needs a leveled guard to interleave with carries
+    if(!hasLeveledGuard){
+      const existingGap=gaps.find(g=>g.id==='no_guard');
+      if(existingGap){existingGap.severity='critical';existingGap.boost=400;
+        existingGap.message=`Debuff-Guard Layer cannot work without a leveled Guard riding alongside your carries. This is the single most important investment for your chosen strategy.`;}
+    }
+    // And it needs SOME debuff-capable cards for T1 bait — any type counts
+    if(poisonCurseCards.length+stunSleepCards.length<2){
+      gaps.push({id:'low_any_debuff',severity:'minor',
+        message:`Debuff-Guard Layer wants at least a couple of debuff-capable cards (Poison, Curse, Stun, or Sleep — any type) for T1 bait so your sacrifices aren't wasted. You have ${poisonCurseCards.length+stunSleepCards.length}.`,
+        cardFilter:e=>{const p=(gc(e.cardId)?.passive||'').toLowerCase();return p.includes('poison')||p.includes('curse')||p.includes('stun')||p.includes('sleep');},boost:100});
+    }
+  }
 
   // Element vulnerability
   if(allSameElement&&totalElemSSRs>=3){
@@ -3822,15 +3968,22 @@ function evaluateBestStrategy(){
   if(!roster.length)return null;
   const passive=e=>(gc(e.cardId)?.passive||'').toLowerCase();
   const rarity=e=>gc(e.cardId)?.r||'';
-  const isDebuffFodder=e=>rarity(e)!=='SSR'&&(passive(e).includes('poison')||passive(e).includes('curse')||passive(e).includes('stun')||passive(e).includes('sleep'));
-  const isPoisonCurse=e=>isDebuffFodder(e)&&(passive(e).includes('poison')||passive(e).includes('curse'));
+  const skillsOf=e=>(gc(e.cardId)?.skills||[]).map(s=>s.toLowerCase());
+  const CURSE_SKILLS=['curse assault','curse attack','earth curse','fire curse','vengeance curse','water curse'];
+  const isCurseSkill=e=>CURSE_SKILLS.some(s=>skillsOf(e).some(sk=>sk.includes(s)));
+  const isDebuffFodder=e=>rarity(e)!=='SSR'&&(passive(e).includes('poison')||passive(e).includes('curse')||passive(e).includes('stun')||passive(e).includes('sleep')||isCurseSkill(e));
+  const isPoisonCurse=e=>isDebuffFodder(e)&&(passive(e).includes('poison')||passive(e).includes('curse')||isCurseSkill(e));
   const isStunSleep=e=>isDebuffFodder(e)&&(passive(e).includes('stun')||passive(e).includes('sleep'));
   const isGuardSSR=e=>{const c=gc(e.cardId);if(!c||c.r!=='SSR')return false;return GUARD_SKILLS.some(g=>[...(c.skills||[]).map(s=>s.toLowerCase()),passive(e)].join(' ').includes(g));};
   const isHeavy=e=>{const c=gc(e.cardId);return c?.r==='SSR'&&!isGuardSSR(e);};
+  // A Guard that ALSO applies a debuff (poison/curse/stun/sleep, any type) — the "tank
+  // and debuff at once" card that makes Strategy 9 (Debuff-Guard Layer) hit hardest.
+  const isGuardDebuffHybrid=e=>isGuardSSR(e)&&(passive(e).includes('poison')||passive(e).includes('curse')||passive(e).includes('stun')||passive(e).includes('sleep')||isCurseSkill(e));
 
   const pcCount=roster.filter(isPoisonCurse).length;
   const ssCount=roster.filter(isStunSleep).length;
   const guardCount=roster.filter(isGuardSSR).length;
+  const guardDebuffHybridCount=roster.filter(isGuardDebuffHybrid).length;
   const heavyCount=roster.filter(isHeavy).length;
   const heavy=roster.filter(isHeavy).sort((a,b)=>(b.power||0)-(a.power||0));
   const topPower=heavy[0]?.power||0;
@@ -3942,10 +4095,21 @@ function evaluateBestStrategy(){
   if(sleepFodderCount>=2)scores[8]+=8;
   if(sleepEntryCount>=1&&dreamHuntCount>=1)scores[8]+=15; // both halves of the combo = full strategy
 
+  // S9 — Debuff-Guard Layer: needs multiple guards (ideally hybrid debuff-appliers) AND
+  // enough heavy carries to interleave with them, plus a real debuff pool for T1 bait.
+  scores[9]=20;
+  if(guardCount>=2)scores[9]+=15;
+  if(guardDebuffHybridCount>=1)scores[9]+=20; // the signature combo — tank+debuff in one card
+  if(guardDebuffHybridCount>=2)scores[9]+=15;
+  if(guardWellLeveled)scores[9]+=15;
+  if(heavyCount>=4)scores[9]+=10; // enough carries to pair with guards wave after wave
+  if(pcCount+ssCount>=3)scores[9]+=8; // any debuff type counts — bait fodder for T1
+  if(topPower>3000000)scores[9]+=7;
+
   const best=Object.entries(scores).sort((a,b)=>b[1]-a[1])[0];
   const top3=Object.entries(scores).sort((a,b)=>b[1]-a[1]).slice(0,3);
 
-  const names={1:'Debuff First',2:'Big Early',3:'Wall First',4:'Bait & Punish',5:'Poison Stack',6:'Guard First',7:'Endurance Wall',8:'Dream Hunt'};
+  const names={1:'Debuff First',2:'Big Early',3:'Wall First',4:'Bait & Punish',5:'Poison Stack',6:'Guard First',7:'Endurance Wall',8:'Dream Hunt',9:'Debuff-Guard Layer'};
   const reasons={
     1:`Balanced debuff roster (${pcCount} poison/curse, ${ssCount} stun/sleep) with ${heavyCount} SSR hitters. Classic setup for most matchups.`,
     2:`Shion at ${fmtP(topPower)} is dominant. Send carries early while debuffs are fresh — maximise damage before the enemy recovers. Note: leveling Alan to 100+ first would make Guard First viable as an alternative.`,
@@ -3955,6 +4119,7 @@ function evaluateBestStrategy(){
     6:`With ${guardCount} guard(s) and Alan at Lv${guardMaxLv}, leading with guards buys time for your carries. Becomes stronger once Alan reaches Lv 100.`,
     7:`You have ${durableCount} durable SSR(s) (Endurance / Life Flip / Survivor's Burst)${hasAttackAllDurable?', including an Attack All card':''}. Open with these as a wall to soak the opponent's early debuffs and alpha strike, then drop your carries once their opening is spent. Durable openers outlast the enemy's first wave instead of feeding death-passive triggers.`,
     8:`You have ${sleepEntryCount} Sleep Entry SSR(s) and ${dreamHuntCount} Dream Hunt carrie(s). Sleep the opponent's big cards on reinforcement entry, then hit the sleeping target for 6x with Dream Hunt. Keep sleep fodder leveled so it survives to sleep their carries — not their filler.`,
+    9:`You have ${guardDebuffHybridCount} Guard card(s) that also apply a debuff and ${guardCount} guard(s) total — enough to interleave a live guard alongside your carries wave after wave, instead of front-loading all your guards into one team. Your ${pcCount+ssCount} debuff-capable card(s) mean your T1 bait can weaken the enemy even while dying.`,
   };
 
   return{best:parseInt(best[0]),bestName:names[best[0]],reason:reasons[best[0]],top3:top3.map(([s,sc])=>({s:parseInt(s),name:names[s],score:sc})),scores,evaluatedAt:new Date().toISOString()};
