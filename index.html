@@ -1266,6 +1266,9 @@ const BASE_CARDS=[
 {id:233,name:"Evening Breeze Mio Susuhara",r:"SSR",type:"Desperate",tier:"C",atk:"S",elem:"Fire",passive:"Slow Entry",skills:["Life Flip","Desperate Strike","Time Strike","Attack Two"],unique:"Mapmaker",house:"Dionysia"},
 {id:234,name:"Viridescent Peridot Shohei Haizono",r:"SSR",type:"Vengeance",tier:"",atk:"P",elem:"Fire",passive:"Stun Revenge++",skills:["Life Flip","Vengeance Strike","Power Attack","Attack All"],unique:"The Accomplice's Road",house:"Vagastrom"},
 {id:235,name:"Mirrored Wish Lucas Errant",r:"SSR",type:"Survivor",tier:"",atk:"S",elem:"Grass",passive:"Endurance",skills:["Earth Quicken","Survivor's Burst","Power Attack","Attack Two"],unique:"Substitute Cowherd",house:"Frostheim"},
+{id:236,name:"Darkwick Chic Jiro Kirisaki",r:"SR",type:"Desperate",tier:"",atk:"S",elem:"Grass",passive:"Curse Revenge",skills:["Desperate Strike","Time Strike","Reckless Attack"],unique:"Mandatory Dose",house:"Mortkranken"},
+{id:237,name:"Darkwick Chic Towa Otonashi",r:"SR",type:"General",tier:"",atk:"P",elem:"Water",passive:"Curse Revenge",skills:["Power Attack","P DEF Break","Reckless Attack"],unique:"Language Of Love And Flowers",house:"Jabberwock"},
+{id:238,name:"Casual Style Jiro Kirisaki",r:"R",type:"Curse",tier:"",atk:"P",elem:"Fire",passive:"Curse Entry",skills:["Curse Assault","Power Attack","Reckless Attack"],unique:"Under The Knife",house:""},
 {id:206,name:"Otherworldly Reaper Rui Mizuki",r:"SSR",type:"Vengeance",tier:"B",atk:"P",elem:"Grass",passive:"Auto Curse",skills:["Curse Assault","Vengeance Strike","Power Attack","Attack"],unique:"I'll Be Waiting For You",house:"Obscuary"},
 {id:'sr1',name:"Darkwick Chic Jo Kongoza",r:"SR",type:"P.Attacker",tier:"",atk:"P",elem:"Fire",passive:"Sleep Revenge+",skills:["Life Flip","Vengeance Strike","Attack All"],unique:"",house:"Sinostra"},
 {id:'sr2',name:"Darkwick Chic Shion Genkai",r:"SR",type:"S.Attacker",tier:"",atk:"S",elem:"Grass",passive:"Auto S ATK Boost",skills:["Furious Strike","Unleash Fury","Attack All"],unique:"Perilous Act",house:"Dionysia"},
@@ -1321,55 +1324,34 @@ const BASE_CARDS=[
 // DEFAULT ROSTER — your 49 cards, verified cardIds & powers
 // ════════════════════════════════════════════════
 const DEFAULT_ROSTER=[
-{uid:1, cardId:173,power:8426873,lv:200,awk:4,pot:63.0,set:"Celestial ×4",link:"on",roleOverride:"",stats:{speed:259,hp:1900000,atk:2200000,patk:1400000,pdef:994000,satk:980000,sdef:987000,cosmic:4.0},audit:"INT gem on Perfume → swap to P.ATK. Cosmic Bond inactive (2/5)."},
-{uid:2, cardId:43, power:3095204,lv:150,awk:4,pot:45.5,set:"Legend ×3+Celestial ×1",link:"on",roleOverride:"",stats:{},audit:"In progress → target Lv 200. Fury kit — P.Attacker."},
-{uid:3, cardId:206,power:436861, lv:25, awk:4,pot:3.7, set:"Shadow+Fable+Legend ×2",link:"on",roleOverride:"",stats:{},audit:"Curse Assault + Vengeance Strike — invest after Alan."},
-{uid:4, cardId:138,power:202354, lv:75, awk:4,pot:10.2,set:"Shadow+Phantom",link:"off",roleOverride:"",stats:{},audit:"Dream Hunt + Sleep Entry. Future Carry-type. Activate link bonus."},
-{uid:5, cardId:90, power:183506, lv:64, awk:4,pot:2.4, set:"Shadow+Legend",link:"off",roleOverride:"",stats:{},audit:"YOUR ONLY GUARD — Guard Allies + Curse Assault. #3 investment priority after Romeo."},
-{uid:6, cardId:13, power:113998, lv:50, awk:4,pot:0.1, set:"Shadow",link:"on",roleOverride:"",stats:{},audit:"Curse Assault + Attack All — Carry-type hybrid debuffer."},
-{uid:7, cardId:25, power:106341, lv:50, awk:4,pot:0.0, set:"Shadow",link:"off",roleOverride:"",stats:{},audit:"Auto Fury passive — secondary damage dealer."},
-{uid:8, cardId:1,  power:72319,  lv:2,  awk:4,pot:0.0, set:"Shadow",link:"on",roleOverride:"",stats:{},audit:"Icebound Tyrant Jin — Tier C. Low priority."},
-{uid:9, cardId:11, power:53595,  lv:2,  awk:4,pot:0.0, set:"Shadow+Fable",link:"off",roleOverride:"",stats:{},audit:"Notorious Visionary Taiga — Tier C. Low priority."},
-{uid:10,cardId:7,  power:49089,  lv:2,  awk:4,pot:0.0, set:"Shadow",link:"off",roleOverride:"",stats:{},audit:"Delinquent Chill Shohei — Reckless Power Attack. Sweeper-type."},
-{uid:11,cardId:36, power:48706,  lv:1,  awk:4,pot:0.0, set:"Shadow",link:"off",roleOverride:"",stats:{},audit:"Lawful Plunder Ritsu — Guard Allies! Second Guard option."},
-{uid:12,cardId:'sr1', power:65587,lv:25,awk:4,pot:0.0,set:"Shadow",link:"on",roleOverride:"",stats:{},audit:"Sleep Revenge+ · Attack All."},
-{uid:13,cardId:'sr10',power:63130,lv:25,awk:3,pot:0.0,set:"Shadow",link:"on",roleOverride:"",stats:{},audit:"Charge Up Entry."},
-{uid:14,cardId:'sr15',power:55779,lv:25,awk:2,pot:0.0,set:"Shadow",link:"on",roleOverride:"",stats:{},audit:"Curse Revenge passive."},
-{uid:15,cardId:'sr6', power:54010,lv:25,awk:1,pot:0.0,set:"Shadow",link:"on",roleOverride:"",stats:{},audit:"Stun Revenge+ · Curse Assault."},
-{uid:16,cardId:'sr11',power:50917,lv:2, awk:4,pot:0.0,set:"Shadow",link:"on",roleOverride:"",stats:{},audit:"Sleep Revenge+ · Reckless Power Attack."},
-{uid:17,cardId:'sr19',power:45909,lv:25,awk:2,pot:0.0,set:"Shadow",link:"off",roleOverride:"",stats:{},audit:"DC Leo — filler."},
-{uid:18,cardId:'sr5', power:44414,lv:1, awk:2,pot:0.0,set:"Shadow",link:"on",roleOverride:"",stats:{},audit:"Poison Revenge · Attack All."},
-{uid:19,cardId:'sr14',power:40378,lv:1, awk:2,pot:0.0,set:"Shadow",link:"on",roleOverride:"",stats:{},audit:"Guard Entry passive."},
-{uid:20,cardId:'sr20',power:37874,lv:1, awk:1,pot:0.0,set:"Shadow",link:"on",roleOverride:"",stats:{},audit:"Sleep Revenge+."},
-{uid:21,cardId:'sr2', power:37873,lv:1, awk:1,pot:0.0,set:"Shadow",link:"on",roleOverride:"",stats:{},audit:"Auto S ATK Boost · Attack All."},
-{uid:22,cardId:'sr23',power:37169,lv:1, awk:1,pot:0.0,set:"Shadow",link:"on",roleOverride:"",stats:{},audit:"Guard Entry passive."},
-{uid:23,cardId:'sr21',power:34924,lv:1, awk:4,pot:0.0,set:"Shadow",link:"on",roleOverride:"",stats:{},audit:"Endurance filler."},
-{uid:24,cardId:'sr24',power:34606,lv:1, awk:1,pot:0.0,set:"Shadow",link:"on",roleOverride:"",stats:{},audit:"Curse Revenge."},
-{uid:25,cardId:'sr25',power:34604,lv:1, awk:4,pot:0.0,set:"Shadow",link:"on",roleOverride:"",stats:{},audit:"Curse Assault + Curse Attack."},
-{uid:26,cardId:'sr9', power:34604,lv:1, awk:4,pot:0.0,set:"Shadow",link:"on",roleOverride:"",stats:{},audit:"Unleash Fury."},
-{uid:27,cardId:'sr8', power:33961,lv:1, awk:4,pot:0.0,set:"Shadow",link:"on",roleOverride:"",stats:{},audit:"Guard Entry passive."},
-{uid:28,cardId:'sr17',power:32038,lv:1, awk:4,pot:0.0,set:"Shadow",link:"on",roleOverride:"",stats:{},audit:"Reckless Power Attack (AoE)."},
-{uid:29,cardId:'r7', power:56033,lv:25,awk:4,pot:0.0,set:"Steel",link:"on",roleOverride:"",stats:{},audit:"Poison Revenge · Attack All."},
-{uid:30,cardId:'r13',power:51127,lv:25,awk:4,pot:0.0,set:"Steel",link:"on",roleOverride:"",stats:{},audit:"Curse Revenge · Unleash Fury."},
-{uid:31,cardId:'r15',power:49149,lv:25,awk:4,pot:0.0,set:"Steel",link:"on",roleOverride:"",stats:{},audit:"Furious Entry filler."},
-{uid:32,cardId:'r21',power:48121,lv:25,awk:4,pot:0.0,set:"Steel",link:"on",roleOverride:"",stats:{},audit:"Poison Revenge."},
-{uid:33,cardId:'r1', power:47175,lv:25,awk:4,pot:0.0,set:"Steel",link:"on",roleOverride:"",stats:{},audit:"Stun Revenge."},
-{uid:34,cardId:'r2', power:47174,lv:25,awk:4,pot:0.0,set:"Steel",link:"on",roleOverride:"",stats:{},audit:"Poison Revenge."},
-{uid:35,cardId:'r11',power:47174,lv:25,awk:4,pot:0.0,set:"Steel",link:"on",roleOverride:"",stats:{},audit:"Poison Revenge."},
-{uid:36,cardId:'r9', power:47173,lv:25,awk:4,pot:0.0,set:"Steel",link:"on",roleOverride:"",stats:{},audit:"Auto Guard passive."},
-{uid:37,cardId:'r10',power:47173,lv:25,awk:4,pot:0.0,set:"Steel",link:"on",roleOverride:"",stats:{},audit:"Reckless Power Attack (AoE)."},
-{uid:38,cardId:'r12',power:47172,lv:25,awk:4,pot:0.0,set:"Steel",link:"on",roleOverride:"",stats:{},audit:"Sleep Revenge."},
-{uid:39,cardId:'r16',power:45260,lv:1, awk:4,pot:0.0,set:"Steel",link:"on",roleOverride:"",stats:{},audit:"Endurance filler."},
-{uid:40,cardId:'r20',power:44865,lv:3, awk:4,pot:0.0,set:"Steel",link:"on",roleOverride:"",stats:{},audit:"Stun Revenge."},
-{uid:41,cardId:'r17',power:40925,lv:2, awk:4,pot:0.0,set:"Steel",link:"on",roleOverride:"",stats:{},audit:"Auto Guard passive."},
-{uid:42,cardId:'r14',power:40666,lv:1, awk:4,pot:0.0,set:"Steel",link:"on",roleOverride:"",stats:{},audit:"Stun Revenge · Curse Assault."},
-{uid:43,cardId:'r6', power:40665,lv:1, awk:4,pot:0.0,set:"Steel",link:"on",roleOverride:"",stats:{},audit:"Curse Entry · Curse Assault."},
-{uid:44,cardId:'r4', power:40665,lv:1, awk:4,pot:0.0,set:"Steel",link:"on",roleOverride:"",stats:{},audit:"Sleep Revenge."},
-{uid:45,cardId:'r19',power:40664,lv:1, awk:4,pot:0.0,set:"Steel",link:"on",roleOverride:"",stats:{},audit:"Charge Up Entry filler."},
-{uid:46,cardId:'r5', power:40664,lv:1, awk:4,pot:0.0,set:"Steel",link:"on",roleOverride:"",stats:{},audit:"S ATK Break Revenge."},
-{uid:47,cardId:'r18',power:40663,lv:1, awk:4,pot:0.0,set:"Steel",link:"on",roleOverride:"",stats:{},audit:"Sleep Revenge · Curse Assault."},
-{uid:48,cardId:'r3', power:40662,lv:1, awk:4,pot:0.0,set:"Steel",link:"on",roleOverride:"",stats:{},audit:"Endurance filler."},
-{uid:49,cardId:'r8', power:37012,lv:1, awk:4,pot:0.0,set:"Steel",link:"on",roleOverride:"",stats:{},audit:"Curse Revenge · Curse Assault."},
+// Squad 1
+{uid:1, cardId:174,power:126000,lv:25,awk:0,pot:0.0,set:"",link:"off",roleOverride:"",stats:{},audit:"Squad 1, slot 1"},
+{uid:2, cardId:4,power:75000,lv:1,awk:0,pot:0.0,set:"",link:"off",roleOverride:"",stats:{},audit:"Squad 1, slot 2"},
+{uid:3, cardId:18,power:82000,lv:6,awk:0,pot:0.0,set:"",link:"off",roleOverride:"",stats:{},audit:"Squad 1, slot 3"},
+{uid:4, cardId:'sr14',power:52000,lv:1,awk:0,pot:0.0,set:"",link:"off",roleOverride:"",stats:{},audit:"Squad 1, slot 4"},
+{uid:5, cardId:25,power:159000,lv:50,awk:0,pot:0.0,set:"",link:"off",roleOverride:"",stats:{},audit:"Squad 1, slot 5"},
+{uid:6, cardId:43,power:5600000,lv:195,awk:0,pot:0.0,set:"",link:"off",roleOverride:"",stats:{},audit:"Squad 1, slot 6"},
+// Squad 2
+{uid:7, cardId:173,power:14000000,lv:200,awk:0,pot:0.0,set:"",link:"off",roleOverride:"",stats:{},audit:"Squad 2, slot 1"},
+{uid:8, cardId:224,power:6700000,lv:171,awk:0,pot:0.0,set:"",link:"off",roleOverride:"",stats:{},audit:"Squad 2, slot 2"},
+{uid:9, cardId:236,power:49000,lv:1,awk:0,pot:0.0,set:"",link:"off",roleOverride:"",stats:{},audit:"Squad 2, slot 3"},
+{uid:10, cardId:138,power:272000,lv:75,awk:0,pot:0.0,set:"",link:"off",roleOverride:"",stats:{},audit:"Squad 2, slot 4"},
+{uid:11, cardId:237,power:70000,lv:25,awk:0,pot:0.0,set:"",link:"off",roleOverride:"",stats:{},audit:"Squad 2, slot 5"},
+{uid:12, cardId:90,power:395000,lv:75,awk:0,pot:0.0,set:"",link:"off",roleOverride:"",stats:{},audit:"Squad 2, slot 6"},
+// Squad 3
+{uid:13, cardId:238,power:46000,lv:1,awk:0,pot:0.0,set:"",link:"off",roleOverride:"",stats:{},audit:"Squad 3, slot 1"},
+{uid:14, cardId:171,power:50000,lv:1,awk:0,pot:0.0,set:"",link:"off",roleOverride:"",stats:{},audit:"Squad 3, slot 2"},
+{uid:15, cardId:212,power:10000000,lv:200,awk:0,pot:0.0,set:"",link:"off",roleOverride:"",stats:{},audit:"Squad 3, slot 3"},
+{uid:16, cardId:134,power:7000000,lv:175,awk:0,pot:0.0,set:"",link:"off",roleOverride:"",stats:{},audit:"Squad 3, slot 4"},
+{uid:17, cardId:135,power:348000,lv:46,awk:0,pot:0.0,set:"",link:"off",roleOverride:"",stats:{},audit:"Squad 3, slot 5"},
+{uid:18, cardId:235,power:121000,lv:25,awk:0,pot:0.0,set:"",link:"off",roleOverride:"",stats:{},audit:"Squad 3, slot 6"},
+// Squad 4
+{uid:19, cardId:36,power:86000,lv:25,awk:0,pot:0.0,set:"",link:"off",roleOverride:"",stats:{},audit:"Squad 4, slot 1"},
+{uid:20, cardId:13,power:517000,lv:57,awk:0,pot:0.0,set:"",link:"off",roleOverride:"",stats:{},audit:"Squad 4, slot 2"},
+{uid:21, cardId:206,power:457000,lv:25,awk:0,pot:0.0,set:"",link:"off",roleOverride:"",stats:{},audit:"Squad 4, slot 3"},
+{uid:22, cardId:17,power:131000,lv:25,awk:0,pot:0.0,set:"",link:"off",roleOverride:"",stats:{},audit:"Squad 4, slot 4"},
+{uid:23, cardId:7,power:125000,lv:25,awk:0,pot:0.0,set:"",link:"off",roleOverride:"",stats:{},audit:"Squad 4, slot 5"},
+{uid:24, cardId:3,power:143000,lv:23,awk:0,pot:0.0,set:"",link:"off",roleOverride:"",stats:{},audit:"Squad 4, slot 6"},
 ];
 
 // ════════════════════════════════════════════════
@@ -1773,18 +1755,30 @@ function autoAssignTeams(strategy){
   const wallFiller  = midHeavy;
   const baitCards   = midHeavy.slice(0,2);
 
+  // A card only counts as legitimate T1 "bait" if its power is genuinely low relative
+  // to the roster's own best card — otherwise a heavily-invested Guard (e.g. a 6.7M
+  // Guard that also happens to have a debuff passive) could get treated as disposable
+  // fodder just because it structurally qualifies, wasting a real investment and
+  // blocking it from the combo-aware T2/T3 guard selection that should get first claim
+  // on it instead. Confirmed against real roster data: without this, a strategy's own
+  // "smart bait" pool would grab a 6.7M-power Guard purely because too few OTHER
+  // guard-debuff hybrids existed to outrank it on power alone.
+  const rosterMaxPower=Math.max(0,...sorted.map(e=>e.power||0));
+  const BAIT_POWER_CEILING=rosterMaxPower*0.15;
+  const isBaitEligible=e=>rosterMaxPower===0||(e.power||0)<=BAIT_POWER_CEILING;
+
   // ── Smart bait: cards that apply a debuff (any type) on the way out aren't wasted ──
   // sacrifices. Guard-type SSRs that ALSO apply a debuff (e.g. a Guard with Curse Assault)
   // are premium bait — they can tank a hit AND debuff at once. Cards matching the roster's
   // dominant type are sorted first so bait feeds the actual payoff instead of diluting it.
-  const guardDebuffHybrids=sorted.filter(e=>isGuard(e)&&appliesDebuff(e)&&!hasEntryPassive(e))
+  const guardDebuffHybrids=sorted.filter(e=>isGuard(e)&&appliesDebuff(e)&&!hasEntryPassive(e)&&isBaitEligible(e))
     .sort((a,b)=>{
       const aMatch=cardDebuffTypes(a).includes(dominantType)?1:0, bMatch=cardDebuffTypes(b).includes(dominantType)?1:0;
       if(aMatch!==bMatch)return bMatch-aMatch;
       return (a.power||0)-(b.power||0);
     });
   // Any low-power SSR (guard or heavy) that applies a debuff — broader net than the hybrids above
-  const debuffApplyingHeavy=[...heavy,...guards].filter(e=>appliesDebuff(e)&&!hasEntryPassive(e))
+  const debuffApplyingHeavy=[...heavy,...guards].filter(e=>appliesDebuff(e)&&!hasEntryPassive(e)&&isBaitEligible(e))
     .sort((a,b)=>{
       const aMatch=cardDebuffTypes(a).includes(dominantType)?1:0, bMatch=cardDebuffTypes(b).includes(dominantType)?1:0;
       if(aMatch!==bMatch)return bMatch-aMatch;
@@ -1843,6 +1837,130 @@ function autoAssignTeams(strategy){
       }
     }
     return team;
+  }
+
+  // ── Guard-to-Carry matching: element diversity + death-trigger combo ──────────────
+  // Two things confirmed from a real high-performing squad, scored together instead of
+  // handled separately:
+  // (1) Element diversity — a Guard sharing its Carry's element also shares its
+  //     elemental weakness (Water Carry deliberately paired with a Fire Guard).
+  // (2) Death-trigger combo — a Guard's Revenge passive can specifically set up a
+  //     teammate's payoff skill (Sleep Revenge++ on a Guard, paired with a Dream Hunt
+  //     carry in the SAME team: when the guard dies, it sleeps an enemy, and the Dream
+  //     Hunt carry can land a guaranteed 6x hit on that target. Curse Revenge -> Curse
+  //     Assault works the same way).
+  // Defined here (before the strategy dispatch) so any strategy can use it.
+  const elemOf=entry=>{const c=gc(entry.cardId);return c?c.elem:null;};
+  const firstUnused=pool=>pool.find(e=>!used.has(e.uid));
+  const REVENGE_COMBO={'sleep revenge':'dream hunt','curse revenge':'curse assault'};
+  const guardComboBonus=(guardEntry,carryEntry)=>{
+    const gCard=gc(guardEntry.cardId),cCard=carryEntry?gc(carryEntry.cardId):null;
+    if(!gCard||!cCard)return 0;
+    const gPassive=(gCard.passive||'').toLowerCase();
+    const cSkills=(cCard.skills||[]).map(s=>s.toLowerCase());
+    for(const[revenge,payoff]of Object.entries(REVENGE_COMBO)){
+      if(gPassive.includes(revenge)&&cSkills.some(s=>s.includes(payoff)))return 3;
+    }
+    return 0;
+  };
+  const pickBestGuardFor=(pool,carryEntry,n)=>{
+    const carryElem=carryEntry?elemOf(carryEntry):null;
+    const candidates=pool.filter(e=>!used.has(e.uid));
+    const scored=candidates.map(e=>{
+      let score=0;
+      if(carryElem&&elemOf(e)!==carryElem)score+=2; // element diversity
+      score+=guardComboBonus(e,carryEntry); // Revenge passive -> payoff skill combo
+      return{entry:e,score};
+    }).sort((a,b)=>b.score-a.score);
+    const out=[];
+    for(const s of scored){
+      if(out.length>=n)break;
+      out.push(s.entry);used.add(s.entry.uid);
+    }
+    return out;
+  };
+
+  // ── Elemental team-buff optimization ──────────────────────────────
+  // Skills like "Earth Quicken" / "Water Quicken" buff ALL allies of that element on the
+  // SAME team — confirmed from real card text (Mirrored Wish Lucas's Earth Quicken:
+  // "Targets all Earth Allies on the battlefield, reduces their active skill TU costs by
+  // 20%. Usable once per battle."). A card with this skill is wasted if its own team has
+  // no other same-element allies. Applied as a final pass after all 4 teams are built:
+  // for each elemental-buff card, if a DIFFERENT team has more same-element allies, swap
+  // it there for a low-power, mismatched-element filler — never touches Guards or other
+  // elemental-buff cards, so nothing strategy-critical gets displaced.
+  const ELEM_QUICKEN_SKILLS={'Water Quicken':'Water','Earth Quicken':'Grass','Fire Quicken':'Fire'};
+  const hasElementalBuff=entry=>{
+    const c=gc(entry.cardId);if(!c)return null;
+    for(const sk of(c.skills||[]))if(ELEM_QUICKEN_SKILLS[sk])return ELEM_QUICKEN_SKILLS[sk];
+    return null;
+  };
+  const countSameElement=(team,elemVal,excludeUid)=>team.filter(e=>e.uid!==excludeUid&&gc(e.cardId)?.elem===elemVal).length;
+  const isGuardEntry=e=>{const c=gc(e.cardId);if(!c)return false;return GUARD_SKILLS.some(g=>{const p=(c.passive||'').toLowerCase();const sk=(c.skills||[]).map(s=>s.toLowerCase());return[...sk,p].join(' ').includes(g);});};
+  function optimizeElementalBuffPlacement(allTeams){
+    for(let ti=0;ti<4;ti++){
+      for(const entry of[...allTeams[ti]]){
+        const buffElem=hasElementalBuff(entry);
+        if(!buffElem)continue;
+        const currentCount=countSameElement(allTeams[ti],buffElem,entry.uid);
+        let bestTi=ti,bestCount=currentCount;
+        for(let tj=0;tj<4;tj++){
+          if(tj===ti)continue;
+          const count=countSameElement(allTeams[tj],buffElem,-1);
+          if(count>bestCount){bestCount=count;bestTi=tj;}
+        }
+        if(bestTi===ti)continue; // no team offers more same-element company
+        const targetTeam=allTeams[bestTi];
+        const swapCandidates=targetTeam.filter(e=>!isGuardEntry(e)&&gc(e.cardId)?.elem!==buffElem&&!hasElementalBuff(e));
+        if(!swapCandidates.length)continue; // nothing safe to swap in the target team
+        const swapTarget=[...swapCandidates].sort((a,b)=>(a.power||0)-(b.power||0))[0]; // least-important card
+        const buffIdx=allTeams[ti].findIndex(e=>e.uid===entry.uid);
+        const swapIdx=targetTeam.findIndex(e=>e.uid===swapTarget.uid);
+        if(buffIdx<0||swapIdx<0)continue;
+        allTeams[ti][buffIdx]=swapTarget;
+        targetTeam[swapIdx]=entry;
+      }
+    }
+  }
+
+  // ── Guard-Revenge-combo proximity ──────────────────────────────
+  // Confirmed from real play: the payoff carry (e.g. a Dream Hunt carry) doesn't need to
+  // be in the Revenge-passive guard's EXACT team — but Sleep only lasts until the
+  // target's next turn, so the carry needs to be close enough in squad order that it's
+  // still realistically live when the guard dies and the Revenge effect triggers. "Close
+  // enough" = same team or the immediately adjacent one; a payoff carry stashed 2+ teams
+  // away essentially never gets to use it. RNG in turn order means this can't be
+  // guaranteed — only made likely, which is all a squad-order optimization can do.
+  function optimizeRevengeComboProximity(allTeams){
+    for(let ti=0;ti<4;ti++){
+      for(const guardEntry of[...allTeams[ti]]){
+        const gCard=gc(guardEntry.cardId);if(!gCard)continue;
+        const gPassive=(gCard.passive||'').toLowerCase();
+        let payoffSkill=null;
+        for(const[revenge,payoff]of Object.entries(REVENGE_COMBO)){
+          if(gPassive.includes(revenge)){payoffSkill=payoff;break;}
+        }
+        if(!payoffSkill)continue;
+        const hasPayoff=e=>{const c=gc(e.cardId);return c&&(c.skills||[]).some(s=>s.toLowerCase().includes(payoffSkill));};
+        // Already within 1 team? Nothing to do.
+        const alreadyNear=[ti-1,ti,ti+1].some(tj=>tj>=0&&tj<4&&allTeams[tj].some(hasPayoff));
+        if(alreadyNear)continue;
+        // Find the payoff carry wherever it is (2+ teams away) and pull it closer
+        for(let tj=0;tj<4;tj++){
+          if(Math.abs(tj-ti)<=1)continue;
+          const carryIdx=allTeams[tj].findIndex(e=>!isGuardEntry(e)&&hasPayoff(e));
+          if(carryIdx<0)continue;
+          const carryEntry=allTeams[tj][carryIdx];
+          const swapCandidates=allTeams[ti].filter(e=>e.uid!==guardEntry.uid&&!isGuardEntry(e)&&!hasPayoff(e));
+          if(!swapCandidates.length)break; // nothing safe to trade away in the guard's team
+          const swapTarget=[...swapCandidates].sort((a,b)=>(a.power||0)-(b.power||0))[0];
+          const guardTeamIdx=allTeams[ti].findIndex(e=>e.uid===swapTarget.uid);
+          allTeams[tj][carryIdx]=swapTarget;
+          allTeams[ti][guardTeamIdx]=carryEntry;
+          break;
+        }
+      }
+    }
   }
 
   let t1=[],t2=[],t3=[],t4=[];
@@ -1986,10 +2104,12 @@ function autoAssignTeams(strategy){
     t1=pick(guardDebuffHybrids,2);
     pad(t1,dominantTypePool,debuffApplyingHeavy,poisonCurse,stunSleep,fillers);
     // T2: Best guard + best carries together — interleaved in one wave, not segregated.
-    t2=pick(primaryGuards,1);
+    // Guard is scored for element diversity AND a death-trigger combo with the carry
+    // (e.g. Sleep Revenge guard paired with a Dream Hunt carry in the same team).
+    t2=pickBestGuardFor(primaryGuards,firstUnused(heavyDesc),1);
     pad(t2,heavyDesc,entrySSRs);
-    // T3: Second guard + next-best carries + more debuff pressure
-    t3=pick(primaryGuards,1);
+    // T3: Second guard + next-best carries + more debuff pressure — same scoring
+    t3=pickBestGuardFor(primaryGuards,firstUnused(heavyDesc),1);
     pad(t3,heavyDesc,entrySSRs,allDebuff,excessGuards);
     // T4: Remaining — excess guards protect whoever's left
     pad(t4,excessGuards,heavyAll,fillers,allDebuff,poisonCurse,stunSleep);
@@ -2047,6 +2167,14 @@ function autoAssignTeams(strategy){
     if(allTeams[3].length<6)allTeams[3].push(card);
   }
   allTeams[3]=pairSleepBeforeDreamHunt(sortTeam(allTeams[3]));
+
+  // Pass 5: relocate elemental team-buff cards (Earth/Water/Fire Quicken) to whichever
+  // team gives them the most same-element allies to buff, then re-sort those teams
+  optimizeElementalBuffPlacement(allTeams);
+  // Pass 6: pull a Revenge-passive guard's matching payoff carry (Sleep Revenge -> Dream
+  // Hunt, Curse Revenge -> Curse Assault) within 1 team if it's currently too far away
+  optimizeRevengeComboProximity(allTeams);
+  for(let i=0;i<4;i++)allTeams[i]=pairSleepBeforeDreamHunt(sortTeam(allTeams[i]));
 
   teams=allTeams;
 }
