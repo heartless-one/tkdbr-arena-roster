@@ -899,14 +899,27 @@ function statusAilment(card){
 // against, so Carry/Sub-Carry don't apply there at all — those views just show
 // Guard / Sweeper / Attacker.
 
-function optimalRole(card) {
-  if (!card) return 'Attacker';
+function optimalRoleTags(card) {
+  if (!card) return ['Attacker'];
   const p  = (card.passive||'').toLowerCase();
   const sk = card.skills.map(s=>s.toLowerCase());
   const all = [...sk, p].join(' ');
-  if (GUARD_SKILLS.some(g => all.includes(g))) return 'Guard';
+  const tags=[];
+  if (GUARD_SKILLS.some(g => all.includes(g))) tags.push('Guard');
   const {burst,aoe} = cardDamageProfile(card);
-  if (aoe>0 && aoe>=burst) return 'Sweeper';
+  if (aoe>0) tags.push('Sweeper');       // genuine multi-target capability
+  if (burst>0 && !tags.includes('Sweeper')) tags.push('Carry'); // only add Carry if not already covered by Sweeper's dominance, avoids double-counting a single generic hit as two separate things
+  if (!tags.length) tags.push('Attacker');
+  return tags;
+}
+// Single "primary" tag — used where exactly one label is needed (sorting, badge color).
+// Priority: Guard first (protection matters even on a card that can also hit hard),
+// then Sweeper, then Carry.
+function optimalRole(card) {
+  const tags = optimalRoleTags(card);
+  if (tags.includes('Guard')) return 'Guard';
+  if (tags.includes('Sweeper')) return 'Sweeper';
+  if (tags.includes('Carry')) return 'Carry';
   return 'Attacker';
 }
 
@@ -1266,57 +1279,55 @@ const BASE_CARDS=[
 {id:233,name:"Evening Breeze Mio Susuhara",r:"SSR",type:"Desperate",tier:"C",atk:"S",elem:"Fire",passive:"Slow Entry",skills:["Life Flip","Desperate Strike","Time Strike","Attack Two"],unique:"Mapmaker",house:"Dionysia"},
 {id:234,name:"Viridescent Peridot Shohei Haizono",r:"SSR",type:"Vengeance",tier:"",atk:"P",elem:"Fire",passive:"Stun Revenge++",skills:["Life Flip","Vengeance Strike","Power Attack","Attack All"],unique:"The Accomplice's Road",house:"Vagastrom"},
 {id:235,name:"Mirrored Wish Lucas Errant",r:"SSR",type:"Survivor",tier:"",atk:"S",elem:"Grass",passive:"Endurance",skills:["Earth Quicken","Survivor's Burst","Power Attack","Attack Two"],unique:"Substitute Cowherd",house:"Frostheim"},
-{id:236,name:"Darkwick Chic Jiro Kirisaki",r:"SR",type:"Desperate",tier:"",atk:"S",elem:"Grass",passive:"Curse Revenge",skills:["Desperate Strike","Time Strike","Reckless Attack"],unique:"Mandatory Dose",house:"Mortkranken"},
-{id:237,name:"Darkwick Chic Towa Otonashi",r:"SR",type:"General",tier:"",atk:"P",elem:"Water",passive:"Curse Revenge",skills:["Power Attack","P DEF Break","Reckless Attack"],unique:"Language Of Love And Flowers",house:"Jabberwock"},
-{id:238,name:"Casual Style Jiro Kirisaki",r:"R",type:"Curse",tier:"",atk:"P",elem:"Fire",passive:"Curse Entry",skills:["Curse Assault","Power Attack","Reckless Attack"],unique:"Under The Knife",house:""},
+{id:236,name:"Darkwick Chic Jiro Kirisaki",r:"SR",type:"Curse",tier:"",atk:"S",elem:"Grass",passive:"Curse Revenge",skills:["Desperate Strike","Time Strike","Reckless Attack"],unique:"Mandatory Dose",house:"Mortkranken"},
+{id:237,name:"Darkwick Chic Towa Otonashi",r:"SR",type:"Curse",tier:"",atk:"P",elem:"Water",passive:"Curse Revenge",skills:["Power Attack","P DEF Break","Reckless Attack"],unique:"Elusive",house:"Jabberwock"},
+{id:238,name:"Casual Style Jiro Kirisaki",r:"R",type:"Curse",tier:"",atk:"P",elem:"Fire",passive:"Curse Entry",skills:["Curse Assault","Power Attack","Reckless Attack"],unique:"Nausea",house:""},
+{id:239,name:"Darkwick Chic Mio Susuhara",r:"SR",type:"Charge",tier:"",atk:"S",elem:"Water",passive:"Charge Up Entry",skills:["Charged Strike","Charge Boost","Attack"],unique:"Campus Janitor",house:"Dionysia"},
 {id:206,name:"Otherworldly Reaper Rui Mizuki",r:"SSR",type:"Vengeance",tier:"B",atk:"P",elem:"Grass",passive:"Auto Curse",skills:["Curse Assault","Vengeance Strike","Power Attack","Attack"],unique:"I'll Be Waiting For You",house:"Obscuary"},
-{id:'sr1',name:"Darkwick Chic Jo Kongoza",r:"SR",type:"P.Attacker",tier:"",atk:"P",elem:"Fire",passive:"Sleep Revenge+",skills:["Life Flip","Vengeance Strike","Attack All"],unique:"",house:"Sinostra"},
-{id:'sr2',name:"Darkwick Chic Shion Genkai",r:"SR",type:"S.Attacker",tier:"",atk:"S",elem:"Grass",passive:"Auto S ATK Boost",skills:["Furious Strike","Unleash Fury","Attack All"],unique:"Perilous Act",house:"Dionysia"},
-{id:'sr5',name:"Darkwick Chic Lyca Colt",r:"SR",type:"P.Attacker",tier:"",atk:"P",elem:"Grass",passive:"Poison Revenge",skills:["Furious Strike","Unleash Fury","Attack All"],unique:"Like Humans Do",house:"Vagastrom"},
-{id:'sr6',name:"Darkwick Chic Edward Hart",r:"SR",type:"S.Attacker",tier:"",atk:"S",elem:"Water",passive:"Stun Revenge+",skills:["Curse Assault","Curse Attack","Reckless Attack"],unique:"Allegedly All-Powerful",house:"Obscuary"},
-{id:'sr7',name:"Darkwick Chic Shohei Haizono",r:"SR",type:"S.Attacker",tier:"",atk:"S",elem:"Fire",passive:"Quicken",skills:["Survivor's Burst","Time Strike","Attack Two"],unique:"New Dish",house:"Vagastrom"},
-{id:'sr8',name:"Darkwick Chic Haru Sagara",r:"SR",type:"P.Attacker",tier:"",atk:"P",elem:"Fire",passive:"Guard Entry",skills:["Power Attack","P ATK Break","Attack"],unique:"Let's Do This!",house:"Jabberwock"},
-{id:'sr9',name:"Darkwick Chic Alan Mido",r:"SR",type:"S.Attacker",tier:"",atk:"S",elem:"Fire",passive:"None",skills:["Life Flip","Furious Strike","Unleash Fury","Reckless Attack"],unique:"Intimidating",house:"Vagastrom"},
-{id:'sr10',name:"Darkwick Chic Yuri Isami",r:"SR",type:"S.Attacker",tier:"",atk:"S",elem:"Fire",passive:"Charge Up Entry",skills:["Charged Strike","Power Attack","Charge Up"],unique:"New Drug Trial",house:"Mortkranken"},
-{id:'sr11',name:"Darkwick Chic Romeo Lucci",r:"SR",type:"P.Attacker",tier:"",atk:"P",elem:"Fire",passive:"Sleep Revenge+",skills:["Reckless Power Attack","Power Attack","Attack"],unique:"Persistent Debt Collector",house:"Sinostra"},
-{id:'sr12',name:"Darkwick Chic Rui Mizuki",r:"SR",type:"S.Attacker",tier:"",atk:"S",elem:"Fire",passive:"None",skills:["Guard Breaker","Curse Attack","Reckless Attack"],unique:"Cheers!",house:"Obscuary"},
-{id:'sr13',name:"Darkwick Chic Kaito Fuji",r:"SR",type:"P.Attacker",tier:"",atk:"P",elem:"Fire",passive:"Stun Revenge+",skills:["Survivor's Burst","Quicken","Attack All"],unique:"Trembling Bow",house:"Frostheim"},
-{id:'sr14',name:"Darkwick Chic Zenji Kotodama",r:"SR",type:"S.Attacker",tier:"",atk:"S",elem:"Water",passive:"Guard Entry",skills:["Reckless Power Attack","S ATK Break","Attack"],unique:"Don't You Worry, My Dear!",house:"Hotarubi"},
-{id:'sr15',name:"Darkwick Chic Towa Otonashi",r:"SR",type:"P.Attacker",tier:"",atk:"P",elem:"Water",passive:"Curse Revenge",skills:["Power Attack","P DEF Break","Reckless Attack"],unique:"Elusive",house:"Jabberwock"},
-{id:'sr16',name:"Darkwick Chic Subaru Kagami",r:"SR",type:"P.Attacker",tier:"",atk:"P",elem:"Water",passive:"Sleep Revenge+",skills:["Vengeance Strike","Power Attack","Attack"],unique:"Tender Heart",house:"Hotarubi"},
-{id:'sr17',name:"Darkwick Chic Tohma Ishibashi",r:"SR",type:"P.Attacker",tier:"",atk:"P",elem:"Water",passive:"P ATK Boost Entry",skills:["Desperate Strike","Reckless Power Attack","Reckless Attack"],unique:"Aristocratic Manners",house:"Frostheim"},
-{id:'sr18',name:"Darkwick Chic Taiga Hoshibami",r:"SR",type:"S.Attacker",tier:"",atk:"S",elem:"Water",passive:"None",skills:["Desperate Strike","Furious Strike","Unleash Fury","Attack Two"],unique:"The Fuck Are You?",house:"Sinostra"},
-{id:'sr19',name:"Darkwick Chic Leo Kurosagi",r:"SR",type:"P.Attacker",tier:"",atk:"P",elem:"Water",passive:"None",skills:["Charged Strike","Power Attack","Charge Up","Attack Two"],unique:"Trap Laid",house:"Vagastrom"},
-{id:'sr20',name:"Darkwick Chic Ritsu Shinjo",r:"SR",type:"S.Attacker",tier:"",atk:"S",elem:"Grass",passive:"Sleep Revenge+",skills:["Survivor's Burst","Curse Attack","Attack Two"],unique:"Just As Planned",house:"Sinostra"},
-{id:'sr21',name:"Darkwick Chic Jin Kamurai",r:"SR",type:"P.Attacker",tier:"",atk:"P",elem:"Grass",passive:"Endurance",skills:["Zealous Strike","Life Flip","Reckless Attack"],unique:"Majesty",house:"Frostheim"},
-{id:'sr22',name:"Darkwick Chic Ren Shiranami",r:"SR",type:"S.Attacker",tier:"",atk:"S",elem:"Grass",passive:"Stun Revenge+",skills:["Final Stand","Power Attack","Attack"],unique:"Novice Keeper",house:"Mortkranken"},
-{id:'sr23',name:"Darkwick Chic Lucas Errant",r:"SR",type:"S.Attacker",tier:"",atk:"S",elem:"Grass",passive:"Guard Entry",skills:["Vengeance Strike","Quicken","Attack Two"],unique:"Tricks Are Useless",house:"Frostheim"},
-{id:'sr24',name:"Darkwick Chic Jiro Kirisaki",r:"SR",type:"S.Attacker",tier:"",atk:"S",elem:"Grass",passive:"Curse Revenge",skills:["Desperate Strike","Time Strike","Reckless Attack"],unique:"Mandatory Dose",house:"Mortkranken"},
-{id:'sr25',name:"Darkwick Chic Haku Kusanagi",r:"SR",type:"P.Attacker",tier:"",atk:"P",elem:"Grass",passive:"None",skills:["Curse Assault","Quicken","Curse Attack","Attack"],unique:"Optimism",house:"Hotarubi"},
+{id:'sr1',name:"Darkwick Chic Jo Kongoza",r:"SR",type:"Vengeance",tier:"",atk:"P",elem:"Fire",passive:"Sleep Revenge+",skills:["Life Flip","Vengance Strike","Attack All"],unique:"Crowd Charmer",house:"Sinostra"},
+{id:'sr2',name:"Darkwick Chic Shion Genkai",r:"SR",type:"Fury",tier:"",atk:"S",elem:"Grass",passive:"Auto S ATK Boost",skills:["Furious Strike","Unleash Fury","Attack All"],unique:"Perilous Act",house:"Dionysia"},
+{id:'sr5',name:"Darkwick Chic Lyca Colt",r:"SR",type:"Fury",tier:"",atk:"P",elem:"Grass",passive:"Poison Revenge",skills:["Furious Strike","Unleash Fury","Attack All"],unique:"Like Humans Do",house:"Vagastrom"},
+{id:'sr6',name:"Darkwick Chic Edward Hart",r:"SR",type:"General",tier:"",atk:"S",elem:"Water",passive:"Stun Revenge+",skills:["Curse Assault","Curse Attack","Reckless Attack"],unique:"Allegedly All-Powerful",house:"Obscuary"},
+{id:'sr7',name:"Darkwick Chic Shohei Haizono",r:"SR",type:"Survivor",tier:"",atk:"S",elem:"Fire",passive:"Quicken",skills:["Survivors Burst","Time Strike","Attack Two"],unique:"New Dish",house:"Vagastrom"},
+{id:'sr8',name:"Darkwick Chic Haru Sagara",r:"SR",type:"Guard",tier:"",atk:"P",elem:"Fire",passive:"Guard Entry",skills:["Power Attack","P ATK Break","Attack"],unique:"Let's Do This!",house:"Jabberwock"},
+{id:'sr9',name:"Darkwick Chic Alan Mido",r:"SR",type:"Fury",tier:"",atk:"S",elem:"Fire",passive:"",skills:["Life Flip","Furious Strike","Unleash Fury","Reckless Attack"],unique:"Intimidating",house:"Vagastrom"},
+{id:'sr10',name:"Darkwick Chic Yuri Isami",r:"SR",type:"Charge",tier:"",atk:"S",elem:"Fire",passive:"Charge Up Entry",skills:["Charged Strike","Power Attack","Charge Up"],unique:"New Drug Trial",house:"Mortkranken"},
+{id:'sr11',name:"Darkwick Chic Romeo Lucci",r:"SR",type:"General",tier:"",atk:"P",elem:"Fire",passive:"Sleep Revenge+",skills:["Reckless Power Attack","Power Attack","Attack"],unique:"Persistent Debt Collector",house:"Sinostra"},
+{id:'sr12',name:"Darkwick Chic Rui Mizuki",r:"SR",type:"Guard",tier:"",atk:"S",elem:"Fire",passive:"",skills:["Curse Assault","Guard Breaker","Curse Attack","Reckless Attack"],unique:"Cheers!",house:"Obscuary"},
+{id:'sr13',name:"Darkwick Chic Kaito Fuji",r:"SR",type:"Survivor",tier:"",atk:"P",elem:"Fire",passive:"Stun Revenge+",skills:["Survivors Burst","Quicken","Attack All"],unique:"Trembling Bow",house:"Frostheim"},
+{id:'sr14',name:"Darkwick Chic Zenji Kotodama",r:"SR",type:"Guard",tier:"",atk:"S",elem:"Water",passive:"Guard Entry",skills:["Reckless Power Attack","S ATK Break","Attack"],unique:"Don't You Worry My Dear!",house:"Hotarubi"},
+{id:'sr16',name:"Darkwick Chic Subaru Kagami",r:"SR",type:"Vengeance",tier:"",atk:"P",elem:"Water",passive:"Sleep Revenge+",skills:["Vengance Strike","Power Attack","Attack"],unique:"Tender Heart",house:"Hotarubi"},
+{id:'sr17',name:"Darkwick Chic Tohma Ishibashi",r:"SR",type:"Desperate",tier:"",atk:"P",elem:"Water",passive:"P ATK Boost Entry",skills:["Desperate Strike","Reckless Power Attack","Reckless Attack"],unique:"Aristocratic Manners",house:"Frostheim"},
+{id:'sr18',name:"Darkwick Chic Taiga Hoshibami",r:"SR",type:"Fury",tier:"",atk:"S",elem:"Water",passive:"",skills:["Desperate Strike","Furious Strike","Unleash Fury","Attack Two"],unique:"The Fuck Are You?",house:"Sinostra"},
+{id:'sr19',name:"Darkwick Chic Leo Kurosagi",r:"SR",type:"Charge",tier:"",atk:"P",elem:"Water",passive:"",skills:["Charged Strike","Power Attack","Charge Up","Attack Two"],unique:"Trap Laid",house:"Vagastrom"},
+{id:'sr20',name:"Darkwick Chic Ritsu Shinjo",r:"SR",type:"Survivor",tier:"",atk:"S",elem:"Grass",passive:"Sleep Revenge+",skills:["Survivors Burst","Curse Attack","Attack Two"],unique:"Just As Planned",house:"Sinostra"},
+{id:'sr21',name:"Darkwick Chic Jin Kamurai",r:"SR",type:"General",tier:"",atk:"P",elem:"Grass",passive:"Endurance",skills:["Zealous Strike","Life Flip","Reckless Attack"],unique:"Majesty",house:"Frostheim"},
+{id:'sr22',name:"Darkwick Chic Ren Shiranami",r:"SR",type:"Final Stand",tier:"",atk:"S",elem:"Grass",passive:"Stun Revenge+",skills:["Final Stand","Power Attack","Attack"],unique:"Novice Keeper",house:"Mortkranken"},
+{id:'sr23',name:"Darkwick Chic Lucas Errant",r:"SR",type:"Guard",tier:"",atk:"S",elem:"Grass",passive:"Guard Entry",skills:["Vengance Strike","Quicken","Attack Two"],unique:"Tricks Are Useless",house:"Frostheim"},
+{id:'sr25',name:"Darkwick Chic Haku Kusanagi",r:"SR",type:"General",tier:"",atk:"P",elem:"Grass",passive:"",skills:["Curse Assault","Quicken","Curse Attack","Attack"],unique:"Optimism",house:"Hotarubi"},
 {id:'sr26',name:"Darkwick Chic Elias Pratt",r:"SR",type:"S.Attacker",tier:"",atk:"S",elem:"Water",passive:"Charge Up Entry",skills:["Charged Strike","Charge Boost","Attack"],unique:"Campus Janitor",house:"Dionysia"},
-{id:'sr27',name:"Darkwick Chic Mio Susuhara",r:"SR",type:"P.Attacker",tier:"",atk:"P",elem:"Fire",passive:"Guard Entry",skills:["Full DEF Boost","Survivor's Burst","Attack Two"],unique:"In Constant Demand",house:"Dionysia"},
+{id:'sr27',name:"Darkwick Chic Mio Susuhara",r:"SR",type:"Guard",tier:"",atk:"P",elem:"Fire",passive:"Guard Entry",skills:["Full DEF Boost","Survivors Burst","Attack Two"],unique:"In Constant Demand",house:"Dionysia"},
 
-{id:'r1',name:"Casual Style Lyca Colt",r:"R",type:"S.Attacker",tier:"",atk:"S",elem:"Fire",passive:"Stun Revenge",skills:["Furious Strike","Unleash Fury","Attack Two"],unique:"Like Humans Do",house:""},
-{id:'r2',name:"Casual Style Edward Hart",r:"R",type:"S.Attacker",tier:"",atk:"S",elem:"Grass",passive:"Poison Revenge",skills:["Final Stand","Power Attack","Attack Two"],unique:"Allegedly All-Powerful",house:""},
-{id:'r3',name:"Casual Style Yuri Isami",r:"R",type:"S.Attacker",tier:"",atk:"S",elem:"Fire",passive:"Endurance",skills:["Zealous Strike","Life Flip","Reckless Attack"],unique:"New Drug Trial",house:""},
-{id:'r4',name:"Casual Style Lucas Errant",r:"R",type:"P.Attacker",tier:"",atk:"P",elem:"Fire",passive:"Sleep Revenge",skills:["Guard Breaker","P DEF Break","Reckless Attack"],unique:"Tricks Are Useless",house:""},
-{id:'r5',name:"Casual Style Zenji Kotodama",r:"R",type:"S.Attacker",tier:"",atk:"S",elem:"Fire",passive:"S ATK Break Revenge",skills:["Desperate Strike","Temporary Guard","Attack"],unique:"Don't You Worry, My Dear!",house:""},
-{id:'r6',name:"Casual Style Jiro Kirisaki",r:"R",type:"P.Attacker",tier:"",atk:"P",elem:"Fire",passive:"Curse Entry",skills:["Curse Assault","Power Attack","Reckless Attack"],unique:"Mandatory Dose",house:""},
-{id:'r7',name:"Casual Style Ren Shiranami",r:"R",type:"P.Attacker",tier:"",atk:"P",elem:"Fire",passive:"Poison Revenge",skills:["Survivor's Burst","Power Attack","Attack All"],unique:"Novice Keeper",house:""},
-{id:'r8',name:"Casual Style Rui Mizuki",r:"R",type:"P.Attacker",tier:"",atk:"P",elem:"Fire",passive:"Curse Revenge",skills:["Curse Assault","Curse Attack","Attack"],unique:"Cheers!",house:""},
-{id:'r9',name:"Casual Style Ritsu Shinjo",r:"R",type:"S.Attacker",tier:"",atk:"S",elem:"Water",passive:"Auto Guard",skills:["Life Flip","Curse Attack","Attack"],unique:"Just As Planned",house:""},
-{id:'r10',name:"Casual Style Tohma Ishibashi",r:"R",type:"P.Attacker",tier:"",atk:"P",elem:"Water",passive:"Endurance",skills:["Desperate Strike","Reckless Power Attack","Reckless Attack"],unique:"Aristocratic Manners",house:""},
-{id:'r11',name:"Casual Style Towa Otonashi",r:"R",type:"S.Attacker",tier:"",atk:"S",elem:"Water",passive:"Poison Revenge",skills:["Charged Strike","Charge Up","Reckless Attack"],unique:"Elusive",house:""},
-{id:'r12',name:"Casual Style Jin Kamurai",r:"R",type:"S.Attacker",tier:"",atk:"S",elem:"Water",passive:"Sleep Revenge",skills:["Survivor's Burst","Zealous Strike","Attack Two"],unique:"Majesty",house:""},
-{id:'r13',name:"Casual Style Romeo Lucci",r:"R",type:"P.Attacker",tier:"",atk:"P",elem:"Water",passive:"Curse Revenge",skills:["Furious Strike","Unleash Fury","Attack Two"],unique:"Persistent Debt Collector",house:""},
-{id:'r14',name:"Casual Style Haku Kusanagi",r:"R",type:"S.Attacker",tier:"",atk:"S",elem:"Water",passive:"Stun Revenge",skills:["Curse Assault","Curse Attack","Attack"],unique:"Optimism",house:""},
-{id:'r15',name:"Casual Style Alan Mido",r:"R",type:"P.Attacker",tier:"",atk:"P",elem:"Water",passive:"Furious Entry",skills:["Furious Strike","Power Attack","Reckless Attack"],unique:"Intimidating",house:""},
-{id:'r16',name:"Casual Style Kaito Fuji",r:"R",type:"S.Attacker",tier:"",atk:"S",elem:"Grass",passive:"Endurance",skills:["Life Flip","Survivor's Burst","Attack"],unique:"Trembling Bow",house:""},
-{id:'r17',name:"Casual Style Haru Sagara",r:"R",type:"P.Attacker",tier:"",atk:"P",elem:"Grass",passive:"Auto Guard",skills:["Vengeance Strike","P ATK Boost","Reckless Attack"],unique:"Let's Do This!",house:""},
-{id:'r18',name:"Casual Style Subaru Kagami",r:"R",type:"P.Attacker",tier:"",atk:"P",elem:"Grass",passive:"Sleep Revenge",skills:["Curse Assault","Curse Attack","Attack"],unique:"Tender Heart",house:""},
-{id:'r19',name:"Casual Style Leo Kurosagi",r:"R",type:"P.Attacker",tier:"",atk:"P",elem:"Grass",passive:"Charge Up Entry",skills:["Charged Strike","Power Attack","Reckless Attack"],unique:"Trap Laid",house:""},
-{id:'r20',name:"Casual Style Shohei Haizono",r:"R",type:"S.Attacker",tier:"",atk:"S",elem:"Grass",passive:"Stun Revenge",skills:["Guard Breaker","Power Attack","Attack"],unique:"New Dish",house:""},
-{id:'r21',name:"Casual Style Taiga Hoshibami",r:"R",type:"P.Attacker",tier:"",atk:"P",elem:"Grass",passive:"Poison Revenge",skills:["Furious Strike","Unleash Fury","Attack Two"],unique:"The Fuck Are You?",house:""},
+{id:'r1',name:"Casual Style Lyca Colt",r:"R",type:"Fury",tier:"",atk:"S",elem:"Fire",passive:"Stun Revenge",skills:["Furious Strike","Unleash Fury","Attack Two"],unique:"Wild Nose",house:""},
+{id:'r2',name:"Casual Style Edward Hart",r:"R",type:"Final Stand",tier:"",atk:"S",elem:"Grass",passive:"Poison Revenge",skills:["Final Stand","Power Attack","Attack Two"],unique:"Longevity",house:""},
+{id:'r3',name:"Casual Style Yuri Isami",r:"R",type:"General",tier:"",atk:"S",elem:"Fire",passive:"Endurance",skills:["Zealous Strike","Life Flip","Reckless Attack"],unique:"Pa Rum!",house:""},
+{id:'r4',name:"Casual Style Lucas Errant",r:"R",type:"Guard",tier:"",atk:"P",elem:"Fire",passive:"Sleep Revenge",skills:["Guard Breaker","P DEF Break","Reckless Attack"],unique:"Dual Wield",house:""},
+{id:'r5',name:"Casual Style Zenji Kotodama",r:"R",type:"Desperate",tier:"",atk:"S",elem:"Fire",passive:"S ATK Break Revenge",skills:["Desperate Strike","Temporary Guard","Attack"],unique:"Sophisticated Eye",house:""},
+{id:'r7',name:"Casual Style Ren Shiranami",r:"R",type:"Survivor",tier:"",atk:"P",elem:"Fire",passive:"Poison Revenge",skills:["Survivors Burst","Power Attack","Attack All"],unique:"The Worst",house:""},
+{id:'r8',name:"Casual Style Rui Mizuki",r:"R",type:"Curse",tier:"",atk:"P",elem:"Fire",passive:"Curse Revenge",skills:["Curse Assault","Curse Attack","Attack"],unique:"Good Listener",house:""},
+{id:'r9',name:"Casual Style Ritsu Shinjo",r:"R",type:"Guard",tier:"",atk:"S",elem:"Water",passive:"Auto Guard",skills:["Life Flip","Curse Attack","Attack"],unique:"By The Book",house:""},
+{id:'r10',name:"Casual Style Tohma Ishibashi",r:"R",type:"Desperate",tier:"",atk:"P",elem:"Water",passive:"Endurance",skills:["Desperate Strike","Reckless Power Attack","Reckless Attack"],unique:"King's Proxy",house:""},
+{id:'r11',name:"Casual Style Towa Otonashi",r:"R",type:"Charge",tier:"",atk:"S",elem:"Water",passive:"Poison Revenge",skills:["Charged Strike","Charge Up","Reckless Attack"],unique:"Music Note",house:""},
+{id:'r12',name:"Casual Style Jin Kamurai",r:"R",type:"Survivor",tier:"",atk:"S",elem:"Water",passive:"Sleep Revenge",skills:["Survivors Burst","Zealous Strike","Attack Two"],unique:"Shut-In King",house:""},
+{id:'r13',name:"Casual Style Romeo Lucci",r:"R",type:"Curse",tier:"",atk:"P",elem:"Water",passive:"Curse Revenge",skills:["Furious Strike","Unleash Fury","Attack Two"],unique:"Brand Name Only",house:""},
+{id:'r14',name:"Casual Style Haku Kusanagi",r:"R",type:"General",tier:"",atk:"S",elem:"Water",passive:"Stun Revenge",skills:["Curse Assault","Curse Attack","Attack"],unique:"Tact",house:""},
+{id:'r15',name:"Casual Style Alan Mido",r:"R",type:"Fury",tier:"",atk:"P",elem:"Water",passive:"Furious Entry",skills:["Furious Strike","Power Attack","Reckless Attack"],unique:"Stony Gaze",house:""},
+{id:'r16',name:"Casual Style Kaito Fuji",r:"R",type:"Survivor",tier:"",atk:"S",elem:"Grass",passive:"Endurance",skills:["Life Flip","Survivors Burst","Attack"],unique:"Run And Hide",house:""},
+{id:'r17',name:"Casual Style Haru Sagara",r:"R",type:"Guard",tier:"",atk:"P",elem:"Grass",passive:"Auto Guard",skills:["Vengance Strike","P ATK Boost","Reckless Attack"],unique:"High Spirits",house:""},
+{id:'r18',name:"Casual Style Subaru Kagami",r:"R",type:"General",tier:"",atk:"P",elem:"Grass",passive:"Sleep Revenge",skills:["Curse Assault","Curse Attack","Attack"],unique:"Quite Poise",house:""},
+{id:'r19',name:"Casual Style Leo Kurosagi",r:"R",type:"Charge",tier:"",atk:"P",elem:"Grass",passive:"Charge Up Entry",skills:["Charged Strike","Power Attack","Reckless Attack"],unique:"Fearless",house:""},
+{id:'r20',name:"Casual Style Shohei Haizono",r:"R",type:"Guard",tier:"",atk:"S",elem:"Grass",passive:"Stun Revenge",skills:["Guard Breaker","Power Attack","Attack"],unique:"Cakewalk",house:""},
+{id:'r21',name:"Casual Style Taiga Hoshibami",r:"R",type:"Fury",tier:"",atk:"P",elem:"Grass",passive:"Poison Revenge",skills:["Furious Strike","Unleash Fury","Attack Two"],unique:"Erratic Boss",house:""},
 
 ];
 
@@ -1527,11 +1538,10 @@ const SKILL_DESCS={
   'Full DEF Boost':'Raises own S.DEF and P.DEF — great for tanking.',
   'P ATK Boost':'Raises P.ATK of self or ally.',
   'S ATK Boost':'Raises S.ATK of self or ally.',
-  'Quicken':'Reduces skill TU costs by 20% — speeds up the whole turn cycle.',
+  'Quicken':'Reduces active skill TU costs by 20% — speeds up the whole turn cycle. Powerful with multi-hit setups.',
   'Charged Strike':'Consumes Charge for burst damage — requires Charge status.',
   'Charge Up':'Gain Charge status — enables Charged Strike and restores 5% HP.',
   'Charge Boost':'Gain Charge + boost a stat. Efficient buff + Charge combo.',
-  'Quicken':'Reduces active skill TU by 20%. Powerful with multi-hit setups.',
   'Earth Curse':'Curses all Earth/Grass element enemies simultaneously.',
   'Water Curse':'Curses all Water element enemies simultaneously.',
   'Fire Curse':'Curses all Fire element enemies simultaneously.',
@@ -1540,10 +1550,10 @@ const SKILL_DESCS={
 function skTag(sk){const s=(sk||'').toLowerCase();const g=CARRY_SKILLS.some(x=>s.includes(x));const a=SWEEP_SKILLS.some(x=>s.includes(x));const gd=GUARD_SKILLS.some(x=>s.includes(x));const desc=SKILL_DESCS[sk]||'';
   return`<span class="sk${g?' carry':a?' aoe':gd?' guard':''} tip" data-tip="${desc||sk}">${sk}</span>`;}
 function optBadge(card){
-  const r=optimalRole(card);
+  const tags=optimalRoleTags(card);
   const s=statusAilment(card);
   const roleTips={
-    'Sweeper':'Sweeper — Best AoE damage index (hits 3+ enemies). Great at clearing multiple enemies at once.',
+    'Sweeper':'Sweeper — Has genuine AoE damage (hits 3+ enemies). Great at clearing multiple enemies at once.',
     'Guard':'Guard — Has a Guard skill. Protects your team\'s Carry from taking damage.'
   };
   const statusTips={
@@ -1556,9 +1566,12 @@ function optBadge(card){
     Charge:'Charge status — restores 5% HP and unlocks Charge-consuming skills like Charged Strike.'
   };
   const roleIcon={'Sweeper':'◈','Guard':'⬡'};
-  // 'Attacker' is the unremarkable default (no special kit) and gets no badge — Carry/
-  // Sub-Carry only exist relative to a specific team, see the Lineup tab for those.
-  const roleHtml=r==='Guard'||r==='Sweeper'?`<span class="opt-${r==='Sweeper'?'Sweeper-type':r} tip" data-tip="${roleTips[r]}">${roleIcon[r]} ${r}</span>`:'';
+  // 'Attacker'/'Carry' get no badge here (unremarkable default / only meaningful within
+  // a specific Lineup team) — Guard and Sweeper are shown together when a card genuinely
+  // qualifies for both (e.g. a Guard whose active skill is also a real AoE hit).
+  const roleHtml=tags.filter(r=>r==='Guard'||r==='Sweeper').map(r=>
+    `<span class="opt-${r==='Sweeper'?'Sweeper-type':r} tip" data-tip="${roleTips[r]}">${roleIcon[r]} ${r}</span>`
+  ).join(' ');
   const statusHtml=s?`<span style="margin-left:6px" class="opt-debuff tip" data-tip="${statusTips[s]}">● ${s}</span>`:'';
   return roleHtml+statusHtml;
 }
@@ -2633,11 +2646,72 @@ SKILL_DAMAGE['Charged Strike']={mult:4,targets:2};
 // These are excluded from damage scoring below rather than guessed.
 const UNCONFIRMED_DAMAGE_SKILLS=['Blood Frenzy','Furious Strike','Curse Attack','Earth Curse','Water Curse','Fire Curse'];
 
+// ── Per-card skill damage overrides ──────────────────────────────
+// The SKILL_DAMAGE table above is name-keyed, but the SAME skill name genuinely has
+// different effects on different cards — confirmed repeatedly in this project: Curse
+// Assault (6x/1-target on one card, 3x/2-targets on another), Time Strike (up to 4x/2
+// vs up to 6x/1), Power Attack (1x to 2.5x depending on the card), and Survivor's Burst
+// (5x single-target on Mirrored Wish Lucas, but "2.5x to ALL enemies" on Distorted Heart
+// Taiga — a completely different skill in practice despite the identical name). Whenever
+// a card's specific skill text has been directly confirmed via screenshot, it goes here
+// and takes priority over the generic name-based guess. Keyed by card id -> skill name.
+const CARD_SKILL_OVERRIDES={
+  224:{"Survivor's Burst":{mult:2.5,targets:5}}, // Distorted Heart Taiga Hoshibami — confirmed via screenshot: "2.5x damage to all enemies"
+  // The following are from a full authoritative SR/R skill sheet — every multiplier and
+  // target count below is confirmed exact, not a generic name-based guess.
+  'sr1':{"Vengance Strike":{mult:3.0,targets:1},"Attack All":{mult:0.5,targets:5}},
+  'sr2':{"Furious Strike":{mult:2.0,targets:1},"Attack All":{mult:0.5,targets:5}},
+  239:{"Charged Strike":{mult:3.5,targets:2},"Attack":{mult:1.0,targets:1}},
+  'sr5':{"Furious Strike":{mult:4.0,targets:1},"Attack All":{mult:0.5,targets:5}},
+  'sr6':{"Curse Assault":{mult:4.0,targets:1},"Curse Attack":{mult:0.75,targets:1},"Reckless Attack":{mult:1.25,targets:1}},
+  'sr7':{"Survivors Burst":{mult:5.0,targets:1},"Time Strike":{mult:2.0,targets:1},"Attack Two":{mult:0.75,targets:2}},
+  'sr8':{"Power Attack":{mult:2.0,targets:1},"Attack":{mult:1.0,targets:1}},
+  'sr9':{"Furious Strike":{mult:4.0,targets:1},"Reckless Attack":{mult:1.0,targets:2}},
+  'sr10':{"Charged Strike":{mult:3.5,targets:2},"Power Attack":{mult:2.0,targets:1}},
+  'sr11':{"Reckless Power Attack":{mult:1.75,targets:2},"Power Attack":{mult:2.0,targets:1},"Attack":{mult:1.0,targets:1}},
+  'sr12':{"Curse Assault":{mult:4.0,targets:1},"Guard Breaker":{mult:5.0,targets:1},"Curse Attack":{mult:0.75,targets:1},"Reckless Attack":{mult:1.25,targets:1}},
+  'sr13':{"Survivors Burst":{mult:5.0,targets:1},"Attack All":{mult:0.5,targets:5}},
+  'sr14':{"Reckless Power Attack":{mult:2.5,targets:1},"Attack":{mult:1.0,targets:1}},
+  237:{"Power Attack":{mult:2.0,targets:1},"Reckless Attack":{mult:1.0,targets:2}},
+  'sr16':{"Vengance Strike":{mult:3.0,targets:1},"Power Attack":{mult:1.0,targets:5},"Attack":{mult:1.0,targets:1}},
+  'sr17':{"Desperate Strike":{mult:5.0,targets:1},"Reckless Power Attack":{mult:2.5,targets:1},"Reckless Attack":{mult:1.25,targets:1}},
+  'sr18':{"Desperate Strike":{mult:5.0,targets:1},"Furious Strike":{mult:4.0,targets:1},"Attack Two":{mult:0.75,targets:2}},
+  'sr19':{"Charged Strike":{mult:5.0,targets:1},"Power Attack":{mult:2.0,targets:1},"Attack Two":{mult:0.75,targets:2}},
+  'sr20':{"Survivors Burst":{mult:5.0,targets:1},"Curse Attack":{mult:0.75,targets:1},"Attack Two":{mult:0.75,targets:2}},
+  'sr21':{"Zealous Strike":{mult:2.5,targets:1},"Reckless Attack":{mult:1.25,targets:1}},
+  'sr22':{"Final Stand":{mult:5.0,targets:1},"Power Attack":{mult:1.75,targets:1},"Attack":{mult:1.0,targets:1}},
+  'sr23':{"Vengance Strike":{mult:3.0,targets:1},"Attack Two":{mult:0.75,targets:2}},
+  236:{"Desperate Strike":{mult:5.0,targets:1},"Time Strike":{mult:2.0,targets:1},"Reckless Attack":{mult:1.0,targets:2}},
+  'sr25':{"Curse Assault":{mult:4.0,targets:1},"Curse Attack":{mult:0.75,targets:1},"Attack":{mult:1.0,targets:1}},
+  'r1':{"Furious Strike":{mult:4.0,targets:1},"Attack Two":{mult:0.75,targets:2}},
+  'r2':{"Final Stand":{mult:5.0,targets:1},"Power Attack":{mult:1.25,targets:2},"Attack Two":{mult:0.75,targets:2}},
+  'r3':{"Zealous Strike":{mult:2.5,targets:1},"Reckless Attack":{mult:1.0,targets:2}},
+  'r4':{"Guard Breaker":{mult:5.0,targets:1},"Reckless Attack":{mult:1.25,targets:1}},
+  'r5':{"Desperate Strike":{mult:5.0,targets:1},"Attack":{mult:1.0,targets:1}},
+  238:{"Curse Assault":{mult:4.0,targets:1},"Power Attack":{mult:1.75,targets:1},"Reckless Attack":{mult:1.25,targets:1}},
+  'r7':{"Survivors Burst":{mult:5.0,targets:1},"Power Attack":{mult:1.75,targets:1},"Attack All":{mult:0.5,targets:5}},
+  'r8':{"Curse Assault":{mult:4.0,targets:1},"Curse Attack":{mult:0.75,targets:1},"Attack":{mult:1.0,targets:1}},
+  'r9':{"Curse Attack":{mult:0.75,targets:1},"Attack":{mult:1.0,targets:1}},
+  'r10':{"Desperate Strike":{mult:5.0,targets:1},"Reckless Power Attack":{mult:2.0,targets:1},"Reckless Attack":{mult:1.25,targets:1}},
+  'r11':{"Charged Strike":{mult:5.0,targets:1},"Reckless Attack":{mult:1.0,targets:2}},
+  'r12':{"Survivors Burst":{mult:5.0,targets:1},"Zealous Strike":{mult:2.5,targets:1},"Attack Two":{mult:0.75,targets:2}},
+  'r13':{"Furious Strike":{mult:4.0,targets:1},"Attack Two":{mult:0.75,targets:2}},
+  'r14':{"Curse Assault":{mult:4.0,targets:1},"Curse Attack":{mult:0.75,targets:1},"Attack":{mult:1.0,targets:1}},
+  'r15':{"Furious Strike":{mult:4.0,targets:1},"Power Attack":{mult:1.75,targets:1},"Reckless Attack":{mult:1.25,targets:1}},
+  'r16':{"Survivors Burst":{mult:5.0,targets:1},"Attack":{mult:1.0,targets:1}},
+  'r17':{"Vengance Strike":{mult:3.0,targets:1},"Reckless Attack":{mult:1.25,targets:1}},
+  'r18':{"Curse Assault":{mult:4.0,targets:1},"Curse Attack":{mult:0.75,targets:1},"Attack":{mult:1.0,targets:1}},
+  'r19':{"Charged Strike":{mult:5.0,targets:1},"Power Attack":{mult:1.75,targets:1},"Reckless Attack":{mult:1.25,targets:1}},
+  'r20':{"Guard Breaker":{mult:5.0,targets:1},"Power Attack":{mult:1.0,targets:5},"Attack":{mult:1.0,targets:1}},
+  'r21':{"Furious Strike":{mult:4.0,targets:1},"Attack Two":{mult:0.75,targets:2}},
+};
+
 function cardDamageProfile(card){
   if(!card)return{burst:0,aoe:0};
   let burst=0,aoe=0;
+  const overrides=CARD_SKILL_OVERRIDES[card.id]||{};
   (card.skills||[]).forEach(sk=>{
-    const d=SKILL_DAMAGE[sk];
+    const d=overrides[sk]||SKILL_DAMAGE[sk];
     if(!d)return;
     const burstVal=d.mult*Math.min(d.targets,2);
     const aoeVal=d.targets>=3?d.mult*d.targets:0;
@@ -2654,10 +2728,12 @@ function isGuardCardCheck(c){
   return GUARD_SKILLS.some(g=>{const p=(c.passive||'').toLowerCase();const sk=(c.skills||[]).map(s=>s.toLowerCase());return [...sk,p].join(' ').includes(g);});
 }
 // Collection Overview's Role category matches Roster/Card DB exactly — Guard/Sweeper/
-// Attacker only. Carry/Sub-Carry are Lineup-only concepts (see teamRole) since they only
-// mean anything relative to a specific team, not a card browsed in isolation.
+// Carry/Attacker, and a card can genuinely count toward more than one (a Guard whose
+// active skill is also a real AoE hit shows up under both). Carry/Sub-Carry as a formal
+// distinction only exists in Lineup (see teamRole), but "has real single-target burst"
+// is still worth surfacing here as a plain Carry tag.
 function getCollectionRole(c){
-  return optimalRole(c);
+  return optimalRoleTags(c);
 }
 
 // Strategy coverage — for each roster card, how many of the 9 auto-assign strategies
@@ -2688,7 +2764,8 @@ function renderRosterStatsPanel(){
     return counts;
   };
   const rarityCounts=countBy(c=>c.r);
-  const roleCounts=countBy(c=>getCollectionRole(c));
+  const roleCounts={};
+  withCards.forEach(x=>{getCollectionRole(x.c).forEach(tag=>{roleCounts[tag]=(roleCounts[tag]||0)+1;});});
   const statusCounts={};
   withCards.forEach(x=>{const s=statusAilment(x.c);if(s)statusCounts[s]=(statusCounts[s]||0)+1;});
   const elemCounts=countBy(c=>c.elem||'—');
@@ -2782,7 +2859,7 @@ function renderRosterList(){
   const filteredRoster=activeFilterCount?roster.filter(e=>{
     const c=gc(e.cardId);if(!c)return false;
     if(rosterStatFilters.rarity.size&&!rosterStatFilters.rarity.has(c.r))return false;
-    if(rosterStatFilters.role.size&&!rosterStatFilters.role.has(getCollectionRole(c)))return false;
+    if(rosterStatFilters.role.size&&!getCollectionRole(c).some(tag=>rosterStatFilters.role.has(tag)))return false;
     if(rosterStatFilters.status.size&&!rosterStatFilters.status.has(statusAilment(c)))return false;
     if(rosterStatFilters.elem.size&&!rosterStatFilters.elem.has(c.elem))return false;
     if(rosterStatFilters.atk.size&&!rosterStatFilters.atk.has(c.atk==='S'?'S.Attacker':'P.Attacker'))return false;
@@ -2820,10 +2897,10 @@ function renderRosterList(){
 
   el.innerHTML=filterBanner+coverageBanner+sortedFiltered.map(entry=>{
     const c=gc(entry.cardId);
-    const opt=c?optimalRole(c):null;
+    const roleTags=c?optimalRoleTags(c):['Attacker'];
     const status=c?statusAilment(c):null;
-    const optColor=opt==='Sweeper'?'var(--amber)':opt==='Guard'?'var(--green2)':'var(--text3)';
-    const optShort=opt||'—';
+    const roleColor=r=>r==='Sweeper'?'var(--amber)':r==='Guard'?'var(--green2)':r==='Carry'?'var(--blue2)':'var(--text3)';
+    const roleTagsHtml=roleTags.filter(r=>r!=='Attacker').map(r=>`<span style="font-family:'Cinzel',serif;font-size:10px;color:${roleColor(r)};font-weight:600">${r}</span>`).join('');
     const statusColorMap={Curse:'var(--purple2)',Poison:'var(--purple2)',Sleep:'var(--purple2)',Stun:'var(--purple2)',Block:'var(--purple2)',Rage:'var(--purple2)',Charge:'var(--purple2)'};
     const rc=rarColor[c?.r]||'var(--border)';
     const rb=rarBg[c?.r]||'transparent';
@@ -2842,7 +2919,7 @@ function renderRosterList(){
           <div style="font-weight:500;font-size:14px;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${c?c.name:'Unknown'}</div>
           <div style="display:flex;align-items:center;gap:6px;margin-top:2px;flex-wrap:wrap">
             ${c?atkSpan(c.atk):''}
-            <span style="font-family:'Cinzel',serif;font-size:10px;color:${optColor};font-weight:600">${optShort}</span>
+            ${roleTagsHtml||'<span style="font-family:\'Cinzel\',serif;font-size:10px;color:var(--text3);font-weight:600">—</span>'}
             ${status?`<span style="color:var(--border2);font-size:9px">│</span><span style="font-family:'Cinzel',serif;font-size:9px;color:${statusColorMap[status]};background:rgba(155,89,182,.1);border:1px solid rgba(155,89,182,.3);border-radius:10px;padding:1px 7px">${status}</span>`:''}
             <span style="font-size:10px;color:var(--text3);margin-left:2px">Lv ${entry.lv||1}</span>
             <span style="font-size:10px;color:var(--gold)">${stars}</span>
