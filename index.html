@@ -1628,13 +1628,15 @@ const BASE_CARDS=[
 const RAR_COLOR={SSR:'var(--gold)',SR:'var(--text2)',R:'var(--border2)'};
 const RAR_BG={SSR:'rgba(200,168,75,.08)',SR:'rgba(168,168,168,.06)',R:'rgba(100,100,100,.04)'};
 function cardThumb(c,size){
-  size=size||40;
+  size=size||56;
   const rc=RAR_COLOR[c?.r]||'var(--border)';
   const rb=RAR_BG[c?.r]||'transparent';
   const fontSize=Math.round(size*0.225);
   const fallback=`<div class="thumb-fallback" style="display:${c&&CARD_IMAGE[c.id]?'none':'flex'};position:absolute;top:0;left:0;width:${size}px;height:${size}px;border-radius:10px;border:1px solid ${rc};background:${rb};align-items:center;justify-content:center;font-family:'Cinzel',serif;font-size:${fontSize}px;color:${rc};text-align:center;line-height:1.2;box-shadow:0 1px 3px rgba(0,0,0,.2)">${c?.r||'?'}</div>`;
   const filename=c?CARD_IMAGE[c.id]:null;
-  const img=filename?`<img src="images/${filename}" loading="lazy" alt="${c.name}" style="width:${size}px;height:${size}px;border-radius:10px;object-fit:cover;border:1px solid ${rc};box-shadow:0 1px 3px rgba(0,0,0,.2);display:block" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">`:'';
+  // object-position biased toward the top — these are portrait character art, so a
+  // dead-center crop (the default) cuts off heads. ~18% down keeps the face in frame.
+  const img=filename?`<img src="images/${filename}" loading="lazy" alt="${c.name}" style="width:${size}px;height:${size}px;border-radius:10px;object-fit:cover;object-position:50% 18%;border:1px solid ${rc};box-shadow:0 1px 3px rgba(0,0,0,.2);display:block" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">`:'';
   return `<div style="position:relative;width:${size}px;height:${size}px;flex-shrink:0">${img}${fallback}</div>`;
 }
 
@@ -3462,7 +3464,7 @@ function renderRosterList(){
       <!-- COMPACT SUMMARY ROW — always visible, tap to expand -->
       <div onclick="toggleRosterCard(${entry.uid})" style="display:flex;align-items:center;gap:10px;padding:10px 12px;cursor:pointer;min-height:56px">
         <!-- Image slot — coloured by rarity now, swap for <img> later -->
-        ${cardThumb(c,40)}
+        ${cardThumb(c,56)}
         <!-- Name + role -->
         <div style="flex:1;min-width:0">
           <div style="font-weight:500;font-size:14px;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${c?c.name:'Unknown'}</div>
@@ -4750,7 +4752,7 @@ function renderDB(){
   document.getElementById('db-results').innerHTML=`<div style="font-size:11px;color:var(--text3);margin-bottom:9px;font-family:'Cinzel',serif">${cards.length} cards</div>`+
   cards.map(c=>`<div class="db-card">
     <div style="display:flex;align-items:flex-start;gap:8px;margin-bottom:5px">
-      ${cardThumb(c,36)}
+      ${cardThumb(c,56)}
       <div class="db-name" style="flex:1;font-weight:500;color:var(--text)">${c.name}${isCust(c.id)?'<span style="font-size:10px;color:var(--text3);margin-left:6px;font-family:Cinzel,serif;border:1px solid var(--border2);border-radius:3px;padding:1px 5px">new</span>':''}</div>
       ${isCust(c.id)?`<button class="btn btn-sm btn-danger" onclick="removeCustomCard('${c.id}')" style="min-height:28px;padding:3px 8px;font-size:9px">✕</button>`:''}
     </div>
