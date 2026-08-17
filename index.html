@@ -804,6 +804,15 @@ textarea{resize:vertical;min-height:60px;font-size:14px}
 </div>
 
 <!-- CUSTOM DB CARD MODAL -->
+<div class="modal-overlay" id="card-detail-modal">
+  <div class="modal" style="max-width:400px">
+    <div style="display:flex;justify-content:flex-end;margin-bottom:-8px">
+      <button onclick="document.getElementById('card-detail-modal').classList.remove('open')" style="background:none;border:none;color:var(--text3);cursor:pointer;font-size:18px;line-height:1;padding:4px 6px">✕</button>
+    </div>
+    <div id="card-detail-modal-body"></div>
+  </div>
+</div>
+
 <div class="modal-overlay" id="custom-modal">
   <div class="modal">
     <div class="modal-title">+ Add New Card to Database</div>
@@ -1626,6 +1635,30 @@ function _cardThumbBox(c,w,h){
 }
 function cardThumb(c,size){ size=size||56; return _cardThumbBox(c,size,size); }
 function cardThumbPortrait(c,w,h){ w=w||100; return _cardThumbBox(c,w,h||'100%'); }
+
+// Shows a card's full abilities (image, tags, passive, skills, unique) in a modal —
+// used from anywhere a card is referenced without navigating away (Invest tab pulls,
+// pull evaluator, etc.) so mobile users don't lose their place switching tabs.
+function showCardDetailModal(cardId){
+  const c=gc(cardId);
+  if(!c)return;
+  const body=document.getElementById('card-detail-modal-body');
+  if(!body)return;
+  body.innerHTML=`
+    <div style="display:flex;gap:12px;align-items:flex-start;margin-bottom:12px">
+      ${cardThumbPortrait(c,90,130)}
+      <div style="flex:1;min-width:0">
+        <div style="font-weight:600;font-size:16px;color:var(--text);margin-bottom:6px">${c.name}</div>
+        <div style="display:flex;gap:4px;flex-wrap:wrap">${rar(c.r)}${c.tier?tier(c.tier):''}${atkSpan(c.atk)}${elem(c.elem)}${house(c.house)}</div>
+        <div style="font-size:11px;color:var(--text3);margin-top:6px">${optBadge(c)}</div>
+      </div>
+    </div>
+    ${c.passive&&c.passive!=='None'?`<div style="font-size:12px;color:var(--text3);margin-bottom:8px">Passive: <span style="color:var(--text2)">${c.passive}</span></div>`:''}
+    <div style="margin-bottom:8px">${c.skills.map(sk=>skTag(sk,c.id)).join('')}</div>
+    ${c.unique?`<div><span style="font-family:'Cinzel',serif;font-size:10px;color:var(--gold2);letter-spacing:.05em">UNIQUE · </span><span style="font-size:12px;color:var(--gold2)">${c.unique}</span></div>`:''}
+  `;
+  document.getElementById('card-detail-modal').classList.add('open');
+}
 
 const DEFAULT_ROSTER=[
 // Squad 1
@@ -3793,7 +3826,7 @@ function evaluatePullCard(cardId){
     </div>
     <!-- Layout A: Single line card name (title + first name, no surname) + pills -->
     <div style="padding:10px 14px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap">
-      <div style="display:flex;align-items:center;gap:10px;min-width:0">
+      <div onclick="showCardDetailModal(${typeof cardId==='string'?`'${cardId}'`:cardId})" style="display:flex;align-items:center;gap:10px;min-width:0;cursor:pointer">
         ${cardThumb(c,40)}
         <div style="font-size:14px;font-weight:400;color:var(--text)">${cardTitle} ${charFirst}</div>
       </div>
@@ -4357,7 +4390,7 @@ function renderInvest(){
       <div style="display:flex;gap:10px;overflow-x:auto;padding-bottom:10px;scrollbar-width:thin;scrollbar-color:var(--border2) transparent;-webkit-overflow-scrolling:touch">
         ${pickCards.map((p,i)=>{
           const rc=roleColor[p.role]||'var(--text3)';
-          return`<div style="flex:0 0 160px;background:var(--bg2);border:1px solid var(--border);border-top:2px solid ${rc};border-radius:10px;padding:12px;display:flex;flex-direction:column;gap:7px">
+          return`<div onclick="showCardDetailModal(${typeof p.card.id==='string'?`'${p.card.id}'`:p.card.id})" style="flex:0 0 160px;background:var(--bg2);border:1px solid var(--border);border-top:2px solid ${rc};border-radius:10px;padding:12px;display:flex;flex-direction:column;gap:7px;cursor:pointer">
             <div style="display:flex;align-items:center;justify-content:space-between">
               <span style="font-family:'Cinzel',serif;font-size:18px;font-weight:900;color:var(--border2);line-height:1">${i+1}</span>
               <span style="font-family:'Cinzel',serif;font-size:9px;padding:2px 6px;border-radius:4px;border:1px solid ${rc};color:${rc}">${p.role}</span>
