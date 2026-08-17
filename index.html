@@ -1607,18 +1607,19 @@ const BASE_CARDS=[
 // one implementation instead of two that can drift apart.
 const RAR_COLOR={SSR:'var(--gold)',SR:'var(--text2)',R:'var(--border2)'};
 const RAR_BG={SSR:'rgba(200,168,75,.08)',SR:'rgba(168,168,168,.06)',R:'rgba(100,100,100,.04)'};
-function cardThumb(c,size){
-  size=size||56;
+function _cardThumbBox(c,w,h){
   const rc=RAR_COLOR[c?.r]||'var(--border)';
   const rb=RAR_BG[c?.r]||'transparent';
-  const fontSize=Math.round(size*0.225);
-  const fallback=`<div class="thumb-fallback" style="display:${c&&CARD_IMAGE[c.id]?'none':'flex'};position:absolute;top:0;left:0;width:${size}px;height:${size}px;border-radius:10px;border:1px solid ${rc};background:${rb};align-items:center;justify-content:center;font-family:'Cinzel',serif;font-size:${fontSize}px;color:${rc};text-align:center;line-height:1.2;box-shadow:0 1px 3px rgba(0,0,0,.2)">${c?.r||'?'}</div>`;
+  const fontSize=Math.round(Math.min(w,h)*0.225);
+  const fallback=`<div class="thumb-fallback" style="display:${c&&CARD_IMAGE[c.id]?'none':'flex'};position:absolute;top:0;left:0;width:${w}px;height:${h}px;border-radius:10px;border:1px solid ${rc};background:${rb};align-items:center;justify-content:center;font-family:'Cinzel',serif;font-size:${fontSize}px;color:${rc};text-align:center;line-height:1.2;box-shadow:0 1px 3px rgba(0,0,0,.2)">${c?.r||'?'}</div>`;
   const filename=c?CARD_IMAGE[c.id]:null;
   // object-position biased toward the top — these are portrait character art, so a
   // dead-center crop (the default) cuts off heads. ~18% down keeps the face in frame.
-  const img=filename?`<img src="images/${filename}" loading="lazy" alt="${c.name}" style="width:${size}px;height:${size}px;border-radius:10px;object-fit:cover;object-position:50% 18%;border:1px solid ${rc};box-shadow:0 1px 3px rgba(0,0,0,.2);display:block" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">`:'';
-  return `<div style="position:relative;width:${size}px;height:${size}px;flex-shrink:0">${img}${fallback}</div>`;
+  const img=filename?`<img src="images/${filename}" loading="lazy" alt="${c.name}" style="width:${w}px;height:${h}px;border-radius:10px;object-fit:cover;object-position:50% 18%;border:1px solid ${rc};box-shadow:0 1px 3px rgba(0,0,0,.2);display:block" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">`:'';
+  return `<div style="position:relative;width:${w}px;height:${h}px;flex-shrink:0">${img}${fallback}</div>`;
 }
+function cardThumb(c,size){ size=size||56; return _cardThumbBox(c,size,size); }
+function cardThumbPortrait(c,w,h){ w=w||84; h=h||112; return _cardThumbBox(c,w,h); }
 
 const DEFAULT_ROSTER=[
 // Squad 1
@@ -2579,7 +2580,8 @@ function renderLineup(){
           id="slot-${ti}-${i}">
           <div class="slot-accent" style="background:${slotAccentColor(e.computedRole)}"></div>
           <div class="slot-num">${i+1}</div>
-          <div class="slot-info">
+          ${e.card?cardThumb(e.card,34):''}
+          <div class="slot-info" style="margin-left:8px">
             <div class="slot-name">${e.card?e.card.name:'Unknown'}</div>
             <div style="display:flex;gap:5px;align-items:center;flex-wrap:wrap;margin-top:4px">
               ${roleBadge(e.computedRole)}${e.card?statusBadge(e.card):''}
@@ -4240,6 +4242,7 @@ function renderInvest(){
             </div>
             <div style="background:${isComplete?'rgba(39,174,96,.04)':isActive?'rgba(200,168,75,.04)':'rgba(74,140,212,.03)'};border:1px solid ${isComplete?'rgba(39,174,96,.25)':isActive?'rgba(200,168,75,.25)':'rgba(74,140,212,.2)'};border-radius:10px;padding:12px 14px">
               <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:8px;margin-bottom:8px">
+                ${cardThumb(c,44)}
                 <div style="flex:1;min-width:0">
                   <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin-bottom:2px">
                     <div style="font-weight:500;font-size:15px;color:var(--text);line-height:1.3">${shortName(c)}</div>
@@ -4728,17 +4731,19 @@ function renderDB(){
   });
   const isCust=id=>customCards.some(c=>String(c.id)===String(id));
   document.getElementById('db-results').innerHTML=`<div style="font-size:11px;color:var(--text3);margin-bottom:9px;font-family:'Cinzel',serif">${cards.length} cards</div>`+
-  cards.map(c=>`<div class="db-card">
-    <div style="display:flex;align-items:flex-start;gap:8px;margin-bottom:5px">
-      ${cardThumb(c,56)}
-      <div class="db-name" style="flex:1;font-weight:500;color:var(--text)">${c.name}${isCust(c.id)?'<span style="font-size:10px;color:var(--text3);margin-left:6px;font-family:Cinzel,serif;border:1px solid var(--border2);border-radius:3px;padding:1px 5px">new</span>':''}</div>
-      ${isCust(c.id)?`<button class="btn btn-sm btn-danger" onclick="removeCustomCard('${c.id}')" style="min-height:28px;padding:3px 8px;font-size:9px">✕</button>`:''}
+  cards.map(c=>`<div class="db-card" style="display:flex;gap:12px;align-items:flex-start">
+    ${cardThumbPortrait(c,84,112)}
+    <div style="flex:1;min-width:0">
+      <div style="display:flex;align-items:flex-start;gap:6px;margin-bottom:5px">
+        <div class="db-name" style="flex:1;font-weight:500;color:var(--text)">${c.name}${isCust(c.id)?'<span style="font-size:10px;color:var(--text3);margin-left:6px;font-family:Cinzel,serif;border:1px solid var(--border2);border-radius:3px;padding:1px 5px">new</span>':''}</div>
+        ${isCust(c.id)?`<button class="btn btn-sm btn-danger" onclick="removeCustomCard('${c.id}')" style="min-height:28px;padding:3px 8px;font-size:9px;flex-shrink:0">✕</button>`:''}
+      </div>
+      <div style="display:flex;gap:4px;flex-wrap:wrap;align-items:center;margin-bottom:4px">${rar(c.r)}${c.tier?tier(c.tier):''}${atkSpan(c.atk)}${elem(c.elem)}${house(c.house)}${c.type?`<span class="tag" style="color:var(--text3)">${c.type}</span>`:''}</div>
+      <div style="font-size:11px;color:var(--text3);margin-bottom:4px">${optBadge(c)}</div>
+      ${c.passive&&c.passive!=='None'?`<div style="font-size:11px;color:var(--text3);margin-bottom:4px">Passive: ${c.passive}</div>`:''}
+      <div>${c.skills.map(sk=>skTag(sk,c.id)).join('')}</div>
+      ${c.unique?`<div style="margin-top:4px"><span style="font-family:'Cinzel',serif;font-size:9px;color:var(--gold2);letter-spacing:.05em">UNIQUE · </span><span style="font-size:11px;color:var(--gold2)">${c.unique}</span></div>`:''}
     </div>
-    <div style="display:flex;gap:4px;flex-wrap:wrap;align-items:center;margin-bottom:4px">${rar(c.r)}${c.tier?tier(c.tier):''}${atkSpan(c.atk)}${elem(c.elem)}${house(c.house)}${c.type?`<span class="tag" style="color:var(--text3)">${c.type}</span>`:''}</div>
-    <div style="font-size:11px;color:var(--text3);margin-bottom:4px">${optBadge(c)}</div>
-    ${c.passive&&c.passive!=='None'?`<div style="font-size:11px;color:var(--text3);margin-bottom:4px">Passive: ${c.passive}</div>`:''}
-    <div>${c.skills.map(sk=>skTag(sk,c.id)).join('')}</div>
-    ${c.unique?`<div style="margin-top:4px"><span style="font-family:'Cinzel',serif;font-size:9px;color:var(--gold2);letter-spacing:.05em">UNIQUE · </span><span style="font-size:11px;color:var(--gold2)">${c.unique}</span></div>`:''}
   </div>`).join('');
 }
 
