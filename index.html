@@ -1608,18 +1608,24 @@ const BASE_CARDS=[
 const RAR_COLOR={SSR:'var(--gold)',SR:'var(--text2)',R:'var(--border2)'};
 const RAR_BG={SSR:'rgba(200,168,75,.08)',SR:'rgba(168,168,168,.06)',R:'rgba(100,100,100,.04)'};
 function _cardThumbBox(c,w,h){
+  // w/h can be numbers (px) or strings (e.g. '100%') — string height lets the image
+  // stretch to match a taller flex sibling instead of leaving dead space below it.
+  const wCss=typeof w==='number'?`${w}px`:w;
+  const hCss=typeof h==='number'?`${h}px`:h;
   const rc=RAR_COLOR[c?.r]||'var(--border)';
   const rb=RAR_BG[c?.r]||'transparent';
-  const fontSize=Math.round(Math.min(w,h)*0.225);
-  const fallback=`<div class="thumb-fallback" style="display:${c&&CARD_IMAGE[c.id]?'none':'flex'};position:absolute;top:0;left:0;width:${w}px;height:${h}px;border-radius:10px;border:1px solid ${rc};background:${rb};align-items:center;justify-content:center;font-family:'Cinzel',serif;font-size:${fontSize}px;color:${rc};text-align:center;line-height:1.2;box-shadow:0 1px 3px rgba(0,0,0,.2)">${c?.r||'?'}</div>`;
+  const fontSize=Math.round((typeof w==='number'?w:56)*0.225);
+  const fallback=`<div class="thumb-fallback" style="display:${c&&CARD_IMAGE[c.id]?'none':'flex'};position:absolute;top:0;left:0;width:${wCss};height:${hCss};border-radius:10px;border:1px solid ${rc};background:${rb};align-items:center;justify-content:center;font-family:'Cinzel',serif;font-size:${fontSize}px;color:${rc};text-align:center;line-height:1.2;box-shadow:0 1px 3px rgba(0,0,0,.2)">${c?.r||'?'}</div>`;
   const filename=c?CARD_IMAGE[c.id]:null;
-  // object-position biased toward the top — these are portrait character art, so a
-  // dead-center crop (the default) cuts off heads. ~18% down keeps the face in frame.
-  const img=filename?`<img src="images/${filename}" loading="lazy" alt="${c.name}" style="width:${w}px;height:${h}px;border-radius:10px;object-fit:cover;object-position:50% 18%;border:1px solid ${rc};box-shadow:0 1px 3px rgba(0,0,0,.2);display:block" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">`:'';
-  return `<div style="position:relative;width:${w}px;height:${h}px;flex-shrink:0">${img}${fallback}</div>`;
+  // SR art frames the character much closer to the top edge of the source image than
+  // SSR/R does — confirmed from a real side-by-side (SR heads were still getting cut off
+  // at 18%). SR needs a near-zero vertical bias; SSR/R keep the original 18%.
+  const objPos=c?.r==='SR'?'50% 2%':'50% 18%';
+  const img=filename?`<img src="images/${filename}" loading="lazy" alt="${c.name}" style="width:${wCss};height:${hCss};border-radius:10px;object-fit:cover;object-position:${objPos};border:1px solid ${rc};box-shadow:0 1px 3px rgba(0,0,0,.2);display:block" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">`:'';
+  return `<div style="position:relative;width:${wCss};height:${hCss};flex-shrink:0">${img}${fallback}</div>`;
 }
 function cardThumb(c,size){ size=size||56; return _cardThumbBox(c,size,size); }
-function cardThumbPortrait(c,w,h){ w=w||84; h=h||112; return _cardThumbBox(c,w,h); }
+function cardThumbPortrait(c,w,h){ w=w||100; return _cardThumbBox(c,w,h||'100%'); }
 
 const DEFAULT_ROSTER=[
 // Squad 1
@@ -3787,7 +3793,10 @@ function evaluatePullCard(cardId){
     </div>
     <!-- Layout A: Single line card name (title + first name, no surname) + pills -->
     <div style="padding:10px 14px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap">
-      <div style="font-size:14px;font-weight:400;color:var(--text)">${cardTitle} ${charFirst}</div>
+      <div style="display:flex;align-items:center;gap:10px;min-width:0">
+        ${cardThumb(c,40)}
+        <div style="font-size:14px;font-weight:400;color:var(--text)">${cardTitle} ${charFirst}</div>
+      </div>
       <div style="display:flex;gap:3px;flex-wrap:wrap;flex-shrink:0">${rar(c.r)}${c.tier?tier(c.tier):''}${atkSpan(c.atk)}${house(c.house)}</div>
     </div>
     <!-- Detailed explanations -->
@@ -4731,8 +4740,8 @@ function renderDB(){
   });
   const isCust=id=>customCards.some(c=>String(c.id)===String(id));
   document.getElementById('db-results').innerHTML=`<div style="font-size:11px;color:var(--text3);margin-bottom:9px;font-family:'Cinzel',serif">${cards.length} cards</div>`+
-  cards.map(c=>`<div class="db-card" style="display:flex;gap:12px;align-items:flex-start">
-    ${cardThumbPortrait(c,84,112)}
+  cards.map(c=>`<div class="db-card" style="display:flex;gap:12px;align-items:stretch">
+    ${cardThumbPortrait(c,110)}
     <div style="flex:1;min-width:0">
       <div style="display:flex;align-items:flex-start;gap:6px;margin-bottom:5px">
         <div class="db-name" style="flex:1;font-weight:500;color:var(--text)">${c.name}${isCust(c.id)?'<span style="font-size:10px;color:var(--text3);margin-left:6px;font-family:Cinzel,serif;border:1px solid var(--border2);border-radius:3px;padding:1px 5px">new</span>':''}</div>
