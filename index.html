@@ -1036,6 +1036,8 @@ function gemGuardianRec(card, uid) {
 // to have a matching file — cardThumb() falls back to the colored rarity square if the
 // image 404s or was never crawled, so nothing breaks for partial coverage.
 const CARD_IMAGE={
+  250:"Lyca_Colt_Sea-Swept_Gaze.png",
+  251:"Romeo_Lucci_Captivating_Mirage.png",
   1:"Jin_Kamurai_Icebound_Tyrant.png",
   2:"Tohma_Ishibashi_Contrived_Smile.png",
   3:"Lucas_Errant_Scattered_Radiance.png",
@@ -1560,6 +1562,8 @@ const BASE_CARDS=[
 {id:247,name:"The Three Of Swords Tohma Ishibashi",r:"SSR",type:"Desperate",tier:"B",atk:"S",elem:"Fire",passive:"Auto Full DEF Boost",skills:["Life Flip","Desperate Strike","Zealous Strike","Attack Two"],unique:"Halberd Wielder",house:"Frostheim"},
 {id:248,name:"The Page Of Wands Lyca Colt",r:"SSR",type:"Desperate",tier:"B",atk:"P",elem:"Grass",passive:"Stun Revenge++",skills:["Full DEF Boost","Survivor's Burst","Desperate Strike","Reckless Attack"],unique:"Claw Wielder",house:"Obscuary"},
 {id:249,name:"The King Of Cups Subaru Kagami",r:"SSR",type:"Desperate",tier:"C",atk:"P",elem:"Grass",passive:"Endurance",skills:["Desperate Strike","Unleash Fury","Reckless Power Attack","Attack Two"],unique:"Parasol Wielder",house:"Hotarubi"},
+{id:250,name:"Sea-Swept Gaze Lyca Colt",r:"SSR",type:"Guard",tier:"",atk:"S",elem:"Water",passive:"Curse Revenge",skills:["Guard Allies","Curse Assault","Curse Attack","Attack All"],unique:"Scent Of Salt Air",house:"Obscuary"},
+{id:251,name:"Captivating Mirage Romeo Lucci",r:"SSR",type:"Final Stand",tier:"",atk:"S",elem:"Grass",passive:"Endurance",skills:["Final Stand","Curse Assault","Curse Assault","Attack All"],unique:"Follow Me",house:"Sinostra"},
 {id:206,name:"Otherworldly Reaper Rui Mizuki",r:"SSR",type:"Curse",tier:"",atk:"P",elem:"Grass",passive:"Auto Curse",skills:["Curse Assault","Vengeance Strike","Power Attack","Attack"],unique:"Reaper's Strike",house:"Obscuary"},
 {id:'sr1',name:"Darkwick Chic Jo Kongoza",r:"SR",type:"Vengeance",tier:"",atk:"P",elem:"Fire",passive:"Sleep Revenge+",skills:["Life Flip","Vengeance Strike","Attack All"],unique:"Crowd Charmer",house:"Sinostra"},
 {id:'sr2',name:"Darkwick Chic Shion Genkai",r:"SR",type:"Fury",tier:"",atk:"S",elem:"Fire",passive:"Auto S ATK Boost",skills:["Furious Strike","Unleash Fury","Attack All"],unique:"Perilous Act",house:"Dionysia"},
@@ -1654,7 +1658,7 @@ function showCardDetailModal(cardId){
       </div>
     </div>
     ${c.passive&&c.passive!=='None'?`<div style="font-size:12px;color:var(--text3);margin-bottom:8px">Passive: <span style="color:var(--text2)">${c.passive}</span></div>`:''}
-    <div style="margin-bottom:8px">${c.skills.map(sk=>skTag(sk,c.id)).join('')}</div>
+    <div style="margin-bottom:8px">${skillTagsFor(c)}</div>
     ${c.unique?`<div><span style="font-family:'Cinzel',serif;font-size:10px;color:var(--gold2);letter-spacing:.05em">UNIQUE · </span><span style="font-size:12px;color:var(--gold2)">${c.unique}</span></div>`:''}
   `;
   document.getElementById('card-detail-modal').classList.add('open');
@@ -1873,16 +1877,30 @@ const SKILL_DESCS={
   'Fire Curse':'Curses all Fire element enemies simultaneously.',
 };
 
-function skTag(sk,cardId){
+function skTag(sk,cardId,occurrenceIdx){
   const s=(sk||'').toLowerCase();
   const g=CARRY_SKILLS.some(x=>s.includes(x));
   const a=SWEEP_SKILLS.some(x=>s.includes(x));
   const gd=GUARD_SKILLS.some(x=>s.includes(x));
-  // Prefer the exact per-card confirmed target count; fall back to the generic description
-  const override=cardId!=null?(CARD_SKILL_OVERRIDES[cardId]||{})[sk]:null;
+  // Prefer the exact per-card confirmed target count; fall back to the generic description.
+  // A skill name can appear more than once on the same card with different effects (e.g.
+  // two differently-costed "Curse Assault" skills) — CARD_SKILL_OVERRIDES stores that as
+  // an array, and occurrenceIdx picks out which specific instance this tag represents.
+  const raw=cardId!=null?(CARD_SKILL_OVERRIDES[cardId]||{})[sk]:null;
+  const variants=Array.isArray(raw)?raw:(raw?[raw]:null);
+  const override=variants?(variants[occurrenceIdx||0]||variants[0]):null;
   const targetLabel=override?(override.targets>=5?'all enemies':override.targets>1?`${override.targets} enemies`:'1 enemy'):null;
   const desc=override?`Hits ${targetLabel} — ${override.mult}x damage (confirmed)`:(SKILL_DESCS[sk]||'');
   return`<span class="sk${g?' carry':a?' aoe':gd?' guard':''} tip" data-tip="${desc||sk}">${sk}</span>`;
+}
+// Renders all of a card's skill tags, tracking how many times each skill name has
+// already appeared so duplicate-named skills (see skTag) resolve to the right variant.
+function skillTagsFor(card){
+  const seen={};
+  return(card.skills||[]).map(sk=>{
+    const idx=(seen[sk]=(seen[sk]||0)+1)-1;
+    return skTag(sk,card.id,idx);
+  }).join('');
 }
 function optBadge(card){
   const tags=optimalRoleTags(card);
@@ -2992,6 +3010,8 @@ const UNCONFIRMED_DAMAGE_SKILLS=['Blood Frenzy','Furious Strike','Curse Attack',
 // a card's specific skill text has been directly confirmed via screenshot, it goes here
 // and takes priority over the generic name-based guess. Keyed by card id -> skill name.
 const CARD_SKILL_OVERRIDES={
+  250:{"Curse Assault":{mult:3,targets:2},"Curse Attack":{mult:0.5,targets:2},"Attack All":{mult:0.5,targets:5}},
+  251:{"Final Stand":{mult:4,targets:2},"Curse Assault":[{mult:2,targets:5},{mult:0.5,targets:2}],"Attack All":{mult:0.5,targets:5}},
   248:{"Survivor's Burst":{mult:5.0,targets:1},"Desperate Strike":{mult:5.0,targets:1},"Reckless Attack":{mult:1.0,targets:2}},
   1:{"Desperate Strike":{mult:5.0,targets:1},"Zealous Strike":{mult:2.5,targets:1},"Power Attack":{mult:1.25,targets:5},"Reckless Attack":{mult:1.25,targets:1}},
   2:{"Furious Strike":{mult:4.0,targets:1},"Attack":{mult:1.0,targets:1},"Attack All":{mult:0.5,targets:5}},
@@ -3283,10 +3303,16 @@ function cardDamageProfile(card){
   (card.skills||[]).forEach(sk=>{
     const d=overrides[sk]||SKILL_DAMAGE[sk];
     if(!d)return;
-    const burstVal=d.mult*Math.min(d.targets,2);
-    const aoeVal=d.targets>=3?d.mult*d.targets:0;
-    if(burstVal>burst)burst=burstVal;
-    if(aoeVal>aoe)aoe=aoeVal;
+    // A skill name can genuinely have more than one variant on the same card (e.g. two
+    // differently-costed "Curse Assault" skills) — CARD_SKILL_OVERRIDES stores that case
+    // as an array instead of silently keeping only one variant under the shared key.
+    const variants=Array.isArray(d)?d:[d];
+    variants.forEach(v=>{
+      const burstVal=v.mult*Math.min(v.targets,2);
+      const aoeVal=v.targets>=3?v.mult*v.targets:0;
+      if(burstVal>burst)burst=burstVal;
+      if(aoeVal>aoe)aoe=aoeVal;
+    });
   });
   return{burst,aoe};
 }
@@ -3517,7 +3543,7 @@ function renderRosterList(){
           ${c?house(c.house):''}
         </div>
         <!-- Skills -->
-        ${c?`<div style="margin-bottom:8px">${c.skills.map(sk=>skTag(sk,c.id)).join('')}</div>`:''}
+        ${c?`<div style="margin-bottom:8px">${skillTagsFor(c)}</div>`:''}
         <!-- Gem advice -->
         ${c?`<div style="margin-bottom:8px">
           <div style="font-family:'Cinzel',serif;font-size:9px;color:var(--text3);letter-spacing:.08em;text-transform:uppercase;margin-bottom:5px">Gem Guide <span style="font-style:italic;text-transform:none;letter-spacing:0">(guide only)</span></div>
@@ -3626,7 +3652,7 @@ function updatePreview(c){
   document.getElementById('cm-preview').innerHTML=`<div style="background:var(--bg3);border:1px solid var(--border);border-radius:7px;padding:9px 12px;margin-bottom:8px">
     <div style="display:flex;gap:5px;flex-wrap:wrap;align-items:center;margin-bottom:5px">${rar(c.r)}${c.tier?tier(c.tier):''}${atkSpan(c.atk)}${elem(c.elem)}${house(c.house)}</div>
     <div style="font-size:12px;color:var(--text3);margin-bottom:5px">${c.passive&&c.passive!=='None'?'Passive: '+c.passive:''}</div>
-    <div>${c.skills.map(sk=>skTag(sk,c.id)).join('')}</div>
+    <div>${skillTagsFor(c)}</div>
     ${c.unique?`<div style="margin-top:4px"><span style="font-family:'Cinzel',serif;font-size:9px;color:var(--gold2);text-transform:uppercase;letter-spacing:.06em">Unique · </span><span class="sk" style="font-size:11px;border-color:rgba(200,168,75,.35);color:var(--gold2)">${c.unique}</span></div>`:''}
     <div style="margin-top:6px;font-size:11px;color:var(--amber);font-family:'Cinzel',serif">${optBadge(c)}</div>
     <div style="margin-top:8px;padding-top:8px;border-top:1px solid var(--border)">
@@ -4786,7 +4812,7 @@ function renderDB(){
       <div style="display:flex;gap:4px;flex-wrap:wrap;align-items:center;margin-bottom:4px">${rar(c.r)}${c.tier?tier(c.tier):''}${atkSpan(c.atk)}${elem(c.elem)}${house(c.house)}${c.type?`<span class="tag" style="color:var(--text3)">${c.type}</span>`:''}</div>
       <div style="font-size:11px;color:var(--text3);margin-bottom:4px">${optBadge(c)}</div>
       ${c.passive&&c.passive!=='None'?`<div style="font-size:11px;color:var(--text3);margin-bottom:4px">Passive: ${c.passive}</div>`:''}
-      <div>${c.skills.map(sk=>skTag(sk,c.id)).join('')}</div>
+      <div>${skillTagsFor(c)}</div>
       ${c.unique?`<div style="margin-top:4px"><span style="font-family:'Cinzel',serif;font-size:9px;color:var(--gold2);letter-spacing:.05em">UNIQUE · </span><span style="font-size:11px;color:var(--gold2)">${c.unique}</span></div>`:''}
     </div>
   </div>`).join('');
