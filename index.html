@@ -1036,6 +1036,9 @@ function gemGuardianRec(card, uid) {
 // to have a matching file — cardThumb() falls back to the colored rarity square if the
 // image 404s or was never crawled, so nothing breaks for partial coverage.
 const CARD_IMAGE={
+  252:"Jin_Kamurai_Glacial_Spinel.png",
+  253:"Haru_Sagara_Cunning_Cat.png",
+  254:"Rui_Mizuki_Feverish_Night.png",
   250:"Lyca_Colt_Sea-Swept_Gaze.png",
   251:"Romeo_Lucci_Captivating_Mirage.png",
   1:"Jin_Kamurai_Icebound_Tyrant.png",
@@ -1564,6 +1567,9 @@ const BASE_CARDS=[
 {id:249,name:"The King Of Cups Subaru Kagami",r:"SSR",type:"Desperate",tier:"C",atk:"P",elem:"Grass",passive:"Endurance",skills:["Desperate Strike","Unleash Fury","Reckless Power Attack","Attack Two"],unique:"Parasol Wielder",house:"Hotarubi"},
 {id:250,name:"Sea-Swept Gaze Lyca Colt",r:"SSR",type:"Guard",tier:"",atk:"S",elem:"Water",passive:"Curse Revenge",skills:["Guard Allies","Curse Assault","Curse Attack","Attack All"],unique:"Scent Of Salt Air",house:"Obscuary"},
 {id:251,name:"Captivating Mirage Romeo Lucci",r:"SSR",type:"Final Stand",tier:"",atk:"S",elem:"Grass",passive:"Endurance",skills:["Final Stand","Curse Assault","Curse Assault","Attack All"],unique:"Follow Me",house:"Sinostra"},
+{id:252,name:"Glacial Spinel Jin Kamurai",r:"SSR",type:"Vengeance",tier:"",atk:"P",elem:"Grass",passive:"Poison Revenge",skills:["P ATK Boost","Time Strike","Vengeance Strike","Attack Two"],unique:"The King's Road",house:"Frostheim"},
+{id:253,name:"Cunning Cat Haru Sagara",r:"SSR",type:"Survivor",tier:"",atk:"P",elem:"Grass",passive:"Endurance",skills:["Life Flip","Survivor's Burst","Zealous Strike","Attack All"],unique:"Swishing Tail",house:"Jabberwock"},
+{id:254,name:"Feverish Night Rui Mizuki",r:"SSR",type:"Fury",tier:"",atk:"S",elem:"Water",passive:"Auto Fury",skills:["Life Flip","Furious Strike","Unleash Fury","Attack Two"],unique:"Fan's Carress",house:"Obscuary"},
 {id:206,name:"Otherworldly Reaper Rui Mizuki",r:"SSR",type:"Curse",tier:"",atk:"P",elem:"Grass",passive:"Auto Curse",skills:["Curse Assault","Vengeance Strike","Power Attack","Attack"],unique:"Reaper's Strike",house:"Obscuary"},
 {id:'sr1',name:"Darkwick Chic Jo Kongoza",r:"SR",type:"Vengeance",tier:"",atk:"P",elem:"Fire",passive:"Sleep Revenge+",skills:["Life Flip","Vengeance Strike","Attack All"],unique:"Crowd Charmer",house:"Sinostra"},
 {id:'sr2',name:"Darkwick Chic Shion Genkai",r:"SR",type:"Fury",tier:"",atk:"S",elem:"Fire",passive:"Auto S ATK Boost",skills:["Furious Strike","Unleash Fury","Attack All"],unique:"Perilous Act",house:"Dionysia"},
@@ -3010,6 +3016,9 @@ const UNCONFIRMED_DAMAGE_SKILLS=['Blood Frenzy','Furious Strike','Curse Attack',
 // a card's specific skill text has been directly confirmed via screenshot, it goes here
 // and takes priority over the generic name-based guess. Keyed by card id -> skill name.
 const CARD_SKILL_OVERRIDES={
+  252:{"Time Strike":{mult:3,targets:5},"Vengeance Strike":{mult:1.75,targets:5},"Attack Two":{mult:0.75,targets:2}},
+  253:{"Survivor's Burst":{mult:2.5,targets:5},"Zealous Strike":{mult:1.75,targets:2},"Attack All":{mult:0.5,targets:5}},
+  254:{"Furious Strike":{mult:6,targets:1},"Attack Two":{mult:0.75,targets:2}},
   250:{"Curse Assault":{mult:3,targets:2},"Curse Attack":{mult:0.5,targets:2},"Attack All":{mult:0.5,targets:5}},
   251:{"Final Stand":{mult:4,targets:2},"Curse Assault":[{mult:2,targets:5},{mult:0.5,targets:2}],"Attack All":{mult:0.5,targets:5}},
   248:{"Survivor's Burst":{mult:5.0,targets:1},"Desperate Strike":{mult:5.0,targets:1},"Reckless Attack":{mult:1.0,targets:2}},
