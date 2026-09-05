@@ -244,18 +244,17 @@ textarea{resize:vertical;min-height:60px;font-size:14px}
     <button class="btn btn-sm" onclick="addServer()" style="font-size:10px;white-space:nowrap">+ Add Server</button>
   </div>
   <div class="tabs">
-    <button class="tab active" onclick="showTab('lineup')">⚔ Lineup</button>
-    <button class="tab" onclick="showTab('roster')">Roster</button>
-    <button class="tab" onclick="showTab('invest')">Invest</button>
-    <button class="tab" onclick="showTab('scout')">Scout</button>
-    <button class="tab" onclick="showTab('analysis')">Analysis</button>
-    <button class="tab" onclick="showTab('db')">Card DB</button>
-    <button class="tab" onclick="showTab('guide')">Guide</button>
+    <button class="tab active" data-tab="roster" onclick="showTab('roster')">♠ Roster</button>
+    <button class="tab" data-tab="invest" onclick="showTab('invest')">◆ Invest</button>
+    <button class="tab" data-tab="lineup" onclick="showTab('lineup')">⚔ Lineup</button>
+    <button class="tab" data-tab="scout" onclick="showTab('scout')"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px;margin-right:2px"><circle cx="7" cy="15" r="5"/><circle cx="17" cy="15" r="5"/><path d="M9 10l1-4a2 2 0 0 1 2-1a2 2 0 0 1 2 1l1 4"/></svg> Scout</button>
+    <button class="tab" data-tab="db" onclick="showTab('db')">▤ Card DB</button>
+    <button class="tab" data-tab="guide" onclick="showTab('guide')"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px;margin-right:2px"><path d="M2 5h7a3 3 0 0 1 3 3v11a2 2 0 0 0-2-2H2z"/><path d="M22 5h-7a3 3 0 0 0-3 3v11a2 2 0 0 1 2-2h8z"/></svg> Guide</button>
   </div>
 </div>
 
 <!-- LINEUP -->
-<div id="lineup" class="section active">
+<div id="lineup" class="section">
   <div class="section-hdr">
     <div style="flex:1;min-width:0">
       <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
@@ -293,7 +292,7 @@ textarea{resize:vertical;min-height:60px;font-size:14px}
 </div>
 
 <!-- ROSTER -->
-<div id="roster" class="section">
+<div id="roster" class="section active">
   <div class="section-hdr">
     <div>
       <div class="section-title">My Roster</div>
@@ -344,12 +343,8 @@ textarea{resize:vertical;min-height:60px;font-size:14px}
     <div class="ins-b">Enter opponent cards team-by-team as you see them in Arena. Add the card name and their power. The app analyses their strategy and tells you how to counter it.</div>
   </div>
   <div id="scout-teams"></div>
-  <button class="btn btn-primary btn-full" style="margin-top:10px" onclick="showTab('analysis');runAnalysis()">⚔ Analyze &amp; Get Counter Strategy ↗</button>
-</div>
-
-<!-- ANALYSIS -->
-<div id="analysis" class="section">
-  <div id="analysis-content"><div class="empty-state">Add opponent cards in Scout, then tap Get Counter Advice.</div></div>
+  <button class="btn btn-primary btn-full" style="margin-top:10px" onclick="runAnalysis()">⚔ Analyze &amp; Get Counter Strategy ↓</button>
+  <div id="analysis-content" style="margin-top:14px"><div class="empty-state">Add opponent cards above, then tap Analyze.</div></div>
 </div>
 
 <!-- CARD DB -->
@@ -688,7 +683,7 @@ textarea{resize:vertical;min-height:60px;font-size:14px}
       <div style="text-align:center;padding:10px 16px;background:var(--bg3);border-radius:8px;border:1px solid rgba(39,174,96,.3)"><div style="font-family:'Cinzel',serif;font-size:13px;color:var(--green2);margin-bottom:2px">Grass</div><div style="font-size:10px;color:var(--text3)">beats Water</div></div>
       <div style="text-align:center;padding:10px 16px;background:var(--bg3);border-radius:8px;border:1px solid rgba(74,159,212,.3)"><div style="font-family:'Cinzel',serif;font-size:13px;color:var(--blue2);margin-bottom:2px">Water</div><div style="font-size:10px;color:var(--text3)">beats Fire</div></div>
     </div>
-    <div style="font-size:12px;color:var(--text3);text-align:center;font-style:italic">Matching your carries' element against the opponent's weakness increases damage output. The Analysis tab detects this automatically.</div>
+    <div style="font-size:12px;color:var(--text3);text-align:center;font-style:italic">Matching your carries' element against the opponent's weakness increases damage output. The Scout tab detects this automatically once you've entered opponent data.</div>
   </div>
 
   <!-- CREDITS -->
@@ -1036,6 +1031,8 @@ function gemGuardianRec(card, uid) {
 // to have a matching file — cardThumb() falls back to the colored rarity square if the
 // image 404s or was never crawled, so nothing breaks for partial coverage.
 const CARD_IMAGE={
+  255:"Towa_Otonashi_Spellbinding_Smoke.png",
+  256:"Elias_Pratt_The_Magician.png",
   252:"Jin_Kamurai_Glacial_Spinel.png",
   253:"Haru_Sagara_Cunning_Cat.png",
   254:"Rui_Mizuki_Feverish_Night.png",
@@ -1570,6 +1567,8 @@ const BASE_CARDS=[
 {id:252,name:"Glacial Spinel Jin Kamurai",r:"SSR",type:"Vengeance",tier:"",atk:"P",elem:"Grass",passive:"Poison Revenge",skills:["P ATK Boost","Time Strike","Vengeance Strike","Attack Two"],unique:"The King's Road",house:"Frostheim"},
 {id:253,name:"Cunning Cat Haru Sagara",r:"SSR",type:"Survivor",tier:"",atk:"P",elem:"Grass",passive:"Endurance",skills:["Life Flip","Survivor's Burst","Zealous Strike","Attack All"],unique:"Swishing Tail",house:"Jabberwock"},
 {id:254,name:"Feverish Night Rui Mizuki",r:"SSR",type:"Fury",tier:"",atk:"S",elem:"Water",passive:"Auto Fury",skills:["Life Flip","Furious Strike","Unleash Fury","Attack Two"],unique:"Fan's Carress",house:"Obscuary"},
+{id:255,name:"Spellbinding Smoke Towa Otonashi",r:"SSR",type:"Fury",tier:"",atk:"P",elem:"Grass",passive:"Auto Fury",skills:["Blood Frenzy","Furious Strike","Unleash Fury","Attack All"],unique:"From Day Into Night",house:"Jabberwock"},
+{id:256,name:"The Magician Elias Pratt",r:"SSR",type:"Fury",tier:"",atk:"S",elem:"Grass",passive:"Auto Fury",skills:["Life Flip","Survivor's Burst","Furious Strike","Attack All"],unique:"Knife Weilder",house:"Dionysia"},
 {id:206,name:"Otherworldly Reaper Rui Mizuki",r:"SSR",type:"Curse",tier:"",atk:"P",elem:"Grass",passive:"Auto Curse",skills:["Curse Assault","Vengeance Strike","Power Attack","Attack"],unique:"Reaper's Strike",house:"Obscuary"},
 {id:'sr1',name:"Darkwick Chic Jo Kongoza",r:"SR",type:"Vengeance",tier:"",atk:"P",elem:"Fire",passive:"Sleep Revenge+",skills:["Life Flip","Vengeance Strike","Attack All"],unique:"Crowd Charmer",house:"Sinostra"},
 {id:'sr2',name:"Darkwick Chic Shion Genkai",r:"SR",type:"Fury",tier:"",atk:"S",elem:"Fire",passive:"Auto S ATK Boost",skills:["Furious Strike","Unleash Fury","Attack All"],unique:"Perilous Act",house:"Dionysia"},
@@ -3016,6 +3015,8 @@ const UNCONFIRMED_DAMAGE_SKILLS=['Blood Frenzy','Furious Strike','Curse Attack',
 // a card's specific skill text has been directly confirmed via screenshot, it goes here
 // and takes priority over the generic name-based guess. Keyed by card id -> skill name.
 const CARD_SKILL_OVERRIDES={
+  255:{"Blood Frenzy":{mult:4,targets:2},"Furious Strike":{mult:6,targets:1},"Attack All":{mult:0.5,targets:5}},
+  256:{"Survivor's Burst":{mult:4,targets:2},"Furious Strike":{mult:6,targets:1},"Attack All":{mult:0.5,targets:5}},
   252:{"Time Strike":{mult:3,targets:5},"Vengeance Strike":{mult:1.75,targets:5},"Attack Two":{mult:0.75,targets:2}},
   253:{"Survivor's Burst":{mult:2.5,targets:5},"Zealous Strike":{mult:1.75,targets:2},"Attack All":{mult:0.5,targets:5}},
   254:{"Furious Strike":{mult:6,targets:1},"Attack Two":{mult:0.75,targets:2}},
@@ -4578,10 +4579,9 @@ function runAnalysis(){
     el.innerHTML=`<div class="empty-state" style="text-align:center">
       <div style="font-size:32px;margin-bottom:12px">⚔</div>
       <div style="font-family:'Cinzel',serif;font-size:13px;color:var(--text);margin-bottom:8px">No Opponent Data</div>
-      <div style="font-size:13px;color:var(--text3);margin-bottom:20px;line-height:1.6">
-        ${!oppSlots.length ? 'Go to the Scout tab and add your opponent\'s cards.' : 'You\'ve added slots but haven\'t selected cards yet — tap each slot in Scout and search for a card.'}
+      <div style="font-size:13px;color:var(--text3);line-height:1.6">
+        ${!oppSlots.length ? 'Add your opponent\'s cards above, then tap Analyze.' : 'You\'ve added slots but haven\'t selected cards yet — tap each slot above and search for a card.'}
       </div>
-      <button class="btn btn-primary" onclick="showTab('scout')">← Go to Scout</button>
     </div>`;
     return;
   }
@@ -4868,7 +4868,7 @@ function removeCustomCard(id){customCards=customCards.filter(c=>String(c.id)!==S
 })();
 
 function showTab(id){
-  document.querySelectorAll('.tab').forEach((t,i)=>{const ids=['lineup','roster','invest','scout','analysis','db','guide'];t.classList.toggle('active',ids[i]===id);});
+  document.querySelectorAll('.tab').forEach(t=>t.classList.toggle('active',t.dataset.tab===id));
   document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
   document.getElementById(id).classList.add('active');
   if(id==='db')renderDB();
@@ -4876,7 +4876,6 @@ function showTab(id){
   if(id==='roster')renderRosterList();
   if(id==='invest'){renderF2PBtn();renderInvest();}
   if(id==='scout')renderOpp();
-  if(id==='analysis'&&oppSlots.filter(s=>s.cardId).length)runAnalysis();
 }
 
 // ════════════════════════════════════════════════
