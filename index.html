@@ -3896,6 +3896,7 @@ function renderRosterList(){
         </div>
         <!-- Skills -->
         ${c?`<div style="margin-bottom:8px">${skillTagsFor(c)}</div>`:''}
+        ${c?uniqueLine(c,11):''}
         <!-- Gem advice -->
         ${c?`<div style="margin-bottom:8px">
           <div style="font-family:'Cinzel',serif;font-size:9px;color:var(--text3);letter-spacing:.08em;text-transform:uppercase;margin-bottom:5px">Gem Guide <span style="font-style:italic;text-transform:none;letter-spacing:0">(guide only)</span></div>
