@@ -369,32 +369,57 @@ textarea{resize:vertical;min-height:60px;font-size:14px}
   <div class="section-title" style="margin-bottom:14px">Guide &amp; Reference</div>
 
   <!-- ROLES -->
-  <div style="margin-bottom:16px">
-    <div style="font-family:'Cinzel',serif;font-size:12px;color:var(--gold);letter-spacing:.08em;margin-bottom:10px;display:flex;align-items:center;gap:8px">Team Roles<span style="flex:1;height:1px;background:linear-gradient(to right,var(--border2),transparent)"></span></div>
-    <table class="gtable">
-      <tr><th>Role</th><th>Definition</th><th>Qualifies</th></tr>
-      <tr><td><span class="badge role-Carry">Carry</span></td><td style="text-align:left">Main damage dealer</td><td style="text-align:left">Your strongest leveled non-Guard, non-Sweeper card in that team — ranked by power, the same way you'd actually pick one</td></tr>
-      <tr><td><span class="badge role-Sub-Carry">Sub-Carry</span></td><td style="text-align:left">Secondary damage dealer — always weaker than your Carry</td><td style="text-align:left">Strongest remaining card of the OPPOSITE ATK type from whichever card ends up Carry (not fixed to P or S — flips depending on which card wins the Carry slot)</td></tr>
-      <tr><td><span class="badge role-Guard">Guard</span></td><td style="text-align:left">Protects the Carry</td><td style="text-align:left">Guard Allies / Guard Entry / Auto Guard</td></tr>
-      <tr><td><span class="badge role-Sweeper">Sweeper</span></td><td style="text-align:left">Clears fodder with AoE</td><td style="text-align:left">Best AoE damage index — hits 3+ enemies at once</td></tr>
-    </table>
-    <div style="margin-top:8px;font-size:12px;color:var(--text3);font-style:italic;padding:8px 10px;background:var(--bg2);border-radius:7px;border:1px solid var(--border)">Carry/Sub-Carry only exist relative to a specific team — the same card can be Carry in one lineup and Sub-Carry (or neither) in another depending on who it's alongside, which is why these two only appear in the <strong>Lineup</strong> tab. Guard and Sweeper are intrinsic to the card's kit, so they show everywhere, including the Roster tab and Card DB — those two views show <strong>Guard / Sweeper / Attacker</strong> only (no Carry/Sub-Carry, since there's no team to be "the strongest in" while just browsing). This is also a completely separate dimension from Status Ailments below — a card's role and its debuff type are independent facts about it, not the same thing.</div>
+  <div style="background:var(--bg2);border:1px solid var(--border);border-radius:10px;overflow:hidden;margin-bottom:8px">
+    <div onclick="this.nextElementSibling.classList.toggle('open');this.querySelector('.g-chev').textContent=this.nextElementSibling.classList.contains('open')?'▾':'▸'" style="display:flex;align-items:center;gap:10px;padding:12px 14px;cursor:pointer">
+      <div style="flex:1;font-family:'Cinzel',serif;font-size:13px;color:var(--gold);letter-spacing:.05em">Team Roles</div>
+      <span class="g-chev" style="color:var(--text3);font-size:12px">▸</span>
+    </div>
+    <div class="g-body" style="border-top:1px solid var(--border);padding:12px 14px">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px">
+        <div style="padding:9px 11px;background:var(--bg3);border-radius:8px"><span class="badge role-Carry" style="margin-bottom:5px;display:inline-block">Carry</span><div style="font-size:12px;color:var(--text2);line-height:1.4">Main damage dealer — your strongest non-Guard, non-Sweeper card in that team, ranked by power</div></div>
+        <div style="padding:9px 11px;background:var(--bg3);border-radius:8px"><span class="badge role-Sub-Carry" style="margin-bottom:5px;display:inline-block">Sub-Carry</span><div style="font-size:12px;color:var(--text2);line-height:1.4">Secondary damage — strongest of the OPPOSITE ATK type from your Carry, always weaker</div></div>
+        <div style="padding:9px 11px;background:var(--bg3);border-radius:8px"><span class="badge role-Guard" style="margin-bottom:5px;display:inline-block">Guard</span><div style="font-size:12px;color:var(--text2);line-height:1.4">Protects the Carry — Guard Allies / Guard Entry / Auto Guard</div></div>
+        <div style="padding:9px 11px;background:var(--bg3);border-radius:8px"><span class="badge role-Sweeper" style="margin-bottom:5px;display:inline-block">Sweeper</span><div style="font-size:12px;color:var(--text2);line-height:1.4">Clears fodder — best AoE index, hits 3+ enemies at once</div></div>
+      </div>
+      <div style="font-size:12px;color:var(--text3);line-height:1.6">Carry/Sub-Carry only exist relative to a specific team, which is why they only appear in <strong style="color:var(--text2)">Lineup</strong> — Roster and Card DB show <strong style="color:var(--text2)">Guard / Sweeper / Attacker</strong> only. Role and Status Ailment (below) are independent facts about a card, not the same dimension.</div>
+    </div>
   </div>
 
   <!-- STATUS AILMENTS -->
-  <div style="margin-bottom:16px">
-    <div style="font-family:'Cinzel',serif;font-size:12px;color:var(--gold);letter-spacing:.08em;margin-bottom:10px;display:flex;align-items:center;gap:8px">Status Ailments<span style="flex:1;height:1px;background:linear-gradient(to right,var(--border2),transparent)"></span></div>
-    <table class="gtable">
-      <tr><th>Status</th><th>Effect</th><th>Applied by</th></tr>
-      <tr><td><span class="badge role-Curse">Curse</span></td><td style="text-align:left">+5% damage taken</td><td style="text-align:left">Curse passive / Curse Assault / Curse Attack / element Curse skills</td></tr>
-      <tr><td><span class="badge role-Poison">Poison</span></td><td style="text-align:left">Small damage each turn</td><td style="text-align:left">Poison Entry/Revenge passive</td></tr>
-      <tr><td><span class="badge role-Sleep">Sleep</span></td><td style="text-align:left">Skips next turn</td><td style="text-align:left">Sleep Entry/Revenge passive — pairs with Dream Hunt (6x)</td></tr>
-      <tr><td><span class="badge role-Stun">Stun</span></td><td style="text-align:left">Loses a turn</td><td style="text-align:left">Stun Entry/Revenge passive</td></tr>
-      <tr><td><span class="badge role-Guard">Block</span></td><td style="text-align:left">Attracts enemy attacks</td><td style="text-align:left">The Guard mechanic itself (Guard Allies)</td></tr>
-      <tr><td><span class="badge role-Sweeper">Rage</span></td><td style="text-align:left">+5% damage for 3 turns</td><td style="text-align:left">Fury-type: Auto Fury / Furious Strike / Unleash Fury</td></tr>
-      <tr><td><span class="badge role-Sub-Carry">Charge</span></td><td style="text-align:left">Restores 5% HP, unlocks Charge skills</td><td style="text-align:left">Charge-type: Charged Strike / Charge Up / Charge Boost</td></tr>
-    </table>
-    <div style="margin-top:8px;font-size:12px;color:var(--text3);font-style:italic;padding:8px 10px;background:var(--bg2);border-radius:7px;border:1px solid var(--border)">Status Ailments describe <strong>what debuff/buff a card applies</strong>, independent of its Role. A card can be an "Other" role and still carry a Curse status, or a "Carry" role that also happens to apply Sleep. The Roster tab's Collection Overview shows both as separate filterable categories.</div>
+  <div style="background:var(--bg2);border:1px solid var(--border);border-radius:10px;overflow:hidden;margin-bottom:8px">
+    <div onclick="this.nextElementSibling.classList.toggle('open');this.querySelector('.g-chev').textContent=this.nextElementSibling.classList.contains('open')?'▾':'▸'" style="display:flex;align-items:center;gap:10px;padding:12px 14px;cursor:pointer">
+      <div style="flex:1;font-family:'Cinzel',serif;font-size:13px;color:var(--gold);letter-spacing:.05em">Status Ailments</div>
+      <span class="g-chev" style="color:var(--text3);font-size:12px">▸</span>
+    </div>
+    <div class="g-body" style="border-top:1px solid var(--border);padding:12px 14px">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px">
+        <div style="padding:9px 11px;background:var(--bg3);border-radius:8px"><span class="badge role-Curse" style="margin-bottom:5px;display:inline-block">Curse</span><div style="font-size:12px;color:var(--text2);line-height:1.4">+5% damage taken — Curse passive / Curse Assault / Curse Attack</div></div>
+        <div style="padding:9px 11px;background:var(--bg3);border-radius:8px"><span class="badge role-Poison" style="margin-bottom:5px;display:inline-block">Poison</span><div style="font-size:12px;color:var(--text2);line-height:1.4">Small damage each turn — Poison Entry/Revenge passive</div></div>
+        <div style="padding:9px 11px;background:var(--bg3);border-radius:8px"><span class="badge role-Sleep" style="margin-bottom:5px;display:inline-block">Sleep</span><div style="font-size:12px;color:var(--text2);line-height:1.4">Skips next turn — pairs with Dream Hunt (6x)</div></div>
+        <div style="padding:9px 11px;background:var(--bg3);border-radius:8px"><span class="badge role-Stun" style="margin-bottom:5px;display:inline-block">Stun</span><div style="font-size:12px;color:var(--text2);line-height:1.4">Loses a turn — Stun Entry/Revenge passive</div></div>
+        <div style="padding:9px 11px;background:var(--bg3);border-radius:8px"><span class="badge role-Guard" style="margin-bottom:5px;display:inline-block">Block</span><div style="font-size:12px;color:var(--text2);line-height:1.4">Attracts enemy attacks — the Guard mechanic itself</div></div>
+        <div style="padding:9px 11px;background:var(--bg3);border-radius:8px"><span class="badge role-Sweeper" style="margin-bottom:5px;display:inline-block">Rage</span><div style="font-size:12px;color:var(--text2);line-height:1.4">+5% damage for 3 turns — Fury-type: Auto Fury / Furious/Unleash Strike</div></div>
+        <div style="padding:9px 11px;background:var(--bg3);border-radius:8px;grid-column:1/-1"><span class="badge role-Sub-Carry" style="margin-bottom:5px;display:inline-block">Charge</span><div style="font-size:12px;color:var(--text2);line-height:1.4">Restores 5% HP, unlocks Charge skills — Charged Strike / Charge Up / Charge Boost</div></div>
+      </div>
+      <div style="font-size:12px;color:var(--text3);line-height:1.6">Independent of Role — a card can be "Other" role and still carry Curse, or a "Carry" that also applies Sleep. Roster's Collection Overview filters both separately.</div>
+    </div>
+  </div>
+
+  <!-- RESOURCE PRIORITY -->
+  <div style="background:var(--bg2);border:1px solid var(--border);border-radius:10px;overflow:hidden;margin-bottom:16px">
+    <div onclick="this.nextElementSibling.classList.toggle('open');this.querySelector('.g-chev').textContent=this.nextElementSibling.classList.contains('open')?'▾':'▸'" style="display:flex;align-items:center;gap:10px;padding:12px 14px;cursor:pointer">
+      <div style="flex:1;font-family:'Cinzel',serif;font-size:13px;color:var(--gold);letter-spacing:.05em">Resource Priority</div>
+      <span class="g-chev" style="color:var(--text3);font-size:12px">▸</span>
+    </div>
+    <div class="g-body" style="border-top:1px solid var(--border);padding:12px 14px">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px">
+        <div style="padding:9px 11px;background:var(--bg3);border-radius:8px;border-left:2px solid var(--gold)"><div style="font-family:'Cinzel',serif;font-size:10px;color:var(--gold);margin-bottom:3px">Moonlight Paints</div><div style="font-size:12px;color:var(--text2);line-height:1.4">Ward card leveling only — never spend on SR/R ward cards</div></div>
+        <div style="padding:9px 11px;background:var(--bg3);border-radius:8px;border-left:2px solid var(--gold)"><div style="font-family:'Cinzel',serif;font-size:10px;color:var(--gold);margin-bottom:3px">Rainbow Apples</div><div style="font-size:12px;color:var(--text2);line-height:1.4">SSR leveling + Limit Breaks only — hoard if you have no SSR yet</div></div>
+        <div style="padding:9px 11px;background:var(--bg3);border-radius:8px;border-left:2px solid var(--text3)"><div style="font-family:'Cinzel',serif;font-size:10px;color:var(--text2);margin-bottom:3px">SR cards</div><div style="font-size:12px;color:var(--text2);line-height:1.4">Common materials only — cap at Lv 50, then stop</div></div>
+        <div style="padding:9px 11px;background:var(--bg3);border-radius:8px;border-left:2px solid var(--text3)"><div style="font-family:'Cinzel',serif;font-size:10px;color:var(--text2);margin-bottom:3px">R cards</div><div style="font-size:12px;color:var(--text2);line-height:1.4">Common materials only — cap at Lv 25, dying fast is the job</div></div>
+      </div>
+      <div style="font-size:12px;color:var(--text3);line-height:1.6"><strong style="color:var(--text2)">Link Bonus:</strong> a linked SSR's battle stats gain a level-scaling bonus — activate links before investing heavily. <strong style="color:var(--text2)">F2P pacing:</strong> ~2–3% SSR rate means ~33–50 pulls per duplicate — only pull banners featuring cards from Invest's "Worth Pulling" list.</div>
+    </div>
   </div>
 
   <!-- STRATEGIES -->
@@ -1664,7 +1689,7 @@ function showCardDetailModal(cardId){
     </div>
     ${c.passive&&c.passive!=='None'?`<div style="font-size:12px;color:var(--text3);margin-bottom:8px">Passive: <span style="color:var(--text2)">${c.passive}</span></div>`:''}
     <div style="margin-bottom:8px">${skillTagsFor(c)}</div>
-    ${c.unique?`<div><span style="font-family:'Cinzel',serif;font-size:10px;color:var(--gold2);letter-spacing:.05em">UNIQUE · </span><span style="font-size:12px;color:var(--gold2)">${c.unique}</span></div>`:''}
+    ${uniqueLine(c,12)}
   `;
   document.getElementById('card-detail-modal').classList.add('open');
 }
@@ -1704,6 +1729,16 @@ const DEFAULT_ROSTER=[
 // STATE
 // ════════════════════════════════════════════════
 let roster=[], teams=[[],[],[],[]], oppSlots=[], savedLineups=[], customCards=[], stratRec=null, f2p=false;
+// "strict" = Lv200 + 4★ required to count as done (matches real max stat potential).
+// "level" = Lv200 alone counts as done — for players blocked on FA/dupe pulls who still
+// want the roadmap to surface what they CAN actually act on (leveling other cards)
+// instead of getting stuck showing cards they have no way to progress right now.
+let investViewMode=localStorage.getItem('tkdb-invest-view-mode')||'strict';
+function setInvestViewMode(mode){
+  investViewMode=mode;
+  localStorage.setItem('tkdb-invest-view-mode',mode);
+  renderInvest();
+}
 let editUid=null, addCardDbId=null, statsOpen=false, saveTimer=null;
 let rosterStatsOpen=false;
 // Multi-select filter state: OR within a category (e.g. SSR OR SR), AND across
@@ -1906,6 +1941,15 @@ function skillTagsFor(card){
     const idx=(seen[sk]=(seen[sk]||0)+1)-1;
     return skTag(sk,card.id,idx);
   }).join('');
+}
+// Renders "UNIQUE · Skill Name" with the same tap-to-see-effect tooltip behaviour as
+// regular skill tags, using CARD_UNIQUE_DESC when available.
+function uniqueLine(card,size){
+  if(!card||!card.unique)return'';
+  size=size||11;
+  const desc=CARD_UNIQUE_DESC[card.id];
+  const tipAttrs=desc?` class="tip" data-tip="${desc.replace(/"/g,'&quot;')}"`:'';
+  return`<div style="margin-top:4px"><span style="font-family:'Cinzel',serif;font-size:${size-2}px;color:var(--gold2);letter-spacing:.05em">UNIQUE · </span><span style="font-size:${size}px;color:var(--gold2)"${tipAttrs}>${card.unique}</span></div>`;
 }
 function optBadge(card){
   const tags=optimalRoleTags(card);
@@ -3014,6 +3058,304 @@ const UNCONFIRMED_DAMAGE_SKILLS=['Blood Frenzy','Furious Strike','Curse Attack',
 // Taiga — a completely different skill in practice despite the identical name). Whenever
 // a card's specific skill text has been directly confirmed via screenshot, it goes here
 // and takes priority over the generic name-based guess. Keyed by card id -> skill name.
+// Exact unique-skill effect text, keyed by card id — sourced from the same wiki crawl
+// as CARD_SKILL_OVERRIDES. Used to give unique skills the same tap-to-see-effect
+// tooltip behaviour as regular active skills.
+const CARD_UNIQUE_DESC={
+  // Comprehensive, fully verified unique-skill descriptions for all 289 cards —
+  // refreshed from a complete crawl. Every entry name-matched before being
+  // trusted (see the build script logic), zero mismatches.
+  255:"Increases own S DEF and P DEF by 3/6/9/14/20% while this unit has Fury.",
+  252:"Increases own S DEF and P DEF by 3/6/9/14/20% until this unit has survived 200TU.",
+  253:"Increases own P ATK by 3/6/9/14/20% if this unit has survived 400TU.",
+  254:"Increases own S DEF and P DEF by 3/6/9/14/20% while this unit has Fury.",
+  251:"Increases own S ATK and S DEF by 3/6/9/14/20% while there is a Cursed enemy.",
+  250:"Increases own S DEF and P DEF by 3/6/9/14/20% while there is a Cursed enemy.",
+  234:"Increases own P ATK by 3/6/9/14/20% if an enemy has killed twice.",
+  235:"Increases own P ATK by 3%/6%/9%/14%/20% if this unit has survived for 400TU.",
+  233:"Increase own S DEF and P DEF by 3/6/9/14/20% if an enemy has killed twice.",
+  232:"Increase own S DEF and P DEF by 3/6/9/14/20% while this unit is Charged.",
+  231:"Increases own S DEF and P DEF by 3/6/914/20% until this unit has survived 200TU.",
+  230:"Increases own S DEF and P DEF by 3/6/9/14/20% while this unit has above 75% HP.",
+  229:"Increases own S DEF and P DEF by 3/6/9/14/20% until this unit has survived 200TU.",
+  228:"Increases own S DEF and P DEF by 3/6/9/14/20% while there is a Sleeping enemy.",
+  227:"Increases own S DEF and P DEF 3/6/9/14/20% while there is a Cursed enemy.",
+  226:"Increases own S DEF and P DEF by 3/6/9/14/20% if this unit has killed twice.",
+  225:"Increases own S DEF and P DEF by 3/6/9/14/20% until this unit has survived 200TU.",
+  224:"Increases own S DEF and P DEF by 3/6/9/14/20% if an enemy has killed twice.",
+  223:"Increases own S DEF and P DEF by 3/6/9/14/20% if this unit has survived for 400TU since entering battle.",
+  222:"Increases own S ATK by 3/6/9/14/20% while this unit is Charged.",
+  221:"Increases own S DEF and P DEF by 3/6/9/14/20% when alone.",
+  220:"Increase own S DEF and P DEF by 3/6/9/14/20% while this unit is Charged.",
+  219:"Increases own S DEF and P DEF by 3/6/9/14/20% while this unit is Charged.",
+  218:"Increases own S DEF and P DEF by 3/6/9/14/20% if this unit has survived for 400TU since entering battle.",
+  217:"Increase own S DEF and P DEF by 3/6/9/14/20% while there is an enemy with 300+ TU.",
+  216:"Increases own P ATK by 3/6/9/14/20% if this unit has killed twice.",
+  215:"Increases own S DEF and P DEF by 3/6/9/14/20% while there is a Cursed enemy.",
+  214:"Increase own P ATK by 3/6/9/14/20% while this unit has Fury.",
+  211:"Increase own S DEF and P DEF by 3/6/9/14/20% while there is a Poisoned enemy.",
+  210:"Increases own P ATK by 3/6/9/14/20% if this unit has killed twice.",
+  212:"Increases own S ATK by 3/6/9/14/20% while there is a Cursed enemy.",
+  213:"Increases own S DEF and P DEF by 3/6/9/14/20% while there is a Sleeping enemy.",
+  209:"Increases own P ATK by 3/6/9/14/20% if this unit has killed twice.",
+  208:"Increase own S ATK by 3/6/9/14/20% when alone.",
+  207:"Increases own S DEF and P DEF by 3/6/9/14/20% if this unit has survived for 400TU since entering battle.",
+  240:"Increase own S DEF and P DEF by 3/6/9/14/20% while this unit is Charged.",
+  202:"Increase own S ATK by 3/6/9/14/20% while this unit has Fury.",
+  204:"Increases own S DEF and P DEF by 3/6/9/14/20% while this unit has Fury.",
+  203:"Increase own S DEF and P DEF by 3/6/9/14/20% while this unit is Charged.",
+  241:"Increases own S DEF and P DEF by 3/6/9/14/20% until this unit has survived 200TU.",
+  206:"Increases own S DEF and P DEF by 3/6/9/14/20% while there is a Cursed enemy.",
+  196:"Increases own S DEF and P DEF by 3/6/9/14/20% while this unit is Charged.",
+  198:"Increases own S DEF and P DEF by 3/6/9/14/20% while this unit has Fury.",
+  201:"Increases own P ATK by 3/6/9/14/20% while there is a Sleeping enemy.",
+  199:"Increases own S DEF and P DEF by 3/6/9/14/20% if an enemy has killed twice.",
+  197:"Increases own S DEF and P DEF by 3/6/9/14/20% while this unit is Charged.",
+  200:"Increase own P ATK by 3/6/9/14/20% if this unit had killed twice.",
+  191:"Increases own S DEF and P DEF by 3/6/9/14/20% while this unit has Fury.",
+  194:"Increases own S ATK by 3/6/9/14/20% while this unit has Fury.",
+  195:"Increases own S ATK by 3/6/9/14/20% if this unit has killed twice.",
+  193:"Increases own S ATK by 3/6/9/14/20% if this unit has killed twice.",
+  192:"Increases own S DEF and P DEF by 3/6/9/14/20% if an enemy has killed twice.",
+  188:"Increases own S DEF and P DEF by 3/6/9/14/20% while this unit has Fury.",
+  189:"Increases own S DEF and P DEF by 3/6/9/14/20% if this unit has killed twice.",
+  187:"Increases own S DEF and P DEF by 3/6/9/14/20% while there is a Poisoned enemy.",
+  190:"Increases own P ATK by 3/6/9/14/20% while there is an enemy with 300+ TU.",
+  186:"Increases own P ATK by 3/6/9/14/20% while there is a Cursed enemy.",
+  185:"Increases own S ATK by 3/6/9/14/20% while this unit has Fury.",
+  183:"Increases own S ATK by 3/6/9/14/20% while this unit has below 50% HP.",
+  181:"Increases own S ATK by 3/6/9/14/20% while this unit has Fury.",
+  182:"Increases own S DEF and P DEF by 3/6/9/14/20% while this unit is Charged.",
+  184:"Increase own S DEF and P DEF by 3/6/9/14/20% while this unit has Fury.",
+  179:"Increase own P ATK by 3/6/9/14/20% while there is a Cursed enemy.",
+  180:"Increase own S DEF and P DEF by 3/6/9/14/20% if this unit has survived 200TU.",
+  178:"Increases own S DEF and P DEF by 3/6/9/14/20% until this unit has killed twice.",
+  177:"Increase own S DEF and P DEF by 3%/6%/9%/14%/20% if an enemy has killed twice.",
+  176:"Increases own P ATK by 3/6/9/14/20% if this unit has killed twice.",
+  175:"Increases own S DEF and P DEF by 3/6/9/14/20% if this unit has survived for 400TU since entering battle.",
+  'sr26':"Increases own P DEF by 2/4/6/8/10% if an enemy has killed twice.",
+  174:"Increases own S ATK by 3/6/9/14/20% while there is an enemy with 300+ TU.",
+  'sr1':"Increase own P ATK by 2/4/6/8/10% if an enemy has killed.",
+  173:"Increases own P ATK by 3/6/9/14/20% if this unit has killed twice.",
+  'sr2':"Increase own P DEF by 2/4/6/8/10% while this unit has Fury.",
+  172:"Increases own S ATK by 3/6/9/14/20% while there is an enemy with 300+ TU.",
+  'sr27':"Increase own P ATK by 2/4/6/8/10% when alone.",
+  171:"Increases own P ATK by 3/6/9/14/20% while there is a Cursed enemy.",
+  170:"Increases own S DEF and P DEF by 3/6/9/14/20% when alone.",
+  169:"Increases own P ATK by 3/6/9/14/20% while there is a Cursed enemy.",
+  168:"Increases own S DEF and P DEF by 3/6/9/14/20% while there is a Cursed enemy.",
+  167:"Increases own P ATK by 3/6/9/14/20% while there is an enemy with 300+ TU.",
+  166:"Increases own S DEF and P DEF by 3/6/9/14/20% while there is a Cursed enemy.",
+  165:"Increases own S DEF and P DEF by 3/6/9/14/20% while this unit is Charged.",
+  164:"Increases own S DEF and P DEF by 3/6/9/14/20% while there is a Poisoned enemy.",
+  163:"Increases own S ATK by 3/6/9/14/20% while this unit is Charged.",
+  162:"Increases own S DEF and P DEF by 3/6/9/14/20% while there is a Cursed enemy.",
+  161:"Increases own S DEF and P DEF by 3/6/9/14/20% while this unit has Fury.",
+  160:"Increases own S DEF and P DEF by 3/6/9/14/20% until this unit has survived 200TU.",
+  159:"Increases own S DEF and P DEF by 3/6/9/14/20% if this unit has killed twice.",
+  158:"Increase own S ATK by 3/6/9/14/20% when alone.",
+  157:"Increases own S ATK by 3/6/9/14/20% if this unit has killed twice.",
+  156:"Increases own S DEF and P DEF by 3/6/9/14/20% if this unit has killed twice.",
+  155:"Increases own P ATK by 3/6/9/14/20% while this unit is Charged.",
+  154:"Increases own S DEF and P DEF by 3/6/9/14/20% while this unit has Fury.",
+  153:"Increases own P ATK by 3/6/9/14/20% while this unit is Charged.",
+  152:"Increases own S DEF and P DEF by 3/6/9/14/20% until this unit has survived 200TU.",
+  151:"Increases own S ATK by 3/6/9/14/20% while there is a Sleeping enemy.",
+  149:"Increases own S DEF and P DEF by 3/6/9/14/20% while this unit is Charged.",
+  150:"Increases own S DEF and P DEF by 3/6/9/14/20% while this unit is Charged.",
+  148:"Increases own P ATK by 3/6/9/14/20% when alone.",
+  147:"Increase own S DEF and P DEF by 3/6/9/14/20% until this unit has survived 200TU.",
+  146:"Increases own S DEF and P DEF by 3/6/9/14/20% while there is a Poisoned enemy.",
+  145:"Increases own S DEF and P DEF by 3/6/9/14/20% until this unit has survived 200TU.",
+  144:"Increases own S DEF and P EF by 3/6/9/14/20% while there is an enemy with 300+ TU.",
+  143:"Increases own S ATK by 3/6/9/14/20% while this unit has Fury.",
+  142:"Increases own P ATK by 3/6/9/14/20% while there is a Cursed enemy.",
+  141:"Increase own S DEF and P DEF by 3/6/9/14/20% if this unit has killed twice.",
+  140:"Increases own S ATK by 3/6/9/14/20% while this unit has below 50% HP.",
+  139:"Increases own S ATK by 3/6/9/14/20% while this unit has below 50% HP.",
+  138:"Increase own S DEF and P DEF by 3/6/9/14/20% until this unit has survived 200TU.",
+  137:"Increases own S DEF and P DEF by 3/6/9/14/20% until this unit survived 200TU.",
+  136:"Increases own S DEF and P DEF by 3/6/9/14/20% if this unit has survived for 400TU since entering battle.",
+  135:"Increases own S ATK by 3/6/9/14/20% if this unit has killed twice.",
+  134:"Increase own S DEF and P DEF by 3/6/9/14/20% while this unit is Charged.",
+  133:"Increases own S DEF and P DEF by 3/6/9/14/20% if this unit has survived 400TU since entering battle.",
+  132:"Increases own S DEF and P DEF by 3/6/9/14/20% while this unit had above 75% HP.",
+  131:"Increases own S DEF and P DEF by 3/6/9/14/20% if this unit has killed twice.",
+  130:"Increases own P ATK by 3/6/9/14/20% while there is a Poisoned enemy.",
+  129:"Increases own S DEF and P DEF by 3/6/9/14/20% until this unit has survived 200TU.",
+  128:"Increases own S DEF and P DEF by 3/6/9/14/20% if an enemy has killed twice.",
+  127:"Increases own S DEF and P DEF by 3/6/9/14/20% if an enemy has killed twice.",
+  126:"Increases own S DEF and P DEF by 3/6/9/14/20% while there is a Cursed enemy.",
+  242:"Increases own P ATK by 3/6/9/14/20% while this unit is Charged.",
+  124:"Increases own S DEF and P DEF by 3/6/9/14/20% while there is a Poisoned enemy.",
+  123:"Increases own P ATK by 3/6/9/14/20% if this unit has killed twice.",
+  122:"Increase own S DEF and P DEF by 3/6/9/14/20% while there is an enemy with 300+ TU.",
+  121:"Increases own S ATK by 3/6/9/14/20% while there is a Cursed enemy.",
+  243:"Increases own S DEF and P DEF by 3/6/9/14/20% while this unit is Charged.",
+  119:"Increases own S DEF and P Def by 3/6/9/14/20% while this unit is Charged.",
+  118:"Increases own S DEF and P DEF by 3/6/9/14/20% while there is a Cursed enemy.",
+  117:"Increases own S DEF and P Def by 3/6/9/14/20% while this unit has Fury.",
+  116:"Increases own S DEF and P DEF by 3/6/9/14/20% while there is a Sleeping enemy.",
+  244:"Increases own S DEF and P Def by 3/6/9/14/20% while this unit has Fury.",
+  114:"Increases own S ATK by 3/6/9/14/20% while there is a Sleeping enemy.",
+  245:"Increases own S DEF and P DEF by 3/6/9/14/20% if this unit has survived for 400TU since entering battle.",
+  112:"Increases own P ATK by 3/6/9/14/20% if an enemy has killed twice.",
+  111:"Increases own S ATK and S DEF by 3/6/9/14/20% while there is a Cursed enemy.",
+  110:"Increase own S DEF and P DEF by 3/6/9/14/20% if an enemy has killed twice.",
+  109:"Increases own S ATK by 3/6/9/14/20% while there is an enemy with 300+ TU.",
+  108:"Increase own P ATK by 3/6/9/14/20% if an enemy has killed twice.",
+  107:"Increases own S DEF and P DEF by 3/6/9/14/20% while this unit is Charged.",
+  106:"Increases own P ATK by 3/6/9/14/20% while there is a n enemy with 300+ TU.",
+  246:"Increases own S DEF and P DEF by 3/6/9/14/20% while there is a Cursed enemy.",
+  104:"Increases own S DEF and P DEF 3/6/9/14/20% while there is a Poisoned enemy.",
+  103:"Increases own S DEF and P DEF by 3/6/9/14/20% while there is a Sleeping enemy.",
+  102:"Increases own P ATK by 3/6/9/14/20% while this unit is Charged.",
+  101:"Increases own S DEF and P DEF by 3/6/9/14/20% if an enemy has killed twice.",
+  100:"Increases own S DEF and P DEF by 3/6/9/14/20% if this unit has killed twice.",
+  247:"Increases own S DEF and P DEF by 3/6/9/14/20% while this unit has above 75% HP.",
+  98:"Increases own S ATK by 3/6/9/14/20% while there is an enemy with 300+ TU.",
+  97:"Increases own S DEF and P DEF by 3/6/9/14/20% until this unit has survived 200TU.",
+  96:"Increases own S DEF and P DEF by 3/6/9/14/20% while there is a Cursed enemy.",
+  95:"Increases own S ATK by 3/6/9/14/20% while this unit has above 75% HP.",
+  94:"Increases own P ATK by 3/6/9/14/20% while there is a Cursed enemy.",
+  93:"Increases own S DEF and P DEF by 3/6/9/14/20% while there is a Cursed enemy.",
+  92:"Increases own P ATK by 3/6/9/14/20% while there is a Sleeping enemy.",
+  91:"Increases own S DEF and P DEF by 3/6/9/14/20% while this unit is Charged.",
+  90:"Increases own S DEF and P DEF by 3/6/9/14/20% while there is a Cursed enemy.",
+  248:"Increases own P ATK by 3/6/9/14/20% if this unit has survived for 400TU.",
+  88:"Increases own P ATK by 3/6/9/14/20% while this unit has Fury.",
+  87:"Increases own S ATK by 3/6/9/14/20% while this unit has below 50% HP.",
+  86:"Increases own S ATK by 3/6/9/14/20% while this unit has below 50% HP.",
+  85:"Increases own S DEF and P DEF by 3/6/9/14/20% while there is an enemy with 300+ TU.",
+  84:"Increases own S ATK by 3/6/9/14/20% while there is an enemy with 300+ TU.",
+  83:"Increases own P ATK by 3/6/9/14/20% if this unit has killed twice.",
+  82:"Increases own S ATK by 3/6/9/14/20% while there is a Cursed enemy.",
+  81:"Increases own S DEF and P DEF by 3/6/9/14/20% while this unit is Charged.",
+  80:"Increases own S DEF and P DEF by 3/6/9/14/20% if this unit has killed twice.",
+  79:"Increases own P ATK by 3/6/9/14/20% while there is an enemy with 300+ TU.",
+  78:"Increases own S ATK by 3/6/9/14/20% if this unit has survived for 400TU.",
+  77:"Increases own S DEF and P DEF by 3/6/9/14/20% while there is a Cursed enemy.",
+  76:"Increases own P ATK by 3/6/9/14/20% if this unit has killed twice.",
+  75:"Increases own S DEF and P DEF by 3/6/9/14/20% until this until has survived 200TU.",
+  74:"Increases own S DEF and P DEF by 3/6/9/14/20% while there is a Poisoned enemy.",
+  249:"Increases own S DEF and P DEF by 3/6/9/14/20% while this unit has Fury.",
+  72:"Increases own S DEF and P DEF by 3/6/9/14/20% while this unit is Charged.",
+  71:"Increases own S DEF and P Def by 3/6/9/14/20% while there is a Cursed enemy.",
+  70:"Increases own S DEF and P DEF by 3/6/9/14/20% when alone.",
+  69:"Increases own S DEF and P DEF by 3/6/9/14/20% while this unit has Fury.",
+  68:"Increases own S ATK by 3/6/9/14/20% if this unit has killed twice.",
+  67:"Increases own S ATK by 3/6/9/14/20% if this unit has survived for 400TU.",
+  66:"Increases own S DEF and P Def by 3/6/9/14/20% while this unit has above 75% HP.",
+  65:"Increases own S ATK by 3/6/9/14/20% if this unit has killed twice.",
+  64:"Increases own S DEF and P DEF by 3/6/9/14/20% while there is an enemy with 300+ TU.",
+  63:"Increases S DEF and P DEF by 3/6/9/14/20% while there is a Sleeping enemy.",
+  62:"Increases own S ATK by 3/6/9/14/20% while this unit has below 50% HP.",
+  61:"Increases own S DEF and P DEF by 3/6/9/14/20% while this unit has Fury.",
+  60:"Increases own S DEF and P Def by 3/6/9/14/20% if an enemy has killed twice.",
+  59:"Increases own P ATK by 3/6/9/14/20% when alone.",
+  58:"Increases own S DEF and P DEF by 3/6/9/14/20% until this unit has survived 200TU.",
+  57:"Increases own P ATK by 3/6/9/14/20% if this unit has killed twice.",
+  56:"Increases own S ATK and P DEF by 3/6/9/14/20% if an enemy has killed twice.",
+  55:"Increases own S ATK and S DEF by 3/6/9/14/20% while there is a Cursed enemy.",
+  54:"Increases own P ATK by 3/6/9/14/20% while this unit has above 75% HP.",
+  53:"Increases own S DEF and P Def by 3/6/9/14/20% while this unit has Fury.",
+  52:"Increases own S DEF and P DEF by 3/6/9/14/20% if an enemy has killed twice.",
+  51:"Increases own P ARK and S DEF by 3/6/9/14/20% while this unit is Charged.",
+  50:"Increases own S DEF and P DEF by 3/6/9/14/20% while there is a Poisoned enemy.",
+  49:"Increases own S DEF and P DEF by 3/6/9/14/20% if this unit has killed twice.",
+  48:"Increases own PATK and S DEF by 3/6/9/14/20% if an enemy has killed twice.",
+  47:"Increases own S ATK and P DEF by 3/6/9/14/20% while there is a Cursed enemy.",
+  46:"Increases own S DEF and P DEF by 3/6/9/14/20% while this unit is Charged.",
+  45:"Increases own S DEF and P DEF by 3/6/9/14/20% if this unit has survived for 400TU since entering battle.",
+  44:"Increases own S DEF and P DEF by 3/6/9/14/20% until this unit has survived 200TU.",
+  43:"Increases own S DEF and P DEF by 3/6/9/14/20% while this unit has Fury.",
+  42:"Increases own S ATK by 3/6/9/14/20% while this unit has Fury.",
+  41:"Increases own S ATK by 3/6/9/14/20% if this unit has killed twice.",
+  40:"Increases own S ATK by 3/6/9/14/20% while this unit is Charged.",
+  39:"Increases own P ATK by 3/6/9/14/20% if this unit has survived for 400TU.",
+  38:"Increases own P ATK by 3/6/9/14/20% while there is a Cursed enemy.",
+  37:"Increases own S DEF and P Def by 3/6/9/14/20% while there is a Cursed enemy.",
+  36:"Increases own S DEF and P DEF by 3/6/9/14/20% until this unit has survived 200TU.",
+  35:"Increases own S Def and P DEF by 3/6/9/14/20% while there is an enemy with 300+ TU.",
+  34:"Increases own S ATK by 3/6/9/14/20% while this unit has below 50% HP.",
+  33:"Increases own P ATK by 3/6/9/14/20% if this unit has killed twice.",
+  32:"Increases own S DEF and P Def by 3/6/9/14/20% if this unit has killed twice.",
+  31:"Increases own S DEF and P Def by 3/6/9/14/20% if this unit has killed twice.",
+  30:"Increases own S DEF and P DEF by 3/6/9/14/20% until this unit has survived 200TU.",
+  29:"Increases own S DEF and P DEF by 3/6/9/14/20% if this unit has survived for 400TU since entering battle.",
+  28:"Increases own P ATK by 3/6/9/14/20% while this unit is Charged.",
+  27:"Increases own S DEF and P Def by 3/6/9/14/20% while there is a Cursed enemy.",
+  26:"Increases own S ATK by 3/6/9/14/20% while this unit is charged.",
+  25:"Increases own S ATK by 3/6/9/14/20% while this unit has Fury.",
+  24:"Increases own P ATK by 3/6/9/14/20% while this unit has below 50% HP.",
+  23:"Increases own P ATK 3/6/9/14/20% while there is a Cursed enemy.",
+  22:"Increases own P ATK by 3/6/9/14/20% if this unit has killed twice.",
+  21:"Increases own S DEF and P DEF by 3/6/9/14/20% if this unit has survived 400TU since entering battle.",
+  20:"Increases own P ATK by %/20% while this unit has below 50% HP.",
+  19:"Increases own S DEF and P DEF by 3/6/9/14/20% while this unit is Charged",
+  18:"Increases own S DEF by 3/6/9/14/20% while this unit has Fury.",
+  17:"Increases own S DEF and P DEF by 3/6/9/14/20% while this unit is Charged.",
+  16:"Increases own S ATK by 3/6/9/14/20% if this unit has killed twice.",
+  15:"Increases own S DEF and P DEF by 3/6/9/14/20% if this unit has killed twice.",
+  14:"Increases own S DEF and S DEF by 3/6/9/14/20% while there is a Cursed enemy.",
+  13:"Increases own P ATK by 3/6/9/14/20% while there is a Cursed enemy.",
+  12:"Increases own P DEF by 3/6/9/14/20% while this unit has Fury.",
+  11:"Increases own P ATK by 3/6/9/14/20% if this unit has killed twice.",
+  10:"Increases own S DEF and P DEF by 3/6/9/14/20% until this unit has survived 200TU.",
+  9:"Increases own S ATK by 3/6/9/14/20% if this unit has killed twice.",
+  6:"Increases own S DEF and P DEF by 3/6/9/14/20% while there is a Poisoned enemy.",
+  8:"Increases own P ATK by 3/6/9/14/20% if this unit has survived for 400TU.",
+  2:"Increases own S ATK by 3/6/9/14/20% while this unit has Fury.",
+  7:"Increases own S ATK by 3/6/9/14/20% while this unit has below 50% HP.",
+  3:"Increases own S ATK by 3/6/9/14/20% when alone.",
+  4:"Increases own S DEF and P DEF by 3/6/9/14/20% if this unit has killed twice.",
+  1:"Increases own P ATK by 3/6/9/14/20% while this unit has below 50% HP.",
+  5:"Increases own P ATK by 3/6/9/14/20% while there is a Sleeping enemy.",
+  'r1':"Increases own S ATK by 1/2/3/4/5% while this unit has Fury.",
+  'sr14':"Increases own S DEF by 2/4/6/8/10% while this unit has above 75% HP.",
+  'sr10':"Increases own S ATK by 2/4/6/8/10% if this unit has killed twice.",
+  237:"Increases own P DEF by 2/4/6/8/10% until this unit has survived 200TU.",
+  'sr17':"Increases own S DEF by 2/4/6/8/10% while this unit has below 50% HP.",
+  'sr18':"Increases own S ATK by 2/4/6/8/10% while this unit has below 50% HP.",
+  'sr16':"Increases own S ATK by 2/4/6/8/10% if an enemy has killed twice.",
+  'sr7':"Increases own P DEF by 2/4/6/8/10% until this unit has survived 200TU.",
+  'sr12':"Increases own S ATK by 2/4/6/8/10% while there is a Guarding enemy.",
+  'sr11':"Increases own P ATK by 2/4/6/8/10% if an enemy has killed twice.",
+  'sr20':"Increases own S DEF by 2/4/6/8/10% until this unit has survived 200TU.",
+  'sr22':"Increases own S ATK by 2/4/6/8/10% when alone.",
+  'sr5':"Increases own P ATK by 2/4/6/8/10% while this unit has Fury.",
+  'sr23':"Increases own P DEF by 2/4/6/8/10% if an enemy has killed twice.",
+  'sr19':"Increases own P ATK by 2/4/6/8/10% if this unit has killed twice.",
+  'sr13':"Increases own P ATK by 2/4/6/8/10% if this unit has survived for 400TU.",
+  236:"Increases own S ATK by 2/4/6/8/10% while this unit has below 50% HP.",
+  'sr21':"Increases own P ATK by 2/4/6/8/10% if this unit has survived 200TU.",
+  'sr8':"Increases own P DEF by 2/4/6/8/10% while this unit has above 75% HP.",
+  'sr25':"Increases own P ATK by 2/4/6/8/10% if this unit has survived for 400TU.",
+  'sr6':"Increases own S ATK by 2/4/6/8/10% while there is a Cursed enemy.",
+  'sr9':"Increases own S ATK by 2/4/6/8/10% if this unit has survived for 400TU.",
+  'r5':"Increases own S ATK by 1/2/3/4/5% if this unit has below 50% HP.",
+  'r3':"Increases own S DEF by 1/2/3/4/5% while this unit has above 75% HP.",
+  'r11':"Increases own S DEF by 1/2/3/4/5% if this unit has killed twice.",
+  'r10':"Increases own P ATK by 1/2/3/4/5% while this unit has below 50% HP.",
+  'r21':"Increases own P ATK by 1/2/3/4/5% while there is a Poisoned enemy.",
+  'r18':"Increases own P ATK by 1/2/3/4/5% while there is a Sleeping enemy.",
+  'r20':"Increases own S ATK by 1/2/3/4/5% while there is an enemy with 300+TU.",
+  'r8':"Increases own P ATK by 1/2/3/4/5% until this unit has survived for 200TU.",
+  'r13':"Increases own P ATK by 1/2/3/4/5% if this unit has killed twice.",
+  'r9':"Increases own P DEF by 1/2/3/4/5% while there is a Cursed enemy.",
+  'r7':"Increases own P ATK by 1/2/3/4/5% until this unit has survived for 400TU.",
+  'r4':"Increases own P ATK by 1/2/3/4/5% if this unit has killed twice.",
+  'r19':"Increases own P ATK by 1/2/3/4/5% if this unit has killed twice.",
+  'r16':"Increases own S DEF by 1/2/3/4/5% until this unit has survived 200TU.",
+  238:"Increases own P DEF by 1/2/3/4/5% while there is a Cursed enemy.",
+  'r12':"Increases own S ATK by 1/2/3/4/5% while this unit has survived for 400TU.",
+  'r17':"Increases own P ATK by 1/2/3/4/5% while this unit has above 75% HP.",
+  'r14':"Increases own S ATK by 1/2/3/4/5% while there is a Cursed enemy.",
+  'r2':"Increases own S ATK by 1/2/3/4/5% when alone.",
+  'r15':"Increases own P ATK by 1/2/3/4/5% if this unit has killed twice.",
+  256:"Increases own S ATK by 3/6/9/14/20% while this unit has Fury.",
+};
+
 const CARD_SKILL_OVERRIDES={
   255:{"Blood Frenzy":{mult:4,targets:2},"Furious Strike":{mult:6,targets:1},"Attack All":{mult:0.5,targets:5}},
   256:{"Survivor's Burst":{mult:4,targets:2},"Furious Strike":{mult:6,targets:1},"Attack All":{mult:0.5,targets:5}},
@@ -3663,7 +4005,7 @@ function updatePreview(c){
     <div style="display:flex;gap:5px;flex-wrap:wrap;align-items:center;margin-bottom:5px">${rar(c.r)}${c.tier?tier(c.tier):''}${atkSpan(c.atk)}${elem(c.elem)}${house(c.house)}</div>
     <div style="font-size:12px;color:var(--text3);margin-bottom:5px">${c.passive&&c.passive!=='None'?'Passive: '+c.passive:''}</div>
     <div>${skillTagsFor(c)}</div>
-    ${c.unique?`<div style="margin-top:4px"><span style="font-family:'Cinzel',serif;font-size:9px;color:var(--gold2);text-transform:uppercase;letter-spacing:.06em">Unique · </span><span class="sk" style="font-size:11px;border-color:rgba(200,168,75,.35);color:var(--gold2)">${c.unique}</span></div>`:''}
+    ${uniqueLine(c,11)}
     <div style="margin-top:6px;font-size:11px;color:var(--amber);font-family:'Cinzel',serif">${optBadge(c)}</div>
     <div style="margin-top:8px;padding-top:8px;border-top:1px solid var(--border)">
       <div style="font-family:'Cinzel',serif;font-size:10px;color:var(--blue2);margin-bottom:5px;text-transform:uppercase;letter-spacing:.06em">💎 Recommended Setup (if optimised)</div>
@@ -3900,100 +4242,32 @@ function renderInvest(){
   // Three tiers: no_ssr, building, established
   const playerTier=!hasAnySSR?'no_ssr':!hasLeveledSSR?'building':'established';
 
-  const resourceHTML={
-    no_ssr:`<div style="background:var(--bg2);border:1px solid var(--border2);border-left:3px solid var(--blue2);border-radius:10px;padding:14px 16px;margin-bottom:18px">
-      <div style="font-family:'Cinzel',serif;font-size:11px;color:var(--blue2);letter-spacing:.08em;text-transform:uppercase;margin-bottom:8px">Your Situation — No SSR Cards Yet</div>
-      <div style="font-size:13px;color:var(--text2);line-height:1.7;margin-bottom:10px">
-        Until you pull an SSR, your SR and R cards are your primary fighters. Level them to their caps — SRs to <strong style="color:var(--text)">Lv 50</strong>, Rs to <strong style="color:var(--text)">Lv 25</strong>. These are cheap to level and will carry you through early Arena.
-      </div>
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px">
-        <div style="padding:10px;background:var(--bg3);border-radius:8px;border:1px solid var(--border)">
-          <div style="font-family:'Cinzel',serif;font-size:10px;color:var(--gold);margin-bottom:4px">Moonlight Paints</div>
-          <div style="font-size:12px;color:var(--text2);line-height:1.5">Used for leveling <strong>ward cards</strong>. Save them — do not spend on SR/R ward cards until you have SSRs sorted.</div>
-        </div>
-        <div style="padding:10px;background:var(--bg3);border-radius:8px;border:1px solid var(--border)">
-          <div style="font-family:'Cinzel',serif;font-size:10px;color:var(--gold);margin-bottom:4px">Rainbow Apples</div>
-          <div style="font-size:12px;color:var(--text2);line-height:1.5">Used for <strong>SSR leveling</strong>. Hoard every one. When your first SSR arrives you want a stockpile ready to push them to Lv 100+ immediately.</div>
-        </div>
-      </div>
-      <div style="font-size:12px;color:var(--text3);font-style:italic">SR level cap: 50 · R level cap: 25 · Use common materials for these, not Rainbow Apples.</div>
-    </div>`,
-
-    building:`<div style="background:var(--bg2);border:1px solid var(--border2);border-left:3px solid var(--gold);border-radius:10px;padding:14px 16px;margin-bottom:18px">
-      <div style="font-family:'Cinzel',serif;font-size:11px;color:var(--gold);letter-spacing:.08em;text-transform:uppercase;margin-bottom:8px">Your Situation — Building Your SSR Core</div>
-      <div style="font-size:13px;color:var(--text2);line-height:1.7;margin-bottom:10px">
-        You have ${ssrCount} SSR${ssrCount!==1?'s':''} but none are significantly leveled yet. Shift <strong style="color:var(--text)">all Rainbow Apples</strong> to your highest-priority SSR immediately. Stop leveling SR/R beyond their caps.
-      </div>
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px">
-        <div style="padding:10px;background:var(--bg3);border-radius:8px;border:1px solid var(--border)">
-          <div style="font-family:'Cinzel',serif;font-size:10px;color:var(--gold);margin-bottom:4px">SR Cards</div>
-          <div style="font-size:12px;color:var(--text2)">Cap at Lv 50 then stop. Use common materials only — never Rainbow Apples.</div>
-        </div>
-        <div style="padding:10px;background:var(--bg3);border-radius:8px;border:1px solid var(--border)">
-          <div style="font-family:'Cinzel',serif;font-size:10px;color:var(--gold);margin-bottom:4px">R Cards</div>
-          <div style="font-size:12px;color:var(--text2)">Cap at Lv 25 then stop. Their debuff passives work at any level — keep them weak so they die fast.</div>
-        </div>
-      </div>
-      ${linkedSSRs.length?`<div style="font-size:12px;color:var(--amber);font-style:italic">Link Bonus active on ${linkedSSRs.length} SSR${linkedSSRs.length!==1?'s':''}. Prioritise leveling these first — the Link Bonus scales with level and multiplies all battle stats.</div>`:''}
-      ${unlinkedSSRs.length?`<div style="font-size:12px;color:var(--text3);font-style:italic;margin-top:4px">${unlinkedSSRs.length} SSR${unlinkedSSRs.length!==1?'s':''} without Link Bonus active. Activate links before investing heavily — you want that multiplier working from the start.</div>`:''}
-    </div>`,
-
-    established:`<div style="background:var(--bg2);border:1px solid var(--border2);border-left:3px solid var(--green2);border-radius:10px;padding:14px 16px;margin-bottom:18px">
-      <div style="font-family:'Cinzel',serif;font-size:11px;color:var(--green2);letter-spacing:.08em;text-transform:uppercase;margin-bottom:8px">Resource Priority</div>
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px">
-        <div style="padding:10px;background:var(--bg3);border-radius:8px;border:1px solid var(--border)">
-          <div style="font-family:'Cinzel',serif;font-size:10px;color:var(--gold);margin-bottom:4px">Moonlight Paints</div>
-          <div style="font-size:12px;color:var(--text2)">Ward card leveling only. Prioritise ward cards that buff your active SSRs.</div>
-        </div>
-        <div style="padding:10px;background:var(--bg3);border-radius:8px;border:1px solid var(--border)">
-          <div style="font-family:'Cinzel',serif;font-size:10px;color:var(--gold);margin-bottom:4px">Rainbow Apples</div>
-          <div style="font-size:12px;color:var(--text2)">SSR leveling + Limit Breaks only. Never spend on SR/R.</div>
-        </div>
-      </div>
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px">
-        <div style="padding:10px;background:var(--bg3);border-radius:8px;border:1px solid var(--border)">
-          <div style="font-family:'Cinzel',serif;font-size:10px;color:var(--gold);margin-bottom:4px">SR Cards — Lv 50 cap</div>
-          <div style="font-size:12px;color:var(--text2)">Common materials only. Debuff passives work at any level. Stop at 50.</div>
-        </div>
-        <div style="padding:10px;background:var(--bg3);border-radius:8px;border:1px solid var(--border)">
-          <div style="font-family:'Cinzel',serif;font-size:10px;color:var(--gold);margin-bottom:4px">R Cards — Lv 25 cap</div>
-          <div style="font-size:12px;color:var(--text2)">Common materials only. Low level = die faster = debuffs trigger sooner. Keep them weak.</div>
-        </div>
-      </div>
-      ${linkedSSRs.length||unlinkedSSRs.length?`<div style="padding:8px 10px;background:rgba(200,168,75,.05);border-radius:7px;border:1px solid var(--border)">
-        <div style="font-family:'Cinzel',serif;font-size:10px;color:var(--gold);margin-bottom:4px">Link Bonus</div>
-        <div style="font-size:12px;color:var(--text2);line-height:1.6">When an SSR has a linked card equipped, all battle stats gain a bonus that scales with level — making leveling and awakening that card more valuable. ${linkedSSRs.length} of your SSRs have Link active. ${unlinkedSSRs.length?`<span style="color:var(--amber)">${unlinkedSSRs.length} without Link — activate before investing further.</span>`:''}</div>
-      </div>`:''}
-    </div>`,
-  }[playerTier];
-
-  // F2P addendum — appended to resource block when enabled
-  const f2pHTML=f2p&&roster.length?`<div style="background:rgba(74,159,212,.06);border:1px solid rgba(74,159,212,.3);border-left:3px solid var(--blue2);border-radius:10px;padding:13px 15px;margin-bottom:16px">
-    <div style="font-family:'Cinzel',serif;font-size:11px;color:var(--blue2);letter-spacing:.08em;text-transform:uppercase;margin-bottom:8px">F2P Advice</div>
-    <div style="font-size:13px;color:var(--text2);line-height:1.7;margin-bottom:10px">
-      Awakening requires duplicate SSR pulls. At a ~2–3% SSR rate you need roughly <strong style="color:var(--text)">33–50 pulls per copy</strong> — that's months of diamond saving per star. Prioritise wisely.
+  const tierLabel={no_ssr:'No SSR yet',building:'Building your SSR core',established:'Established roster'}[playerTier];
+  const tierColor={no_ssr:'var(--blue2)',building:'var(--gold)',established:'var(--green2)'}[playerTier];
+  const resourceHTML=`<div style="background:var(--bg2);border:1px solid var(--border);border-left:3px solid ${tierColor};border-radius:10px;padding:12px 14px;margin-bottom:10px">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:${linkedSSRs.length||unlinkedSSRs.length?'6px':'0'}">
+      <span style="font-family:'Cinzel',serif;font-size:11px;color:${tierColor};letter-spacing:.05em">${tierLabel}</span>
+      <button onclick="showTab('guide')" style="background:none;border:none;padding:0;font-size:11px;color:var(--text3);text-decoration:underline;cursor:pointer;font-family:inherit">Resource rules →</button>
     </div>
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
-      <div style="padding:10px;background:var(--bg3);border-radius:8px;border:1px solid var(--border)">
-        <div style="font-family:'Cinzel',serif;font-size:10px;color:var(--blue2);margin-bottom:4px">Got a duplicate?</div>
-        <div style="font-size:12px;color:var(--text2);line-height:1.5">${(()=>{
-          // Use cards that aren't yet fully awakened (4★ max), sorted by invest priority
-          const candidates=ssrs
-            .filter(e=>(e.awk||0)<4)
-            .sort((a,b)=>(b.lv||1)-(a.lv||1)||(b.power||0)-(a.power||0))
-            .slice(0,2)
-            .map(e=>{const c=gc(e.cardId);return c?c.name.split(' ').slice(-2,-1)[0]:null;})
-            .filter(Boolean);
-          return candidates.length
-            ?`Use it to awaken ${candidates.join(' or ')} — each star adds 50% battle stats to an already-invested card.`
-            :'All your SSRs are fully awakened — great position! Use duplicates on your next new SSR.';
-        })()}</div>
-      </div>
-      <div style="padding:10px;background:var(--bg3);border-radius:8px;border:1px solid var(--border)">
-        <div style="font-family:'Cinzel',serif;font-size:10px;color:var(--blue2);margin-bottom:4px">Saving diamonds?</div>
-        <div style="font-size:12px;color:var(--text2);line-height:1.5">Only pull on banners featuring cards from the "Worth Pulling" list below. Skip everything else.</div>
-      </div>
-    </div>
+    ${linkedSSRs.length?`<div style="font-size:12px;color:var(--amber)">Link Bonus active on ${linkedSSRs.length} SSR${linkedSSRs.length!==1?'s':''} — prioritise leveling these.</div>`:''}
+    ${unlinkedSSRs.length?`<div style="font-size:12px;color:var(--text3);margin-top:2px">${unlinkedSSRs.length} SSR${unlinkedSSRs.length!==1?'s':''} without Link Bonus — activate before investing further.</div>`:''}
+  </div>`;
+
+  // F2P tip — its own clearly-labeled card so it's never mistaken for generic resource
+  // advice, and always visible (not buried) whenever F2P mode is on.
+  const f2pHTML=f2p&&roster.length?`<div style="background:rgba(74,159,212,.06);border:1px solid rgba(74,159,212,.3);border-left:3px solid var(--blue2);border-radius:10px;padding:12px 14px;margin-bottom:16px">
+    <div style="font-family:'Cinzel',serif;font-size:11px;color:var(--blue2);letter-spacing:.08em;text-transform:uppercase;margin-bottom:6px">F2P Tip</div>
+    <div style="font-size:12px;color:var(--text2);line-height:1.5">${(()=>{
+      const candidates=ssrs
+        .filter(e=>(e.awk||0)<4)
+        .sort((a,b)=>(b.lv||1)-(a.lv||1)||(b.power||0)-(a.power||0))
+        .slice(0,2)
+        .map(e=>{const c=gc(e.cardId);return c?c.name.split(' ').slice(-2,-1)[0]:null;})
+        .filter(Boolean);
+      return candidates.length
+        ?`Got a duplicate SSR? Use it to awaken <strong style="color:var(--text)">${candidates.join(' or ')}</strong> — each star adds 50% battle stats to a card you've already invested in.`
+        :'All your SSRs are fully awakened — great position! Use future duplicates on your next new SSR.';
+    })()}</div>
   </div>`:'';
 
   // ── Pull recommendations ──────────────────────
@@ -4264,8 +4538,11 @@ function renderInvest(){
     return score;
   };
 
-  // Exclude fully complete cards (Lv200 + 4★) — nothing left to invest
-  const incompleteSSRs=ssrs.filter(e=>{const lv=e.lv||1,awk=e.awk||0;return!(lv>=200&&awk>=4);});
+  // Exclude fully complete cards — what counts as "complete" depends on investViewMode
+  const incompleteSSRs=ssrs.filter(e=>{
+    const lv=e.lv||1,awk=e.awk||0;
+    return investViewMode==='level'?!(lv>=200):!(lv>=200&&awk>=4);
+  });
   const allSorted=[...incompleteSSRs].sort((a,b)=>roadmapScore(b)-roadmapScore(a));
   // Split: in-progress (lv>=50 or awk>=1) vs queued (lv<50 and awk=0)
   const inProgress=allSorted.filter(e=>(e.lv||1)>=50||(e.awk||0)>=1);
@@ -4278,7 +4555,15 @@ function renderInvest(){
 
   const timelineHTML=hasAnySSR&&roadmapSSRs.length?`
     <div style="margin-bottom:6px">
-      <div style="font-family:'Cinzel',serif;font-size:12px;color:var(--gold);letter-spacing:.08em;margin-bottom:${gaps.length?'10px':'14px'};display:flex;align-items:center;gap:8px">SSR Investment Roadmap<span style="flex:1;height:1px;background:linear-gradient(to right,var(--border2),transparent)"></span></div>
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:${gaps.length?'10px':'14px'}">
+        <span style="font-family:'Cinzel',serif;font-size:12px;color:var(--gold);letter-spacing:.08em">SSR Investment Roadmap</span>
+        <span style="flex:1;height:1px;background:linear-gradient(to right,var(--border2),transparent)"></span>
+        <div style="display:flex;background:var(--bg3);border-radius:6px;padding:2px;flex-shrink:0">
+          <button onclick="setInvestViewMode('strict')" style="font-family:'Cinzel',serif;font-size:9px;padding:4px 8px;border-radius:5px;border:none;cursor:pointer;background:${investViewMode==='strict'?'var(--gold)':'transparent'};color:${investViewMode==='strict'?'var(--bg0)':'var(--text3)'};font-weight:${investViewMode==='strict'?700:400}">FA+Lv200</button>
+          <button onclick="setInvestViewMode('level')" style="font-family:'Cinzel',serif;font-size:9px;padding:4px 8px;border-radius:5px;border:none;cursor:pointer;background:${investViewMode==='level'?'var(--gold)':'transparent'};color:${investViewMode==='level'?'var(--bg0)':'var(--text3)'};font-weight:${investViewMode==='level'?700:400}">Lv200</button>
+        </div>
+      </div>
+      ${investViewMode==='level'?`<div style="font-size:11px;color:var(--text3);font-style:italic;margin-top:-6px;margin-bottom:12px">Showing Lv 200 as complete regardless of awakening — useful if you're blocked on FA/duplicate pulls right now.</div>`:''}
       ${gaps.length?`<div style="display:flex;flex-direction:column;gap:6px;margin-bottom:12px">
         ${gaps.map(gap=>{
           const isCrit=gap.severity==='critical';
@@ -4298,8 +4583,8 @@ function renderInvest(){
         ${roadmapSSRs.map((e,i)=>{
           const c=gc(e.cardId);if(!c)return'';
           const lv=e.lv||1,awk=e.awk||0;
-          const isComplete=lv>=200&&awk>=4;
-          const isMaxLvLowAwk=lv>=200&&awk<4; // level done, but awakening (up to 5x stat gain) still needed — a real gap, not "complete"
+          const isComplete=investViewMode==='level'?lv>=200:(lv>=200&&awk>=4);
+          const isMaxLvLowAwk=investViewMode==='level'?false:(lv>=200&&awk<4); // level done, but awakening (up to 5x stat gain) still needed — a real gap, not "complete" (only tracked in strict mode)
           const isActive=!isComplete&&!isMaxLvLowAwk&&(lv>=50||awk>=1);
           const isNextUp=!isComplete&&!isMaxLvLowAwk&&!isActive; // lv<50 and awk=0 — not yet started
   const statusLabel=isComplete?'Complete':isMaxLvLowAwk?'Needs Awakening':isActive?'In Progress':'Next to Invest';
@@ -4441,11 +4726,11 @@ function renderInvest(){
     </div>`:'';
 
   document.getElementById('invest-content').innerHTML=`<div style="padding:4px 0 0">
-    ${resourceHTML}
-    ${f2pHTML}
     ${giantHTML}
     ${timelineHTML}
     ${pullsHTML}
+    ${resourceHTML}
+    ${f2pHTML}
   </div>`;
 }
 
@@ -4822,7 +5107,7 @@ function renderDB(){
       <div style="font-size:11px;color:var(--text3);margin-bottom:4px">${optBadge(c)}</div>
       ${c.passive&&c.passive!=='None'?`<div style="font-size:11px;color:var(--text3);margin-bottom:4px">Passive: ${c.passive}</div>`:''}
       <div>${skillTagsFor(c)}</div>
-      ${c.unique?`<div style="margin-top:4px"><span style="font-family:'Cinzel',serif;font-size:9px;color:var(--gold2);letter-spacing:.05em">UNIQUE · </span><span style="font-size:11px;color:var(--gold2)">${c.unique}</span></div>`:''}
+      ${uniqueLine(c,11)}
     </div>
   </div>`).join('');
 }
