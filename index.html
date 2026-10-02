@@ -1114,6 +1114,10 @@ function gemGuardianRec(card, uid) {
 // image 404s or was never crawled, so nothing breaks for partial coverage.
 const CARD_IMAGE={
   260:"Haru_Sagara_Sun-Kissed_Sapphire.png",
+  261:"Jiro_Kirisaki_Bound_Monster.png",
+  262:"Rui_Mizuki_Longing_Fingertips.png",
+  263:"Haku_Kusanagi_Obscure_Moon.png",
+  264:"Haku_Kusanagi_Corpse_King.png",
   257:"Edward_Hart_Blood_Vow.png",
   258:"Yuri_Isami_Candlelit_Sapphire.png",
   259:"Ren_Shiranami_Listless_Hatter.png",
@@ -1660,6 +1664,10 @@ const BASE_CARDS=[
 {id:259,name:"Listless Hatter Ren Shiranami",r:"SSR",type:"Vengeance",tier:"",atk:"S",elem:"Grass",passive:"Auto S ATK Boost",skills:["Full DEF Boost","Time Strike","Vengeance Strike","Attack Two"],unique:"Mad Tea Party",house:"Jabberwock",speed:497},
 {id:260,name:"Sun-Kissed Sapphire Haru Sagara",r:"SSR",type:"Charge",tier:"",atk:"S",elem:"Water",passive:"Poison Entry",skills:["Desperate Strike","Charged Strike","Charge Boost","Attack All"],unique:"The Merry Road",house:"Jabberwock",speed:505},
 {id:206,name:"Otherworldly Reaper Rui Mizuki",r:"SSR",type:"Curse",tier:"",atk:"P",elem:"Grass",passive:"Auto Curse",skills:["Curse Assault","Vengeance Strike","Power Attack","Attack"],unique:"Reaper's Strike",house:"Obscuary",speed:399},
+{id:261,name:"Bound Monster Jiro Kirisaki",r:"SSR",type:"Blood",tier:"",atk:"S",elem:"Grass",passive:"Poison Revenge",skills:["Blood Frenzy","Curse Assault","Curse Attack","Attack Two"],unique:"Muzzled Smile",house:"Mortkranken",speed:533},
+{id:262,name:"Longing Fingertips Rui Mizuki",r:"SSR",type:"Blood",tier:"",atk:"P",elem:"Fire",passive:"Stun Entry",skills:["Full DEF Boost","Blood Frenzy","Time Strike","Attack Two"],unique:"A Dawn That Never Comes",house:"Obscuary",speed:219},
+{id:263,name:"Obscure Moon Haku Kusanagi",r:"SSR",type:"Fury",tier:"",atk:"S",elem:"Grass",passive:"Poison Entry",skills:["Desperate Strike","Furious Strike","Unleash Fury","Attack Two"],unique:"Stolen Glances",house:"Hotarubi",speed:383},
+{id:264,name:"Corpse King Haku Kusanagi",r:"SSR",type:"Survivor",tier:"",atk:"P",elem:"Water",passive:"Auto MP+2",skills:["Life Flip","P ATK Boost","Survivor's Burst","Attack Two"],unique:"Charnel Throne",house:"Hotarubi",speed:448},
 {id:'sr1',name:"Darkwick Chic Jo Kongoza",r:"SR",type:"Vengeance",tier:"",atk:"P",elem:"Fire",passive:"Sleep Revenge+",skills:["Life Flip","Vengeance Strike","Attack All"],unique:"Crowd Charmer",house:"Dionysia",speed:null},
 {id:'sr2',name:"Darkwick Chic Shion Genkai",r:"SR",type:"Fury",tier:"",atk:"S",elem:"Fire",passive:"Auto S ATK Boost",skills:["Furious Strike","Unleash Fury","Attack All"],unique:"Perilous Act",house:"Dionysia",speed:null},
 {id:'sr5',name:"Darkwick Chic Lyca Colt",r:"SR",type:"Fury",tier:"",atk:"P",elem:"Grass",passive:"Poison Revenge",skills:["Furious Strike","Unleash Fury","Attack All"],unique:"Like Humans Do",house:"Obscuary",speed:null},
@@ -3169,6 +3177,10 @@ const UNCONFIRMED_DAMAGE_SKILLS=['Blood Frenzy','Furious Strike','Curse Attack',
 // tooltip behaviour as regular active skills.
 const CARD_UNIQUE_DESC={
   260:"Increases own S DEF and P DEF by 3/6/9/14/20% while there is a Poisoned enemy.",
+  261:"Increases own S ATK by 3/6/9/14/20% if this unit has killed twice.",
+  262:"Increases own P ATK by 3/6/9/14/20% while there is an enemy with 300TU.",
+  263:"Increases own S ATK by 3/6/9/14/20% while this unit has Fury.",
+  264:"Increases own S DEF and P DEF by 3/6/9/14/20% if this unit has survived for 400TU since entering battle.",
   257:"Increases own P ATK by 3/6/9/14/20% if this unit has survived for 400TU.",
   258:"Increases own P ATK by 3/6/9/14/20% while there is a Cursed enemy.",
   259:"Increases own S DEF and P DEF by 3/6/9/14/20% while this unit has survived 200TU.",
@@ -3468,6 +3480,10 @@ const CARD_UNIQUE_DESC={
 
 const CARD_SKILL_OVERRIDES={
   260:{"Desperate Strike":{mult:2.5,targets:5,tu:350,mp:-3},"Charged Strike":{mult:4,targets:2,tu:250,mp:-2},"Attack All":{mult:0.5,targets:5,tu:250,mp:5}},
+  261:{"Blood Frenzy":{mult:4.0,targets:2,tu:200,mp:-3},"Curse Assault":{mult:2.0,targets:5,tu:300,mp:-2},"Curse Attack":{mult:0.5,targets:2,tu:150,mp:-2},"Attack Two":{mult:0.75,targets:2,tu:200,mp:4}},
+  262:{"Blood Frenzy":{mult:5.0,targets:1,tu:150,mp:-2},"Time Strike":{mult:3,targets:5,tu:350,mp:-3},"Attack Two":{mult:0.75,targets:2,tu:200,mp:4}},
+  263:{"Desperate Strike":{mult:4.0,targets:2,tu:200,mp:-2},"Furious Strike":{mult:3.0,targets:2,tu:250,mp:-2},"Attack Two":{mult:0.75,targets:2,tu:200,mp:4}},
+  264:{"Survivor's Burst":{mult:4.0,targets:2,tu:300,mp:-3},"Attack Two":{mult:0.75,targets:2,tu:200,mp:4}},
   257:{"Survivor's Burst":{mult:2.5,targets:5,tu:350,mp:-4},"Attack All":{mult:0.5,targets:5,tu:250,mp:5}},
   258:{"Curse Assault":{mult:4,targets:1,tu:200,mp:-2},"Curse Attack":{mult:0.75,targets:1,tu:130,mp:-1},"Attack All":{mult:0.5,targets:5,tu:250,mp:5}},
   259:{"Time Strike":{mult:6,targets:1,tu:250,mp:-1},"Vengeance Strike":{mult:1.75,targets:5,tu:280,mp:-3},"Attack Two":{mult:0.75,targets:2,tu:180,mp:3}},
